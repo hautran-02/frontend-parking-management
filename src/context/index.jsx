@@ -3,9 +3,10 @@
 import React, { useReducer, createContext } from "react";
 import { reducer, initialState } from "./reducer";
 import { loginAuthenSevice, logout, checkAuthenSevice } from "./actions";
+
 const AppContext = createContext();
 
-export const StateProvider = ({ children }) => {
+const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const actions = {
@@ -23,4 +24,4 @@ export const StateProvider = ({ children }) => {
   );
 };
 
-export default AppContext;
+export default AppProvider;
