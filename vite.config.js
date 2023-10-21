@@ -1,19 +1,19 @@
 /* eslint-disable no-undef */
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
+import jsconfigPaths from 'vite-jsconfig-paths';
 const path = require("path");
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './',
   esbuild: {
     loader: "jsx",
   },
   resolve: {
-    alias: {
-      "~": path.resolve(__dirname, "./src"),
-    },
+    alias: [{ find: "~", replacement: path.resolve(__dirname, "./src") }],
   },
-  plugins: [react()],
+  plugins: [react(), jsconfigPaths()],
   optimizeDeps: {
     esbuildOptions: {
       loader: {
