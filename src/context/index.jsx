@@ -1,11 +1,8 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+// eslint-disable-next-line no-unused-vars
 import React, { useReducer, createContext } from "react";
 import { reducer, initialState } from "./reducer";
-import {
-  loginAuthenSevice,
-  logout,
-  checkAuthenSevice,
-} from "./actions";
+import { loginAuthenSevice, logout, checkAuthenSevice } from "./actions";
 const AppContext = createContext();
 
 export const StateProvider = ({ children }) => {
