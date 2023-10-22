@@ -1,12 +1,17 @@
 const getIsLogin = () => {
-  const isLogin = localStorage.getItem("isLogin") || false;
-  return isLogin;
+  let auth = localStorage.getItem("auth");
+  if(auth) {
+    auth = JSON.parse(auth);
+  } else {
+    auth = {
+      isLogin: false,
+    }
+  }
+  return auth;
 };
 
 const initState = {
-  auth: {
-    isLogin: getIsLogin(),
-  },
+  auth: getIsLogin(),
   mess: null,
 };
 

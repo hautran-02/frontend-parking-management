@@ -13,7 +13,6 @@ function Authen({}) {
   const [loading, setLoading] = useState(false);
 
   const onComplete = (type = "error", content) => {
-    console.log(type, content);
     if (content) {
       actions.onMess({ type, content });
     }

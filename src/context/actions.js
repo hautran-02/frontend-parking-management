@@ -48,6 +48,14 @@ export const onLogin = async (params) => {
       };
       type = "success";
       content = "Đăng nhập thành công";
+
+      localStorage.setItem(
+        "auth",
+        JSON.stringify({
+          isLogin,
+          info,
+        })
+      );
     } else {
       content = "Tên đăng nhập hoặc mật khẩu không đúng";
     }

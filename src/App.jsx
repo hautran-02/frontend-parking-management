@@ -9,6 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function Auth({ children }) {
   const { state } = useContext(AppContext);
   const { auth } = state;
+  console.log(auth);
   if (auth.isLogin) {
     return children;
   }
