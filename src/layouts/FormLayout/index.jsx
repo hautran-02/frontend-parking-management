@@ -7,7 +7,6 @@ import Footer from "../components/Footer";
 function FormLayout({ children }) {
   return (
     <Layout className="vh-100">
-      <Header />
       <Content className="d-flex justify-content-center align-items-center w-100">
         {children}
       </Content>

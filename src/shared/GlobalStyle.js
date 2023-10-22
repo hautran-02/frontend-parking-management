@@ -26,8 +26,4 @@ export default createGlobalStyle`
         object-fit: contain;
     }
 
-    .ant-image-img {
-        background: #fff;
-    }
-
 `;
