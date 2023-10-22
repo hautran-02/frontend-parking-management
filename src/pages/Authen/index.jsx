@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Checkbox, Form, Image, Input, Row, Space, theme } from "antd";
-import { FormLayout } from "~/layouts";
+import { Button, Form, Image, Input, Layout, Row, Space } from "antd";
 import LOGO from "~/assets/logo/full-logo.svg";
 import AppContext from "~/context";
 import { useNavigate } from "react-router-dom";
+import { Content, Footer } from "~/layouts";
 
 function Authen({}) {
   const { state, actions } = useContext(AppContext);
@@ -11,9 +11,6 @@ function Authen({}) {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
 
   const onComplete = (type = "error", content) => {
     console.log(type, content);
@@ -34,65 +31,68 @@ function Authen({}) {
   };
 
   useEffect(() => {
-    if(auth.isLogin) {
+    if (auth.isLogin) {
       navigate("/");
     }
   }, [auth]);
 
   return (
-    <FormLayout>
-      <Space direction="vertical" size="large">
-        <Row justify="center">
-          <Image src={LOGO} preview={false} />
-        </Row>
-        <Row>
-          <Form
-            name="loginForm"
-            style={{
-              width: 400,
-            }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-          >
-            <Form.Item
-              name="username"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your username!",
-                },
-              ]}
+    <Layout className="vh-100">
+      <Content className="d-flex justify-content-center align-items-center w-100">
+        <Space direction="vertical" size="large">
+          <Row justify="center">
+            <Image src={LOGO} preview={false} />
+          </Row>
+          <Row>
+            <Form
+              name="loginForm"
+              style={{
+                width: 400,
+              }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
             >
-              <Input size="large" placeholder="Tên đăng nhập" />
-            </Form.Item>
-
-            <Form.Item
-              name="password"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your password!",
-                },
-              ]}
-            >
-              <Input.Password size="large" placeholder="Mật khẩu" />
-            </Form.Item>
-
-            <Form.Item>
-              <Button
-                size="large"
-                type="primary"
-                htmlType="submit"
-                block
-                loading={loading}
+              <Form.Item
+                name="username"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your username!",
+                  },
+                ]}
               >
-                Đăng nhập
-              </Button>
-            </Form.Item>
-          </Form>
-        </Row>
-      </Space>
-    </FormLayout>
+                <Input size="large" placeholder="Tên đăng nhập" />
+              </Form.Item>
+
+              <Form.Item
+                name="password"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your password!",
+                  },
+                ]}
+              >
+                <Input.Password size="large" placeholder="Mật khẩu" />
+              </Form.Item>
+
+              <Form.Item>
+                <Button
+                  size="large"
+                  type="primary"
+                  htmlType="submit"
+                  block
+                  loading={loading}
+                >
+                  Đăng nhập
+                </Button>
+              </Form.Item>
+            </Form>
+          </Row>
+        </Space>
+      </Content>
+      <Footer />
+    </Layout>
   );
 }
 

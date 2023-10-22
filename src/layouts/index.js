@@ -1,3 +1,5 @@
-import FormLayout from "./FormLayout";
+import Content from "./Content";
+import Footer from "./Footer";
+import Header from "./Header";
 
-export { FormLayout };
+export { Content, Header, Footer };
