@@ -1,13 +1,14 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import React, { useReducer, createContext } from "react";
-import { reducer, initialState } from "./reducer";
 import { loginAuthenSevice, logout, checkAuthenSevice } from "./actions";
+import initState from "./initState";
+import reducer from "./reducer";
 
 const AppContext = createContext();
 
-const AppProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+export const AppProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initState);
 
   const actions = {
     logout: async (params) => dispatch(await logout(params)),
@@ -24,4 +25,4 @@ const AppProvider = ({ children }) => {
   );
 };
 
-export default AppProvider;
+export default AppContext;
