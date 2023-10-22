@@ -7,6 +7,7 @@ const initState = {
   auth: {
     isLogin: getIsLogin(),
   },
+  mess: null,
 };
 
 export default initState;

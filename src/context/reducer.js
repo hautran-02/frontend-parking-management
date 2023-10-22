@@ -3,7 +3,13 @@ const reducer = (state, action) => {
     case "auth": {
       return {
         ...state,
-        auth: JSON.parse(JSON.stringify(action.payload)),
+        auth: action.payload,
+      };
+    }
+    case "mess": {
+      return {
+        ...state,
+        mess: action.payload,
       };
     }
     default:
