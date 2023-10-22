@@ -1,34 +1,55 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "~/App.css";
+import { useContext, useEffect, useState } from "react";
+import Authen from "./pages/Authen";
+import { Navigate, Route, Routes } from "react-router-dom";
+import Main from "./pages/Main";
+import AppContext from "./context";
+import { ConfigProvider, message } from "antd";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+function Auth({ children }) {
+  const { state } = useContext(AppContext);
+  const { auth } = state;
+  console.log(auth);
+  if (auth.isLogin) {
+    return children;
+  }
+
+  return <Navigate to={"/auth/login"} />;
+}
 
 function App() {
-  const [count, setCount] = useState(0);
+  //Message Function
+  const { state } = useContext(AppContext);
+  const { mess } = state;
+  const [ messageApi, contextHolder ] = message.useMessage();
+
+  useEffect(() => {
+    if (mess) {
+      const { type, content } = mess;
+      messageApi.open({
+        type,
+        content,
+      });
+    }
+  }, [mess]);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <ConfigProvider>
+      <div className="app">
+        {contextHolder}
+        <Routes>
+          <Route path="/auth/login" element={<Authen />} />
+          <Route
+            path="/*"
+            element={
+              <Auth>
+                <Main />
+              </Auth>
+            }
+          />
+        </Routes>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </ConfigProvider>
   );
 }
 
