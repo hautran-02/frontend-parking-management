@@ -1,31 +1,78 @@
 import Cookies from "js-cookie";
 import { AccountApi } from "../api";
 
-export const loginAuthenSevice = async ({ acc, onError }) => {
+export const onLogin = async (params) => {
+  let isLogin = false;
+  let type = "error";
+  let content = "";
+  let info = {};
+  const { username, password, onComplete } = params;
+  // try {
+  //   let { result } = await AccountApi.login(acc);
+  //   let name = result.name || result.email.split("@")[0];
+  //   let account_data = {
+  //     homepage: "/",
+  //     profile: {
+  //       id: result._id,
+  //       fullName: name,
+  //       email: result.email,
+  //     },
+  //   };
+  //   let data = { ...account_data, isLogin: true };
+  //   Cookies.set("access_token", result.token);
+  //   return {
+  //     type: "auth",
+  //     payload: data,
+  //   };
+  // } catch (error) {
+  //   onError({ error: error.data || error });
+  const callApi = () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        if (username === "root" && password == "123") {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      }, 500);
+    });
+  };
+
   try {
-    let { result } = await AccountApi.login(acc);
-    let name = result.name || result.email.split("@")[0];
-    let account_data = {
-      homepage: "/",
-      profile: {
-        id: result._id,
-        fullName: name,
-        email: result.email,
-      },
-    };
-    let data = { ...account_data, isLogin: true };
-    Cookies.set("access_token", result.token);
-    return {
-      type: "auth",
-      payload: data,
-    };
+    const rs = await callApi();
+    if (rs) {
+      isLogin = true;
+      info = {
+        username,
+        password,
+      };
+      type = "success";
+      content = "Đăng nhập thành công";
+
+      localStorage.setItem(
+        "auth",
+        JSON.stringify({
+          isLogin,
+          info,
+        })
+      );
+    } else {
+      content = "Tên đăng nhập hoặc mật khẩu không đúng";
+    }
   } catch (error) {
-    onError({ error: error.data || error });
-    return {
-      type: "auth",
-      payload: { isLogin: false },
-    };
+    content = "Login Error";
+  } finally {
+    onComplete(type, content);
   }
+
+  return {
+    type: "auth",
+    payload: {
+      isLogin,
+      info,
+    },
+  };
+  // }
 };
 
 export const checkAuthenSevice = async ({
@@ -71,5 +118,12 @@ export const logout = async () => {
   return {
     type: "auth",
     payload: { isLogin: false },
+  };
+};
+
+export const onMess = (payload) => {
+  return {
+    type: "mess",
+    payload,
   };
 };
