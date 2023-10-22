@@ -1,18 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
-    ::-webkit-scrollbar-track
-    {
-        background: rgba(0,0,0,.2);
-    }
-
-    ::-webkit-scrollbar
-    {
-        width: 5px;
-        height: 5px;
-        background: rgba(0,0,0,.2);
-    }
-
     * {
         margin: 0;
         padding: 0;
@@ -41,4 +29,5 @@ export default createGlobalStyle`
     .ant-image-img {
         background: #fff;
     }
+
 `;

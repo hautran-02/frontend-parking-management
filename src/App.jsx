@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Main from "./pages/Main";
 import AppContext from "./context";
 import { ConfigProvider } from "antd";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Auth({ children }) {
   const { state } = useContext(AppContext);
