@@ -10,7 +10,6 @@ import customAntdTheme from "./shared/CustomAntdTheme";
 function Auth({ children }) {
   const { state } = useContext(AppContext);
   const { auth } = state;
-  console.log(auth);
   if (auth.isLogin) {
     return children;
   }

@@ -10,7 +10,6 @@ function Main({}) {
     token: { colorBgContainer },
   } = theme.useToken();
 
-  console.log(theme);
   return (
     <Layout className="vh-100">
       <Header />
