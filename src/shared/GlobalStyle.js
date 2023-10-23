@@ -26,4 +26,8 @@ export default createGlobalStyle`
         object-fit: contain;
     }
 
+    .border-none: {
+        border: none;
+    }
+
 `;

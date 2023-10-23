@@ -17,7 +17,7 @@ const MENU_ITEMS = [
 
 function Sider({...props}) {
   return (
-    <Layout.Sider {...props} width={200}>
+    <Layout.Sider {...props} width={200} className="py-4">
       <Menu
         defaultSelectedKeys={["home"]}
         items={MENU_ITEMS}
