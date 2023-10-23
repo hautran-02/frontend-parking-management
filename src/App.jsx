@@ -5,6 +5,7 @@ import Main from "./pages/Main";
 import AppContext from "./context";
 import { ConfigProvider, message } from "antd";
 import "bootstrap/dist/css/bootstrap.min.css";
+import customAntdTheme from "./shared/CustomAntdTheme";
 
 function Auth({ children }) {
   const { state } = useContext(AppContext);
@@ -21,7 +22,7 @@ function App() {
   //Message Function
   const { state } = useContext(AppContext);
   const { mess } = state;
-  const [ messageApi, contextHolder ] = message.useMessage();
+  const [messageApi, contextHolder] = message.useMessage();
 
   useEffect(() => {
     if (mess) {
