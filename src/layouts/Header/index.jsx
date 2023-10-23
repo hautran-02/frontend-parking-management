@@ -36,7 +36,6 @@ function Header({}) {
       className="px-4 py-2"
     >
       <Flex justify="space-between" className="w-100">
-        <Image id="logo" src={FULL_LOGO} preview={false} width={240} />
         <Space>
           <Space id="profileUser">
             <Avatar src={DEFAULT_AVATAR} size={40} />
