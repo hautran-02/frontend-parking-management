@@ -13,18 +13,12 @@ function Main({}) {
   return (
     <Layout className="vh-100">
       <Sider style={{ background: colorBgContainer }} />
-      <Layout>
-        <Header />
-        <Content className="w-100 px-4 py-3">
-          <Routes>
-            <Route path="*" element={<Navigate to="/dashboard" />} />
-            <Route path="/dashboard" element={<Home />} />
-            <Route path="/map" element={<Map />} />
-            {/* <Route path="/kpi" element={<Kpi {...auth} />} /> */}
-          </Routes>
-        </Content>
-        <Footer />
-      </Layout>
+      <Routes>
+        <Route path="*" element={<Navigate to="/dashboard" />} />
+        <Route path="/dashboard" element={<Home />} />
+        <Route path="/map" element={<Map />} />
+        {/* <Route path="/kpi" element={<Kpi {...auth} />} /> */}
+      </Routes>
     </Layout>
   );
 }

@@ -30,4 +30,8 @@ export default createGlobalStyle`
         border: none;
     }
 
+    .border-1 {
+        border-radius: 8px;
+    }
+
 `;

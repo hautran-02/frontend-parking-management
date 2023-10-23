@@ -19,12 +19,12 @@ const MENU_ITEMS = [
 function Sider({ ...props }) {
   return (
     <Layout.Sider {...props} width={200} className="py-4">
-      <Flex vertical>
-        <Flex vertical className="px-2" align="center">
+      <Flex vertical className="h-100">
+        <Flex vertical className="px-2 mt-1" justify="space-between" align="center">
           <Image src={LOGO} width={40} />
           <Typography.Title level={4} className="text-center">Parking Management</Typography.Title>
         </Flex>
-        <Menu defaultSelectedKeys={["home"]} items={MENU_ITEMS} />
+        <Menu className="mt-5" defaultSelectedKeys={["home"]} items={MENU_ITEMS} />
       </Flex>
     </Layout.Sider>
   );
