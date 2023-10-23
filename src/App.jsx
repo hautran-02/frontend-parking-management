@@ -34,22 +34,20 @@ function App() {
   }, [mess]);
 
   return (
-    <ConfigProvider>
-      <div className="app">
-        {contextHolder}
-        <Routes>
-          <Route path="/auth/login" element={<Authen />} />
-          <Route
-            path="/*"
-            element={
-              <Auth>
-                <Main />
-              </Auth>
-            }
-          />
-        </Routes>
-      </div>
-    </ConfigProvider>
+    <div className="app">
+      {contextHolder}
+      <Routes>
+        <Route path="/auth/login" element={<Authen />} />
+        <Route
+          path="/*"
+          element={
+            <Auth>
+              <Main />
+            </Auth>
+          }
+        />
+      </Routes>
+    </div>
   );
 }
 
