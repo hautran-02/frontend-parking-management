@@ -42,7 +42,7 @@ function Home({}) {
   return (
     <Layout className="px-4">
       <Header className="border-1" title={"Dashboard"} />
-      <Content className="w-100 px-4 py-3">
+      <Content className="w-100 py-3">
         <Row id="dashboard-block" gutter={16}>
           <Col className="gutter-row" span={16}>
             <TileLayout
