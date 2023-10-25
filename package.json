@@ -18,6 +18,7 @@
     "@progress/kendo-react-layout": "5.9.0",
     "@progress/kendo-react-progressbars": "5.9.0",
     "@progress/kendo-react-taskboard": "5.13.1",
+    "@progress/kendo-theme-default": "7.0.1",
     "@types/node": "^20.8.7",
     "antd": "^5.10.2",
     "axios": "^1.5.1",

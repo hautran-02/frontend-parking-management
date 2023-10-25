@@ -641,6 +641,32 @@
     "@progress/kendo-react-common" "5.13.1"
     prop-types "^15.6.0"
 
+"@progress/kendo-svg-icons@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-svg-icons/-/kendo-svg-icons-2.0.0.tgz#b604628f3c39db8e6a88679c00e7b4088e593e2b"
+  integrity sha512-0eXDk+lgjg6r2TIUBp383sqKQbQZido0S/KnrF3ZEqxJ+rO10K6WSphFINmk0BKqneAaA94RVwPsMb5yOY/PbA==
+
+"@progress/kendo-theme-core@7.0.1":
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-theme-core/-/kendo-theme-core-7.0.1.tgz#403d180ccb2ad589e703c9aaf9b5176f6e30aa49"
+  integrity sha512-nBuMZnp3RcMARM7W+3yGZH3NPYtJcQ+Y7LNldZJ/0zTx4rSI/9Lu85f15rpbvz0xoTt2Ow7/Y+OK9kzNUyb+2A==
+
+"@progress/kendo-theme-default@7.0.1":
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-theme-default/-/kendo-theme-default-7.0.1.tgz#365ebcde19c90cc96c553cf033ed661b05e3a12f"
+  integrity sha512-7sjr66V4e+bKzwrNpPwRl5+0bXr02RCAAcs1Jy0yfPMDkfqOhap0TEfvHg1TnvO6Jh1XZKeGSvUedv+l/sHzQw==
+  dependencies:
+    "@progress/kendo-svg-icons" "2.0.0"
+    "@progress/kendo-theme-core" "7.0.1"
+    "@progress/kendo-theme-utils" "7.0.1"
+
+"@progress/kendo-theme-utils@7.0.1":
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-theme-utils/-/kendo-theme-utils-7.0.1.tgz#f3a4915b85be3b6eb76565ab581ac773a1d19fb1"
+  integrity sha512-5CxA4sVx4QPOYS5jl7yKvcGJIHTg1W4u+mzxFvyoK6nDDQeIvn+6WT4pDqnrSEehDOqT70LTuvwyqkYruYhMiA==
+  dependencies:
+    "@progress/kendo-theme-core" "7.0.1"
+
 "@rc-component/color-picker@~1.4.1":
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/@rc-component/color-picker/-/color-picker-1.4.1.tgz#dcab0b660e9c4ed63a7582db68ed4a77c862cb93"

@@ -4,8 +4,9 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Main from "./pages/Main";
 import AppContext from "./context";
 import { ConfigProvider, message } from "antd";
-import "bootstrap/dist/css/bootstrap.min.css";
 import customAntdTheme from "./shared/CustomAntdTheme";
+import "bootstrap/dist/css/bootstrap.min.css";
+import '@progress/kendo-theme-default/dist/all.css';
 
 function Auth({ children }) {
   const { state } = useContext(AppContext);
