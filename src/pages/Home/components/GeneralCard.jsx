@@ -1,9 +1,10 @@
 import { Gauge } from "@ant-design/plots";
-import { Card, Space, theme } from "antd";
+import { Card, Space, Tag, Typography, theme } from "antd";
 import React from "react";
 import CardBlock from "~/components/CardBlock";
+import CustomedTag from "~/components/CustomedTag";
 
-function GeneralCard({}) {
+function GeneralCard({ entity = "A" }) {
   const { token } = theme.useToken();
 
   console.log(token);
@@ -84,8 +85,16 @@ function GeneralCard({}) {
       shadowOffsetY: 5,
     },
   };
+
   return (
-    <Card title={"Khu A"} className="card-main">
+    <Card
+      title={
+        <CustomedTag bordered={false} entity={entity} entityType={"zone"}>
+          Khu A
+        </CustomedTag>
+      }
+      className="card-main"
+    >
       <CardBlock>
         <div className="py-4">
           <Gauge {...config} />
