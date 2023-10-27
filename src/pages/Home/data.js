@@ -24,3 +24,20 @@ export const DefaultPosition = [
     rowSpan: 14,
   },
 ];
+
+export const DefaultNumberStatisChart = () => {
+  let rs = [];
+  const zones = ["A", "B", "C"];
+
+  for(let i = 0; i < 7; i++) {
+    zones.map(zone => {
+      rs.push({
+        zone,
+        value: Math.random() * 100,
+        date: `0${i}/12/2023`,
+      })
+    })
+  }
+
+  return rs;
+}

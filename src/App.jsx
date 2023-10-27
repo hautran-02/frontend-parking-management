@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from "react";
-import Authen from "./pages/Authen";
-import { Navigate, Route, Routes } from "react-router-dom";
-import Main from "./pages/Main";
-import AppContext from "./context";
-import { ConfigProvider, message } from "antd";
-import customAntdTheme from "./shared/CustomAntdTheme";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { useContext, useEffect, useState } from 'react';
+import Authen from './pages/Authen';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import Main from './pages/Main';
+import AppContext from './context';
+import { ConfigProvider, message } from 'antd';
+import customAntdTheme from './shared/CustomAntdTheme';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '@progress/kendo-theme-default/dist/all.css';
 
 function Auth({ children }) {
@@ -15,7 +15,7 @@ function Auth({ children }) {
     return children;
   }
 
-  return <Navigate to={"/auth/login"} />;
+  return <Navigate to={'/auth/login'} />;
 }
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
       const { type, content } = mess;
       messageApi.open({
         type,
-        content,
+        content
       });
     }
   }, [mess]);
