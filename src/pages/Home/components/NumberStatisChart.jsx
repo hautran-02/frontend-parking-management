@@ -7,6 +7,7 @@ import { ChartService } from '~/services';
 
 function NumberStatisChart({}) {
   const [data, setData] = useState([]);
+  const unit = 'xe';
 
   console.log(data);
 
@@ -18,6 +19,29 @@ function NumberStatisChart({}) {
     yField: 'value',
     seriesField: 'zone',
     isGroup: true,
+    legend: {
+      position: 'top',
+      itemName: {
+        formatter: (text) => {
+          return 'Khu ' + text;
+        }
+      }
+    },
+    tooltip: {
+      title: (e) => {
+        return  e;
+      },
+      customItems: (originalItems) => {
+        let rs = originalItems.map((org) => {
+          return {
+            ...org,
+            name: 'Khu ' + org.name,
+            value: Number(org.value).toFixed(2) + ' ' + unit
+          };
+        });
+        return rs;
+      }
+    }
   };
 
   useEffect(() => {
@@ -30,7 +54,7 @@ function NumberStatisChart({}) {
       extra={
         <Space>
           <Typography.Text>Chọn khoảng thời gian</Typography.Text>
-          <DatePicker.RangePicker size="small" />
+          <DatePicker.RangePicker />
         </Space>
       }
       className="card-main">
