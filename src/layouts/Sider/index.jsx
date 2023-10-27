@@ -1,5 +1,5 @@
 import { CarOutlined, LineChartOutlined } from "@ant-design/icons";
-import { Flex, Image, Layout, Menu, Typography } from "antd";
+import { Flex, Image, Layout, Menu, Typography, theme } from "antd";
 import React from "react";
 import LOGO from "~/assets/logo/main.svg";
 
@@ -17,14 +17,26 @@ const MENU_ITEMS = [
 ];
 
 function Sider({ ...props }) {
+  const { token } = theme.useToken();
   return (
     <Layout.Sider {...props} width={200} className="py-4">
       <Flex vertical className="h-100">
-        <Flex vertical className="px-2 mt-1" justify="space-between" align="center">
+        <Flex
+          vertical
+          className="px-2 mt-1"
+          justify="space-between"
+          align="center"
+        >
           <Image src={LOGO} width={40} />
-          <Typography.Title level={4} className="text-center">Parking Management</Typography.Title>
+          <Typography.Title level={4} className="text-center" style={{color: token.colorPrimary}}>
+            Parking Management
+          </Typography.Title>
         </Flex>
-        <Menu className="mt-5" defaultSelectedKeys={["home"]} items={MENU_ITEMS} />
+        <Menu
+          className="mt-5"
+          defaultSelectedKeys={["home"]}
+          items={MENU_ITEMS}
+        />
       </Flex>
     </Layout.Sider>
   );
