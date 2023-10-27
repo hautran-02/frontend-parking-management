@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { PageHeader } from "~/components";
 import { Content, Footer, Header } from "~/layouts";
 import { DefaultPosition } from "./data";
-import { GeneralCard } from "./components";
+import { GeneralCard, NumberStatisChart } from "./components";
 
 const dynamicBlock = {
   resizable: false,
@@ -28,6 +28,10 @@ function Home({}) {
       },
       {
         body: <GeneralCard />,
+        ...dynamicBlock,
+      },
+      {
+        body: <NumberStatisChart />,
         ...dynamicBlock,
       },
     ];

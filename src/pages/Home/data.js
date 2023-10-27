@@ -17,4 +17,10 @@ export const DefaultPosition = [
     colSpan: 4,
     rowSpan: 14,
   },
+  {
+    order: 4,
+    col: 1,
+    colSpan: 12,
+    rowSpan: 14,
+  },
 ];

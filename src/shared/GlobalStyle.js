@@ -35,6 +35,7 @@ export default createGlobalStyle`
     }
 
     .k-card {
+        border-radius: 8px;
         &.hide-header {
             .k-card-header {
                 display: none;
