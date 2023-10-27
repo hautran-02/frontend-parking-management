@@ -1,4 +1,4 @@
-import { Card, Typography } from "antd";
+import { Card, DatePicker, Space, Typography } from "antd";
 import React from "react";
 import CardBlock from "~/components/CardBlock";
 
@@ -10,12 +10,16 @@ function NumberStatisChart({}) {
           Biểu đồ thống kê số lượng xe
         </Typography.Title>
       }
+      extra={
+        <Space>
+          <Typography.Text>Chọn khoảng thời gian</Typography.Text>
+          <DatePicker.RangePicker size="small" showTime />
+        </Space>
+      }
       className="card-main"
     >
       <CardBlock>
-        <div className="py-4">
-            
-        </div>
+        <div className="py-4"></div>
       </CardBlock>
     </Card>
   );
