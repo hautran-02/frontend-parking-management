@@ -96,7 +96,7 @@ function GeneralCard({ entity = "A" }) {
       className="card-main"
     >
       <CardBlock>
-        <div className="py-4">
+        <div className="py-1">
           <Gauge {...config} />
         </div>
       </CardBlock>

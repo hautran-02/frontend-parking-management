@@ -4,15 +4,16 @@ import React, { useEffect, useState } from 'react';
 import CardBlock from '~/components/CardBlock';
 import { DefaultNumberStatisChart } from '../data';
 import { ChartService } from '~/services';
+import dayjs from 'dayjs';
 
 function NumberStatisChart({}) {
   const [data, setData] = useState([]);
+  const [dates, setDates] = useState([dayjs().startOf('week'), dayjs().endOf('week')]);
+  const defaultConfig = ChartService.defaultConfig;
   const unit = 'xe';
 
-  console.log(data);
-
   const config = {
-    ...ChartService.defaultConfig,
+    ...defaultConfig,
     height: 200,
     data,
     xField: 'date',
@@ -29,7 +30,7 @@ function NumberStatisChart({}) {
     },
     tooltip: {
       title: (e) => {
-        return  e;
+        return e;
       },
       customItems: (originalItems) => {
         let rs = originalItems.map((org) => {
@@ -44,17 +45,29 @@ function NumberStatisChart({}) {
     }
   };
 
+  const onChangeDate = (dates, dateStrings) => {
+    setDates(dates)
+  };
+
   useEffect(() => {
     setData(DefaultNumberStatisChart());
-  }, []);
+  }, [dates]);
 
   return (
     <Card
       title={<Typography.Title level={4}>Biểu đồ thống kê số lượng xe</Typography.Title>}
       extra={
         <Space>
-          <Typography.Text>Chọn khoảng thời gian</Typography.Text>
-          <DatePicker.RangePicker />
+          <Typography.Text>Thời gian:</Typography.Text>
+          <DatePicker.RangePicker
+            onChange={onChangeDate}
+            format={'DD/MM/YYYY'}
+            value={dates}
+            bordered={false}
+            allowClear={false}
+            suffixIcon={false}
+            style={{width: 220}}
+          />
         </Space>
       }
       className="card-main">

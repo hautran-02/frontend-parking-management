@@ -7,6 +7,8 @@ import { ConfigProvider, message } from 'antd';
 import customAntdTheme from './shared/CustomAntdTheme';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@progress/kendo-theme-default/dist/all.css';
+import { dayjsSetup } from './config';
+import dayjs from 'dayjs';
 
 function Auth({ children }) {
   const { state } = useContext(AppContext);
@@ -24,6 +26,8 @@ function App() {
   const { mess } = state;
   const [messageApi, contextHolder] = message.useMessage();
 
+  dayjsSetup();
+
   useEffect(() => {
     if (mess) {
       const { type, content } = mess;
@@ -33,6 +37,8 @@ function App() {
       });
     }
   }, [mess]);
+
+  console.log(dayjs().format("L"));
 
   return (
     <div className="app">
