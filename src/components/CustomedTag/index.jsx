@@ -30,8 +30,8 @@ function CustomedTag({
         backgroundColor = token["purple2"];
         break;
       case "B":
-        color = token["mageta"];
-        backgroundColor = token["mageta2"];
+        color = token["magenta"];
+        backgroundColor = token["magenta2"];
         break;
       case "C":
         color = token["orange7"];

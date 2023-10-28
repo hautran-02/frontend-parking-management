@@ -5,6 +5,7 @@ import { PageHeader } from "~/components";
 import { Content, Footer, Header } from "~/layouts";
 import { DefaultPosition } from "./data";
 import { GeneralCard, NumberStatisChart } from "./components";
+import RevenueChart from "./components/RevenueChart";
 
 const dynamicBlock = {
   resizable: false,
@@ -32,6 +33,10 @@ function Home({}) {
       },
       {
         body: <NumberStatisChart />,
+        ...dynamicBlock,
+      },
+      {
+        body: <RevenueChart />,
         ...dynamicBlock,
       },
     ];

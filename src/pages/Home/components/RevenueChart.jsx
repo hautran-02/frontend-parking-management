@@ -1,4 +1,4 @@
-import { Column } from '@ant-design/plots';
+import { Column, Line } from '@ant-design/plots';
 import { Card, DatePicker, Space, Typography, theme } from 'antd';
 import React, { useEffect, useState } from 'react';
 import CardBlock from '~/components/CardBlock';
@@ -6,13 +6,14 @@ import { DefaultNumberStatisChart } from '../data';
 import { ChartService } from '~/services';
 import dayjs from 'dayjs';
 
-function NumberStatisChart({}) {
+function RevenueChart({}) {
   const [data, setData] = useState([]);
   const [dates, setDates] = useState([dayjs().startOf('week'), dayjs().endOf('week')]);
   const defaultConfig = ChartService.defaultConfig;
-  const unit = 'xe';
   const { token } = theme.useToken();
   const color = [token["purple"], token["magenta"], token["orange2"]];
+  const unit = 'xe';
+  console.log(color);
 
   const config = {
     ...defaultConfig,
@@ -23,7 +24,6 @@ function NumberStatisChart({}) {
     seriesField: 'zone',
     colorField: 'zone',
     color,
-    isGroup: true,
     legend: {
       position: 'top',
       itemName: {
@@ -50,7 +50,7 @@ function NumberStatisChart({}) {
   };
 
   const onChangeDate = (dates, dateStrings) => {
-    setDates(dates)
+    setDates(dates);
   };
 
   useEffect(() => {
@@ -59,7 +59,7 @@ function NumberStatisChart({}) {
 
   return (
     <Card
-      title={<Typography.Title level={4}>Biểu đồ thống kê số lượng xe</Typography.Title>}
+      title={<Typography.Title level={4}>Biểu đồ thống kê doanh thu theo ngày</Typography.Title>}
       extra={
         <Space>
           <Typography.Text>Thời gian:</Typography.Text>
@@ -70,18 +70,18 @@ function NumberStatisChart({}) {
             bordered={false}
             allowClear={false}
             suffixIcon={false}
-            style={{width: 220}}
+            style={{ width: 220 }}
           />
         </Space>
       }
       className="card-main">
       <CardBlock>
         <div className="px-4">
-          <Column {...config} />
+          <Line {...config} />
         </div>
       </CardBlock>
     </Card>
   );
 }
 
-export default NumberStatisChart;
+export default RevenueChart;
