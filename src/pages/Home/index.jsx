@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { PageHeader } from "~/components";
 import { Content, Footer, Header } from "~/layouts";
 import { DefaultPosition } from "./data";
-import { GeneralCard, NumberStatisChart } from "./components";
+import { EventBlock, GeneralCard, NumberStatisChart } from "./components";
 import RevenueChart from "./components/RevenueChart";
 
 const dynamicBlock = {
@@ -69,7 +69,7 @@ function Home({}) {
             />
           </Col>
           <Col className="gutter-row" span={8}>
-            Col2
+            <EventBlock/>
           </Col>
         </Row>
       </Content>
