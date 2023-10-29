@@ -13,7 +13,6 @@ function RevenueChart({}) {
   const { token } = theme.useToken();
   const color = [token["purple"], token["magenta"], token["orange2"]];
   const unit = 'xe';
-  console.log(color);
 
   const config = {
     ...defaultConfig,
@@ -22,8 +21,6 @@ function RevenueChart({}) {
     xField: 'date',
     yField: 'value',
     seriesField: 'zone',
-    colorField: 'zone',
-    color,
     legend: {
       position: 'top',
       itemName: {

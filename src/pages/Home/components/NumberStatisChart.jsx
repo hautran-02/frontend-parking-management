@@ -21,8 +21,6 @@ function NumberStatisChart({}) {
     xField: 'date',
     yField: 'value',
     seriesField: 'zone',
-    colorField: 'zone',
-    color,
     isGroup: true,
     legend: {
       position: 'top',
