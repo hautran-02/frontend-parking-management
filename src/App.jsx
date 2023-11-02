@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import Authen from './pages/Authen';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import Main from './pages/Main';
 import AppContext from './context';
 import { ConfigProvider, message } from 'antd';
@@ -13,6 +13,7 @@ import dayjs from 'dayjs';
 function Auth({ children }) {
   const { state } = useContext(AppContext);
   const { auth } = state;
+
   if (auth.isLogin) {
     return children;
   }
@@ -37,8 +38,6 @@ function App() {
       });
     }
   }, [mess]);
-
-  console.log(dayjs().format("L"));
 
   return (
     <div className="app">
