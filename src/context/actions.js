@@ -104,16 +104,7 @@ export const checkAuthenSevice = async ({
 export const logout = async () => {
   localStorage.removeItem("isLogin");
   Cookies.remove("access_token");
-
-  //backup:
-  // pinedEvents
-  const pinKey = "pinedEvents";
-  const backup = localStorage.getItem(pinKey);
   localStorage.clear();
-
-  if (backup !== null) {
-    localStorage.setItem(pinKey, backup);
-  }
 
   return {
     type: "auth",
