@@ -29,11 +29,13 @@ function Authen({}) {
     console.log("Failed:", errorInfo);
   };
 
+  
   useEffect(() => {
     if (auth.isLogin) {
-      navigate("/");
+      navigate('/');
     }
   }, [auth]);
+
 
   return (
     <Layout className="vh-100">

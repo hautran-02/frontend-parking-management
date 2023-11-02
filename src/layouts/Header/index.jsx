@@ -12,17 +12,23 @@ function Header({ title }) {
     token: { colorBgContainer }
   } = theme.useToken();
   const { state, actions } = useContext(AppContext);
+  const { auth } = state;
   const navigate = useNavigate();
 
-  const hanldeClickProfile = ({ item, key, keyPath, selectedKeys, domEvent }) => {
+  const hanldeLogout = async () => {
+    actions.logout();
+    navigate('/auth/login');
+  };
+
+  const hanldeClickProfile = ({ key }) => {
     if (key === 'logout') {
-      actions.logout();
+      hanldeLogout();
     }
   };
 
   useEffect(() => {
-    if (!state.auth.isLogin) {
-      navigate('/');
+    if(!state.auth.isLogin) {
+      navigate("/auth/login");
     }
   }, [state.auth]);
 
