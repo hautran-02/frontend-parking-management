@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Header({ title }) {
   const {
-    token: { colorBgContainer }
+    token: { colorBgContainer, colorPrimary }
   } = theme.useToken();
   const { state, actions } = useContext(AppContext);
   const { auth } = state;
@@ -27,8 +27,8 @@ function Header({ title }) {
   };
 
   useEffect(() => {
-    if(!state.auth.isLogin) {
-      navigate("/auth/login");
+    if (!state.auth.isLogin) {
+      navigate('/auth/login');
     }
   }, [state.auth]);
 
@@ -47,7 +47,7 @@ function Header({ title }) {
       }}
       className="px-4 py-2 border-1">
       <Flex justify="space-between" className="w-100">
-        <Typography.Title level={4} style={{ margin: 'auto 0' }}>
+        <Typography.Title level={4} style={{ margin: 'auto 0', color: colorPrimary }}>
           {title}
         </Typography.Title>
         <Space>
