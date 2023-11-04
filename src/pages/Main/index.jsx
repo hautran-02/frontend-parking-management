@@ -2,8 +2,8 @@ import React from "react";
 import { Layout, theme } from "antd";
 import { Content, Footer, Header, Sider } from "~/layouts";
 import { Navigate, Route, Routes } from "react-router-dom";
-import Home from "../Home";
-import Map from "../Map";
+import Home from "./Home";
+import Map from "./Map";
 
 function Main({}) {
   const {
