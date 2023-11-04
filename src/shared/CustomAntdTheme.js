@@ -14,6 +14,7 @@ export default createGlobalStyle`
             }
 
             .ant-menu-title-content {
+                margin-inline-start: 0 !important;
                 font-weight: 600;
                 font-size: 1.2rem;
             }
