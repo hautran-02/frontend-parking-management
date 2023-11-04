@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@progress/kendo-theme-default/dist/all.css';
 import { dayjsSetup } from './config';
 import dayjs from 'dayjs';
+import PageError from './pages/PageError';
 
 function Auth({ children }) {
   const { state } = useContext(AppContext);
@@ -26,6 +27,7 @@ function App() {
   const { state } = useContext(AppContext);
   const { mess } = state;
   const [messageApi, contextHolder] = message.useMessage();
+  const navigate = useNavigate();
 
   dayjsSetup();
 
@@ -50,6 +52,14 @@ function App() {
             <Auth>
               <Main />
             </Auth>
+          }
+          errorElement={
+            <PageError
+              status="500"
+              title={false}
+              subTitle="Không tìm thấy trang"
+              btn={{ text: 'Về trang chủ', onClick: () => <Navigate to={'/dashboard'} /> }}
+            />
           }
         />
       </Routes>

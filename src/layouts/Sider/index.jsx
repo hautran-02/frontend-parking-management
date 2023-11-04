@@ -1,41 +1,53 @@
-import { CarOutlined, LineChartOutlined } from "@ant-design/icons";
-import { Flex, Image, Layout, Menu, Typography, theme } from "antd";
-import React from "react";
-import LOGO from "~/assets/logo/main.svg";
-
-const MENU_ITEMS = [
-  {
-    key: "home",
-    label: "Dashboard",
-    icon: <LineChartOutlined />,
-  },
-  {
-    key: "map",
-    label: "Bản đồ",
-    icon: <CarOutlined />,
-  },
-];
+import { CarOutlined, LineChartOutlined } from '@ant-design/icons';
+import { Flex, Image, Layout, Menu, Typography, theme } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import LOGO from '~/assets/logo/main.svg';
+import { publicRoutes } from '~/routes';
 
 function Sider({ ...props }) {
   const { token } = theme.useToken();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [current, setCurrent] = useState();
+
+  const handleChangePage = ({ item }) => {
+    navigate(item.props.path);
+    setCurrent({
+      ...current,
+      selectedKeys: item.props.path.split('/').filter(Boolean),
+      path: item.props.path
+    });
+  };
+
+  useEffect(() => {
+    if (location) {
+      if (location.pathname != current?.path) {
+        setCurrent({
+          selectedKeys: location.pathname.split('/').filter(Boolean),
+          openKeys: location.pathname.split('/').filter(Boolean),
+          path: location.pathname
+        });
+      }
+    }
+  }, [location]);
+
   return (
     <Layout.Sider {...props} width={200} className="py-4">
       <Flex vertical className="h-100">
-        <Flex
-          vertical
-          className="px-2 mt-1"
-          justify="space-between"
-          align="center"
-        >
+        <Flex vertical className="px-2 mt-1" justify="space-between" align="center">
           <Image src={LOGO} width={40} />
-          <Typography.Title level={4} className="text-center" style={{color: token.colorPrimary}}>
+          <Typography.Title level={4} className="text-center" style={{ color: token.colorPrimary }}>
             Parking Management
           </Typography.Title>
         </Flex>
         <Menu
+          id="menuSider"
           className="mt-5"
-          defaultSelectedKeys={["home"]}
-          items={MENU_ITEMS}
+          items={publicRoutes}
+          selectedKeys={current?.selectedKeys}
+          openKeys={current?.openKeys}
+          onSelect={handleChangePage}
         />
       </Flex>
     </Layout.Sider>

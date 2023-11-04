@@ -117,7 +117,7 @@ function GeneralCard({ zone = 'A' }) {
     <Card
       title={
         <CustomedTag bordered={false} entity={zone} entityType={'zone'}>
-          Khu A
+          {`Khu ${zone}`}
         </CustomedTag>
       }
       className="card-main">
