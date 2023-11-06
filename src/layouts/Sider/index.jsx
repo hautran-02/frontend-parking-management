@@ -34,7 +34,7 @@ function Sider({ ...props }) {
 
   return (
     <Layout.Sider {...props} width={200} className="py-4">
-      <Flex vertical className="h-100">
+      <Flex justify="space-between"  vertical className="h-100">
         <Flex vertical className="px-2 mt-1" justify="space-between" align="center">
           <Image src={LOGO} width={40} />
           <Typography.Title level={4} className="text-center" style={{ color: token.colorPrimary }}>
@@ -49,6 +49,9 @@ function Sider({ ...props }) {
           openKeys={current?.openKeys}
           onSelect={handleChangePage}
         />
+        <div className="container text-center">
+          <Typography.Text strong>{`Phiên bản ${import.meta.env.VITE_VERSION}`}</Typography.Text>
+        </div>
       </Flex>
     </Layout.Sider>
   );
