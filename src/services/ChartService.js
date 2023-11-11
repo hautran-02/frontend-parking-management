@@ -37,8 +37,26 @@ export default {
     }
   },
 
-  getMax: (data=[]) => {
+  getMax: (data = []) => {
     const rs = 1.1 * Math.max(data || [0]);
+    return rs;
+  },
+
+  generateRange: (start, end, unit, format = 'L') => {
+    let rs = [start.format(format)];
+    //unit = day || month || year || hour
+    if (dayjs.isDayjs(start)) {
+      start = start.format('YYYY-MM-DD');
+    }
+
+    // const len = end.diff(start, unit);
+    const len = end.diff(start, unit);
+    start = dayjs(start);
+
+    for (let i = 1; i <= len; i++) {
+      const e = start.add(i, unit);
+      rs.push(e.format(format));
+    }
     return rs;
   }
 };
