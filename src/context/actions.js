@@ -80,7 +80,7 @@ export const logout = async () => {
   };
 };
 
-export const onMess = (payload) => {
+export const onMess = async (payload) => {
   return {
     type: 'mess',
     payload

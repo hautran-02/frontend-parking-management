@@ -1,18 +1,21 @@
 import { Column } from '@ant-design/plots';
 import { Card, DatePicker, Space, Typography, theme } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import CardBlock from '~/components/CardBlock';
 import { DefaultNumberStatisChart } from '../data';
 import { ChartService } from '~/services';
 import dayjs from 'dayjs';
+import AppContext from '~/context';
+import { MonitorApi } from '~/api';
 
 function NumberStatisChart({}) {
+  const { state, actions } = useContext(AppContext);
   const [data, setData] = useState([]);
   const [dates, setDates] = useState([dayjs().startOf('week'), dayjs().endOf('week')]);
   const defaultConfig = ChartService.defaultConfig;
   const unit = 'xe';
   const { token } = theme.useToken();
-  const color = [token["purple"], token["magenta"], token["orange2"]];
+  const color = [token['purple'], token['magenta'], token['orange2']];
 
   const config = {
     ...defaultConfig,
@@ -48,11 +51,22 @@ function NumberStatisChart({}) {
   };
 
   const onChangeDate = (dates, dateStrings) => {
-    setDates(dates)
+    setDates(dates);
+  };
+
+  const callApi = async () => {
+    try {
+      let [startDate, endDate] = dates;
+      startDate = startDate.format('L');
+      endDate = endDate.format('L');
+      const api = await MonitorApi.getVehicleInOutNumber({ startDate, endDate });
+      console.log(api);
+    } catch {}
+    setData(DefaultNumberStatisChart());
   };
 
   useEffect(() => {
-    setData(DefaultNumberStatisChart());
+    callApi();
   }, [dates]);
 
   return (
@@ -63,12 +77,12 @@ function NumberStatisChart({}) {
           <Typography.Text>Thời gian:</Typography.Text>
           <DatePicker.RangePicker
             onChange={onChangeDate}
-            format={'DD/MM/YYYY'}
+            format={'L'}
             value={dates}
             bordered={false}
             allowClear={false}
             suffixIcon={false}
-            style={{width: 220}}
+            style={{ width: 220 }}
           />
         </Space>
       }
