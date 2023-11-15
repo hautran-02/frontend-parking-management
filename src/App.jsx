@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
-import Authen from './pages/Authen';
+import Authen from './views/pages/Authen';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
-import Main from './pages/Main';
+import Main from './views/pages/Main';
 import AppContext from './context';
 import { ConfigProvider, message } from 'antd';
 import customAntdTheme from './shared/CustomAntdTheme';
@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@progress/kendo-theme-default/dist/all.css';
 import { dayjsSetup } from './config';
 import dayjs from 'dayjs';
-import PageError from './pages/PageError';
+import PageError from './views/pages/PageError';
 
 function Auth({ children }) {
   const { state } = useContext(AppContext);
