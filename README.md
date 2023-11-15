@@ -22,6 +22,13 @@ yarn install
 yarn dev
 ```
 
+## Reference
+### Library
+[Ant Design](https://ant.design/)
+[Ant Design Charts](https://ant-design-charts.antgroup.com/en/)
+[Dayjs](https://day.js.org/)
+[KendoReact](https://www.telerik.com/kendo-react-ui/components/layout/)
+
 #### Developer team:
 - Trần Trung Hậu
 - Trần công Minh
