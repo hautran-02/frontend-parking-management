@@ -1,6 +1,6 @@
 import { CarOutlined, LineChartOutlined } from "@ant-design/icons";
-import Home from "~/pages/Main/Home";
-import Map from "~/pages/Main/Map";
+import Home from "~/views/pages/Main/Home";
+import Map from "~/views/pages/Main/Map";
 
 // Public routes
 const publicRoutes = [

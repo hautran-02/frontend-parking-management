@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export default {
   defaultConfig: {
     columnStyle: {

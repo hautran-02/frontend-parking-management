@@ -11,5 +11,13 @@ export default {
         zone
       }
     });
+  },
+
+  getVehicleInOutNumber: (payload) => {
+    const url = `${DOMAIN}/parkingTurn/Reports/GetVehicleInOutNumber`;
+    return GET({
+      url,
+      payload,
+    });
   }
 };
