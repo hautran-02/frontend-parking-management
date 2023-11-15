@@ -1,4 +1,5 @@
-import { CarOutlined, LineChartOutlined } from "@ant-design/icons";
+import { CarOutlined, LineChartOutlined, UserOutlined } from "@ant-design/icons";
+import Driver from "~/views/pages/Main/Driver";
 import Home from "~/views/pages/Main/Home";
 import Map from "~/views/pages/Main/Map";
 
@@ -17,6 +18,13 @@ const publicRoutes = [
     path: "/map",
     element: <Map />,
     icon: <CarOutlined />
+  },
+  {
+    key: 'driver',
+    label: 'Quản lý chủ xe',
+    path: "/driver",
+    element: <Driver />,
+    icon: <UserOutlined />
   },
 ];
 
