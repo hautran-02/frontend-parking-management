@@ -43,4 +43,8 @@ export default createGlobalStyle`
             }
         }
     }
+
+    .ant-table {
+        border: 1px solid #f0f0f0;
+    }
 `;

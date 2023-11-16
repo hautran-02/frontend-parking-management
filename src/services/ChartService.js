@@ -8,6 +8,11 @@ export default {
     columnWidthRatio: 0.72,
     maxColumnWidth: 16,
     xAxis: {
+      title: {
+        style: {
+          fontWeight: 500,
+        }
+      },
       label: {
         autoRotate: true,
         autoEllipsis: false
@@ -37,6 +42,11 @@ export default {
         }
       }
     }
+  },
+
+  textStyle: {
+    fontWeight: 500,
+    fill: '#999'
   },
 
   getMax: (data = []) => {

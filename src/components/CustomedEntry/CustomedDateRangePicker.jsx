@@ -10,15 +10,17 @@ function CustomedDateRangePicker({ limit = [14, 'd'], ...restProps }) {
     const [start, end] = values;
     const { range } = info;
 
+    console.log('onCalendarChange', values, range);
     if (range === 'start') {
-      const rs = start.add(...limit);
       const newDisable = (current) => {
-        return current && current > rs;
+        return current && current > (start.add(14, "d") || curr > dayjs());
       };
+      console.log('rs', newDisable);
       setDisabledDate(newDisable);
     } else {
     }
   };
+
 
   return (
     <DatePicker.RangePicker

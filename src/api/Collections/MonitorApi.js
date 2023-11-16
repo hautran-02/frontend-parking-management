@@ -19,5 +19,12 @@ export default {
       url,
       payload,
     });
+  },
+
+  getAllDriver: () => {
+    const url = `${DOMAIN}/user/driver`;
+    return GET({
+      url,
+    });
   }
 };

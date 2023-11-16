@@ -11,8 +11,11 @@ function RevenueChart({}) {
   const [dates, setDates] = useState([dayjs().startOf('week'), dayjs().endOf('week')]);
   const defaultConfig = ChartService.defaultConfig;
   const { token } = theme.useToken();
-  const color = [token["purple"], token["magenta"], token["orange2"]];
-  const unit = 'xe';
+  const color = [token['purple'], token['magenta'], token['orange2']];
+  const unit = {
+    x: 'Ngày',
+    y: 'Triệu VNĐ'
+  };
 
   const config = {
     ...defaultConfig,
@@ -21,6 +24,12 @@ function RevenueChart({}) {
     xField: 'date',
     yField: 'value',
     seriesField: 'zone',
+    yAxis: {
+      title: {
+        text: unit.y,
+        style: ChartService.textStyle
+      }
+    },
     legend: {
       position: 'top',
       itemName: {
@@ -38,7 +47,7 @@ function RevenueChart({}) {
           return {
             ...org,
             name: 'Khu ' + org.name,
-            value: Number(org.value).toFixed(2) + ' ' + unit
+            value: Number(org.value).toFixed(2) + ' ' + unit.y
           };
         });
         return rs;

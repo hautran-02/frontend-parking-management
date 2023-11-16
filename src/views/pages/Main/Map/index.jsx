@@ -6,7 +6,9 @@ function Map({}) {
   return (
     <Layout className="px-4">
       <Header className="border-1" title={'Bản đồ'} />
-      <Content className="w-100 py-3"></Content>
+      <Content className="w-100 py-3">
+        
+      </Content>
       <Footer />
     </Layout>
   );

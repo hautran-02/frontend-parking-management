@@ -31,6 +31,12 @@ function NumberStatisChart({}) {
     yField: 'value',
     seriesField: 'zone',
     isGroup: true,
+    yAxis: {
+      title: {
+        text: unit.y,
+        style: ChartService.textStyle
+      }
+    },
     legend: {
       position: 'top',
       itemName: {
@@ -57,7 +63,6 @@ function NumberStatisChart({}) {
   };
 
   const onChangeDate = (dates, dateStrings) => {
-    console.log('data onChange');
     setDates(dates);
   };
 
@@ -92,7 +97,6 @@ function NumberStatisChart({}) {
         } else {
           zones.map((zone) => {
             value = defaultValue;
-
             newData.push({
               date,
               value,
@@ -120,9 +124,9 @@ function NumberStatisChart({}) {
         <Space>
           <Typography.Text>Thời gian:</Typography.Text>
           <CustomedDateRangePicker
+            defaultValue={dates}
             onChange={onChangeDate}
             format={'L'}
-            value={dates}
             bordered={false}
             allowClear={false}
             suffixIcon={false}

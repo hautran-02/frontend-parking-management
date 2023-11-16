@@ -8,12 +8,14 @@ import Driver from './Driver';
 
 function Main({}) {
   const {
-    token: { colorBgContainer }
+    token
   } = theme.useToken();
+
+  console.log(token);
 
   return (
     <Layout className="vh-100">
-      <Sider style={{ background: colorBgContainer }} />
+      <Sider style={{ background: token.colorBgContainer }} />
       <Routes>
         <Route path="*" element={<Navigate to="/dashboard" />} />
         <Route path="/dashboard" element={<Home />} />
