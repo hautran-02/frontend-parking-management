@@ -3,9 +3,20 @@ import { Avatar, Button, Dropdown, Flex, Image, Layout, Space, Typography, theme
 import FULL_LOGO from '~/assets/logo/logo-text.svg';
 import DEFAULT_AVATAR from '~/assets/images/avatar.png';
 import { DownOutlined, SettingTwoTone } from '@ant-design/icons';
-import { avatarItem } from './data';
 import AppContext from '~/context';
 import { useNavigate } from 'react-router-dom';
+
+const items = [
+  {
+    label: 'Chỉnh sửa thông tin',
+    key: 'editProfile',
+    disabled: true
+  },
+  {
+    label: <Typography.Text type="danger">Đăng xuất</Typography.Text>,
+    key: 'logout'
+  }
+];
 
 function Header({ title }) {
   const {
@@ -54,7 +65,7 @@ function Header({ title }) {
           <Space id="profileUser">
             <Avatar src={DEFAULT_AVATAR} size={40} />
             <Dropdown
-              menu={{ items: avatarItem, onClick: hanldeClickProfile }}
+              menu={{ items, onClick: hanldeClickProfile }}
               trigger={['click']}
               placement="bottomRight">
               <a onClick={(e) => e.preventDefault()}>

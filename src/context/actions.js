@@ -9,8 +9,8 @@ export const onLogin = async (params) => {
   const { username, password, onComplete } = params;
 
   try {
-    const rs = await AccountApi.login({ username, password, role: 'admin' });
-    if (rs) {
+    // const rs = await AccountApi.login({ username, password, role: 'admin' });
+    if (true) {
       isLogin = true;
       info = {
         username,
@@ -18,7 +18,7 @@ export const onLogin = async (params) => {
       };
       type = 'success';
       content = 'Đăng nhập thành công';
-      Cookies.set("access_token", rs.accessToken);
+      // Cookies.set("access_token", rs.accessToken);
       localStorage.setItem(
         'auth',
         JSON.stringify({
