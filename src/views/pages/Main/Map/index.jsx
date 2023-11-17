@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Col, Layout, Row } from 'antd';
 import { Content, Footer, Header } from '~/views/layouts';
+import { lazyRetry } from '~/utils';
+const MapA = React.lazy(() => lazyRetry(() => import('~/assets/images/mapA.svg')));
 
 function Map({}) {
   return (
