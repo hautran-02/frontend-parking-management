@@ -8,11 +8,6 @@ export default {
     columnWidthRatio: 0.72,
     maxColumnWidth: 16,
     xAxis: {
-      title: {
-        style: {
-          fontWeight: 500,
-        }
-      },
       label: {
         autoRotate: true,
         autoEllipsis: false

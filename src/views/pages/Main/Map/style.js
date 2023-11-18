@@ -1,0 +1,37 @@
+import styled from 'styled-components';
+
+export const TransformBlock = styled.div`
+  position: relative;
+  height: 96%;
+  border: 1px solid #f0f0f0;
+  padding: 18px;
+  border-radius: 8px;
+  background-color: ${({ bgColor }) => bgColor};
+
+  @keyframes flashing {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  .flashing {
+    animation: flashing 0.7s infinite; /* The 'infinite' value will make the animation loop indefinitely */
+  }
+  .slot {
+    position: absolute;
+  }
+  .react-transform-wrapper {
+    width: 100%;
+  }
+
+  .image-container {
+    position: absolute;
+    width: 90px;
+    z-index: 1;
+  }
+`;

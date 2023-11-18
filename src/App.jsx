@@ -39,7 +39,7 @@ function App() {
         content
       });
     }
-  }, [mess]);
+  }, [mess]);1
 
   return (
     <div className="app">

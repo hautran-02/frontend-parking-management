@@ -47,4 +47,8 @@ export default createGlobalStyle`
     .ant-table {
         border: 1px solid #f0f0f0;
     }
+
+    .ct-border {
+        border: 1px solid #f0f0f0;
+    }
 `;

@@ -49,7 +49,7 @@ function Sider({ ...props }) {
           openKeys={current?.openKeys}
           onSelect={handleChangePage}
         />
-        <div className="container text-center">
+        <div className="container text-center d-flex flex-column justify-content-end" style={{minHeight: 200}}>
           <Typography.Text strong>{`Phiên bản ${import.meta.env.VITE_VERSION}`}</Typography.Text>
         </div>
       </Flex>
