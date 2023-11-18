@@ -6,7 +6,7 @@ export const TransformBlock = styled.div`
   border: 1px solid #f0f0f0;
   padding: 18px;
   border-radius: 8px;
-  background-color: ${({ bgColor }) => bgColor};
+  background-color: #fff;
 
   @keyframes flashing {
     0% {
@@ -32,6 +32,9 @@ export const TransformBlock = styled.div`
   .image-container {
     position: absolute;
     width: 90px;
-    z-index: 1;
+    z-index: 3;
+
+    &:hover {
+    }
   }
 `;

@@ -2,14 +2,13 @@ import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { Layout, Flex, Radio, theme } from 'antd';
 import { Content, Footer, Header } from '~/views/layouts';
 import { lazyRetry } from '~/utils';
-import MapA from '~/assets/images/mapA.svg';
 import { MapContainer } from './components';
 import { TransformBlock } from './style';
 import { MapInteractionCSS } from 'react-map-interaction';
 
 function Map({}) {
   const { token } = theme.useToken();
-  const { colorBgBase } = token;
+  const { colorBgContainer } = token;
   const [zone, setZone] = useState('A');
 
   const onChangeZone = (e) => {
@@ -27,9 +26,9 @@ function Map({}) {
             <Radio.Button value="C">Khu C</Radio.Button>
           </Radio.Group>
         </Flex>
-        <TransformBlock className="mt-2" bgColor={colorBgBase}>
+        <TransformBlock className="mt-2">
           <MapInteractionCSS>
-            <MapContainer src={MapA} preview={false} />
+            <MapContainer zone={zone} preview={false} />
           </MapInteractionCSS>
         </TransformBlock>
       </Content>
