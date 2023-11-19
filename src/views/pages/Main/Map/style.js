@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const TransformBlock = styled.div`
-  position: relative;
   height: 96%;
   border: 1px solid #f0f0f0;
   padding: 18px;
@@ -25,13 +24,9 @@ export const TransformBlock = styled.div`
   .slot {
     position: absolute;
   }
-  .react-transform-wrapper {
-    width: 100%;
-  }
 
   .image-container {
     position: absolute;
-    width: 90px;
     z-index: 3;
 
     &:hover {

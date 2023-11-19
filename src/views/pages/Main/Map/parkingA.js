@@ -1,69 +1,77 @@
 export const SLOTS_A = () => {
-  return [...SLOTS_A1, ...SLOTS_A2, ...SLOTS_A3, ...SLOTS_A4, ...SLOTS_A5, ...SLOTS_A6, ...SLOTS_A7];
+  return [
+    ...SLOTS_A1,
+    ...SLOTS_A2,
+    ...SLOTS_A3,
+    ...SLOTS_A4,
+    ...SLOTS_A5,
+    ...SLOTS_A6,
+    ...SLOTS_A7
+  ];
 };
 
 const SLOTS_A1 = [
   {
     slotId: 'A101',
     occupied: true,
-    top: 76,
-    left: 180,
+    top: 62,
+    left: 133,
     rotate: 90
   },
   {
     slotId: 'A102',
     occupied: true,
-    top: 76,
-    left: 271,
+    top: 62,
+    left: 184,
     rotate: 90
   },
   {
     slotId: 'A103',
     occupied: true,
-    top: 76,
-    left: 364,
+    top: 62,
+    left: 237,
     rotate: 90
   },
   {
     slotId: 'A104',
     occupied: true,
-    top: 76,
-    left: 455,
+    top: 62,
+    left: 289,
     rotate: 90
   },
   {
     slotId: 'A105',
     occupied: true,
-    top: 76,
-    left: 547,
+    top: 62,
+    left: 340,
     rotate: 90
   },
   {
     slotId: 'A106',
     occupied: true,
-    top: 76,
-    left: 638,
+    top: 62,
+    left: 392,
     rotate: 90
   },
   {
     slotId: 'A107',
     occupied: true,
-    top: 76,
-    left: 867,
+    top: 62,
+    left: 524,
     rotate: 90
   },
   {
     slotId: 'A108',
     occupied: true,
-    top: 76,
-    left: 958,
+    top: 62,
+    left: 575,
     rotate: 90
   },
   {
     slotId: 'A109',
     occupied: true,
-    top: 76,
-    left: 1048,
+    top: 62,
+    left: 627,
     rotate: 90
   }
 ];
@@ -72,43 +80,43 @@ const SLOTS_A2 = [
   {
     slotId: 'A201',
     occupied: true,
-    top: 200,
-    left: 45,
+    top: 133,
+    left: 52,
     rotate: 0
   },
   {
     slotId: 'A202',
     occupied: true,
-    top: 287,
-    left: 45,
+    top: 184,
+    left: 52,
     rotate: 0
   },
   {
     slotId: 'A203',
     occupied: true,
-    top: 377,
-    left: 45,
+    top: 235,
+    left: 52,
     rotate: 0
   },
   {
     slotId: 'A204',
     occupied: true,
-    top: 469,
-    left: 45,
+    top: 286,
+    left: 52,
     rotate: 0
   },
   {
     slotId: 'A205',
     occupied: true,
-    top: 559,
-    left: 45,
+    top: 337,
+    left: 52,
     rotate: 0
   },
   {
     slotId: 'A106',
     occupied: true,
-    top: 648,
-    left: 45,
+    top: 388,
+    left: 52,
     rotate: 0
   }
 ];
@@ -117,57 +125,57 @@ const SLOTS_A3 = [
   {
     slotId: 'A301',
     occupied: true,
-    top: 286,
-    left: 281,
+    top: 180,
+    left: 202,
     rotate: 180
   },
   {
     slotId: 'A302',
     occupied: true,
-    top: 380,
-    left: 281,
+    top: 230,
+    left: 202,
     rotate: 180
   },
   {
     slotId: 'A303',
     occupied: true,
-    top: 468,
-    left: 281,
+    top: 284,
+    left: 202,
     rotate: 180
   },
   {
     slotId: 'A304',
     occupied: true,
-    top: 556,
-    left: 281,
+    top: 334,
+    left: 202,
     rotate: 180
   },
   {
     slotId: 'A305',
     occupied: true,
-    top: 286,
-    left: 410,
+    top: 180,
+    left: 276,
     rotate: 0
   },
   {
     slotId: 'A306',
     occupied: true,
-    top: 380,
-    left: 410,
+    top: 230,
+    left: 276,
     rotate: 0
   },
   {
     slotId: 'A307',
     occupied: true,
-    top: 468,
-    left: 410,
+    top: 284,
+    left: 276,
     rotate: 0
   },
   {
     slotId: 'A308',
     occupied: true,
-    top: 556,
-    left: 410,
+    top: 334,
+    left: 276,
     rotate: 0
   }
 ];
@@ -176,15 +184,15 @@ const SLOTS_A4 = [
   {
     slotId: 'A401',
     occupied: true,
-    top: 286,
-    left: 650,
+    top: 180,
+    left: 408,
     rotate: 0
   },
   {
     slotId: 'A402',
     occupied: true,
-    top: 556,
-    left: 650,
+    top: 334,
+    left: 408,
     rotate: 0
   }
 ];
@@ -193,57 +201,57 @@ const SLOTS_A5 = [
   {
     slotId: 'A501',
     occupied: true,
-    top: 286,
-    left: 890,
+    top: 180,
+    left: 536,
     rotate: 180
   },
   {
     slotId: 'A502',
     occupied: true,
-    top: 380,
-    left: 890,
+    top: 230,
+    left: 536,
     rotate: 180
   },
   {
     slotId: 'A503',
     occupied: true,
-    top: 468,
-    left: 890,
+    top: 284,
+    left: 536,
     rotate: 180
   },
   {
     slotId: 'A504',
     occupied: true,
-    top: 556,
-    left: 890,
+    top: 334,
+    left: 536,
     rotate: 180
   },
   {
     slotId: 'A505',
     occupied: true,
-    top: 286,
-    left: 1024,
+    top: 180,
+    left: 612,
     rotate: 0
   },
   {
     slotId: 'A506',
     occupied: true,
-    top: 380,
-    left: 1024,
+    top: 230,
+    left: 612,
     rotate: 0
   },
   {
     slotId: 'A507',
     occupied: true,
-    top: 468,
-    left: 1024,
+    top: 284,
+    left: 612,
     rotate: 0
   },
   {
     slotId: 'A508',
     occupied: true,
-    top: 556,
-    left: 1024,
+    top: 334,
+    left: 612,
     rotate: 0
   }
 ];
@@ -252,89 +260,88 @@ const SLOTS_A6 = [
   {
     slotId: 'A601',
     occupied: true,
-    top: 340,
-    left: 1268,
+    top: 202,
+    left: 754,
     rotate: 180
   },
   {
     slotId: 'A602',
     occupied: true,
-    top: 422,
-    left: 1268,
+    top: 253,
+    left: 754,
     rotate: 180
   },
   {
     slotId: 'A603',
     occupied: true,
-    top: 512,
-    left: 1268,
+    top: 304,
+    left: 754,
     rotate: 180
   }
 ];
 
 const SLOTS_A7 = [
-    {
-      slotId: 'A701',
-      occupied: true,
-      top: 761,
-      left: 180,
-      rotate: -90
-    },
-    {
-      slotId: 'A702',
-      occupied: true,
-      top: 761,
-      left: 271,
-      rotate: -90
-    },
-    {
-      slotId: 'A703',
-      occupied: true,
-      top: 761,
-      left: 364,
-      rotate: -90
-    },
-    {
-      slotId: 'A704',
-      occupied: true,
-      top: 761,
-      left: 455,
-      rotate: -90
-    },
-    {
-      slotId: 'A705',
-      occupied: true,
-      top: 761,
-      left: 547,
-      rotate: -90
-    },
-    {
-      slotId: 'A706',
-      occupied: true,
-      top: 761,
-      left: 638,
-      rotate: -90
-    },
-    {
-      slotId: 'A707',
-      occupied: true,
-      top: 761,
-      left: 867,
-      rotate: -90
-    },
-    {
-      slotId: 'A708',
-      occupied: true,
-      top: 761,
-      left: 958,
-      rotate: -90
-    },
-    {
-      slotId: 'A709',
-      occupied: true,
-      top: 761,
-      left: 1048,
-      rotate: -90
-    }
-  ];
-  
+  {
+    slotId: 'A701',
+    occupied: true,
+    top: 455,
+    left: 132,
+    rotate: -90
+  },
+  {
+    slotId: 'A702',
+    occupied: true,
+    top: 455,
+    left: 184,
+    rotate: -90
+  },
+  {
+    slotId: 'A703',
+    occupied: true,
+    top: 455,
+    left: 236,
+    rotate: -90
+  },
+  {
+    slotId: 'A704',
+    occupied: true,
+    top: 455,
+    left: 288,
+    rotate: -90
+  },
+  {
+    slotId: 'A705',
+    occupied: true,
+    top: 455,
+    left: 340,
+    rotate: -90
+  },
+  {
+    slotId: 'A706',
+    occupied: true,
+    top: 455,
+    left: 392,
+    rotate: -90
+  },
+  {
+    slotId: 'A707',
+    occupied: true,
+    top: 455,
+    left: 524,
+    rotate: -90
+  },
+  {
+    slotId: 'A708',
+    occupied: true,
+    top: 455,
+    left: 576,
+    rotate: -90
+  },
+  {
+    slotId: 'A709',
+    occupied: true,
+    top: 455,
+    left: 628,
+    rotate: -90
+  }
+];

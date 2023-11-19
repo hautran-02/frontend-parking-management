@@ -8,6 +8,7 @@ function CarImage({ slotId, top, left, rotate, src, width, height, ...props }) {
       src={src}
       style={{
         transform: `rotate(${rotate}deg)`,
+        width: 52,
         top,
         left
       }}

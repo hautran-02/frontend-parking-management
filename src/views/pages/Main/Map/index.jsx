@@ -5,14 +5,16 @@ import { lazyRetry } from '~/utils';
 import { MapContainer } from './components';
 import { TransformBlock } from './style';
 import { MapInteractionCSS } from 'react-map-interaction';
+import { useSearchParams } from 'react-router-dom';
 
 function Map({}) {
   const { token } = theme.useToken();
   const { colorBgContainer } = token;
-  const [zone, setZone] = useState('A');
+  let [searchParams, setSearchParams] = useSearchParams();
+  const zone = searchParams.get('zone') || 'A';
 
   const onChangeZone = (e) => {
-    setZone(e.target.value);
+    setSearchParams({ zone: e.target.value });
   };
 
   return (
