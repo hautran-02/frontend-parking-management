@@ -10,28 +10,34 @@ import { SLOTS_B } from '../parkingB';
 
 function MapContainer({ zone, width, height, ...props }) {
   const [vehs, setVehs] = useState([]);
+  const [vehWidth, setVehWidth] = useState();
 
   useEffect(() => {
     let newVehs;
+    let newWidth = 50;
     switch (zone) {
       case 'A':
         newVehs = SLOTS_A;
+        newWidth = 52;
         break;
       case 'B':
         newVehs = SLOTS_B;
+        newWidth = 76;
         break;
       case 'C':
         newVehs = SLOTS_A;
+        newWidth = 52;
         break;
     }
     setVehs(newVehs);
+    setVehWidth(newWidth);
   }, [zone]);
 
   return (
     <>
       <div>
         {vehs.map((veh) => (
-          <CarImage {...veh} src={Car} />
+          <CarImage {...veh} src={Car} width={vehWidth} />
         ))}
         {useMemo(() => {
           let rs;
