@@ -7,6 +7,7 @@ import MapB from '~/assets/images/mapB.svg?react';
 import MapC from '~/assets/images/mapC.svg?react';
 import { SLOTS_A } from '../parkingA';
 import { SLOTS_B } from '../parkingB';
+import { SLOTS_C } from '../parkingC';
 
 function MapContainer({ zone, width, height, ...props }) {
   const [vehs, setVehs] = useState([]);
@@ -25,8 +26,8 @@ function MapContainer({ zone, width, height, ...props }) {
         newWidth = 76;
         break;
       case 'C':
-        newVehs = SLOTS_A;
-        newWidth = 52;
+        newVehs = SLOTS_C;
+        newWidth = 68;
         break;
     }
     setVehs(newVehs);
