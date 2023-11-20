@@ -1,5 +1,4 @@
 # Parking Management
-
 This project is front-end of parking management system.
 
 # Milestones
