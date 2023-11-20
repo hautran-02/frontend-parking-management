@@ -11,7 +11,7 @@ export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initState);
 
   const actions = {
-    logout: (params) => dispatch(logout(params)),
+    logout: async (params) => dispatch(await logout(params)),
     onLogin: async (params) => dispatch(await onLogin(params)),
     checkAuthenSevice: async (params) =>
       dispatch(await checkAuthenSevice(params)),

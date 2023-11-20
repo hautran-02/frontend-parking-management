@@ -18,6 +18,10 @@ export default createGlobalStyle`
         font-family: 'lexend', sans-serif;
     }
 
+    html {
+        font-size: 62.5%;
+    }
+
     a {
         text-decoration: none;
     }
@@ -26,4 +30,51 @@ export default createGlobalStyle`
         object-fit: contain;
     }
 
+    .border-none: {
+        border: none;
+    }
+
+    .border-1 {
+        border-radius: 8px;
+    }
+
+    .k-card {
+        border-radius: 8px;
+        &.hide-header {
+            .k-card-header {
+                display: none;
+            }
+        }
+
+        .k-card-body {
+            padding-inline: 0;
+            padding-block: 0;
+        }
+    }
+
+    .ant-card.card-main{
+        border-radius: 10px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        border: none;
+
+        .ant-card-head {
+            padding: 10px 10px 0px;
+            border: none;
+            min-height: auto;
+            .ant-card-head-title {
+                display: contents;
+                padding: 0;
+            }
+            .ant-card-extra{
+                padding: 0;
+            }
+        }
+
+        .ant-card-body {
+            flex: 1;
+            padding: 0 16px;
+        }
+    }
 `;
