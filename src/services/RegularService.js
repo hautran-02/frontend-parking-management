@@ -2,7 +2,7 @@ export const FormatNumber = (number, option) => {
   const decimal = option?.decimal || 2;
   let isEndZeroDecimal = true;
 
-  if (option?.hasOwnProperty("isEndZeroDecimal")) {
+  if (option?.hasOwnProperty('isEndZeroDecimal')) {
     isEndZeroDecimal = option.isEndZeroDecimal;
   }
 
@@ -13,12 +13,12 @@ export const FormatNumber = (number, option) => {
   }
 
   const formattedNumber = Number(number).toFixed(decimal);
-  const parts = formattedNumber.split(".");
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  const parts = formattedNumber.split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
   if (!isEndZeroDecimal) {
     // Convert the string to a number to remove leading zeros as well
-    const number = parts[1] ? parts[1].replace(/0+$/, "") : 0;
+    const number = parts[1] ? parts[1].replace(/0+$/, '') : 0;
     parts[1] = String(number);
 
     if (!parts[1]) {
@@ -26,14 +26,14 @@ export const FormatNumber = (number, option) => {
     }
   }
 
-  return parts.join(",");
+  return parts.join(',');
 };
 
 export const TextService = {
   formatFloorText: (id) => {
-    const name = id === "B" ? "hầm" : id;
+    const name = id === 'B' ? 'hầm' : id;
     return `Tầng ${name}`;
-  },
+  }
 };
 
 export const FloorService = {
@@ -46,13 +46,13 @@ export const FloorService = {
 
       switch (e) {
         case 0:
-          e = "B";
+          e = 'B';
           break;
         case 12:
-          e = "12A";
+          e = '12A';
           break;
         case 13:
-          e = "12B";
+          e = '12B';
           break;
       }
 
@@ -62,8 +62,19 @@ export const FloorService = {
   },
 
   formatFloorText: (e) => {
-    e = e === "B" ? "hầm" : e;
+    e = e === 'B' ? 'hầm' : e;
     let rs = `${e}`;
     return rs;
-  },
+  }
+};
+
+export const ValidateNumberPhone = (phoneNumber) => {
+  // Remove any spaces or special characters from the input
+  const cleanedNumber = phoneNumber.replace(/[^\d]/g, '');
+
+  // Define the regex pattern for a Vietnamese phone number
+  const vietnamesePhoneNumberPattern = /^0[2-9][0-9]{8}\b/;
+
+  // Test if the cleaned number matches the pattern
+  return vietnamesePhoneNumberPattern.test(cleanedNumber);
 };

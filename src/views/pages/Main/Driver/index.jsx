@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { TileLayout } from '@progress/kendo-react-layout';
-import { Badge, Card, Col, Layout, Row, Table, Typography } from 'antd';
+import { Badge, Card, Col, Layout, Row, Table, Typography, Space, Button } from 'antd';
 import { Content, Footer, Header } from '~/views/layouts';
+import { PlusOutlined } from '@ant-design/icons';
 import { MonitorApi } from '~/api';
 import dayjs from 'dayjs';
+import { DriverForm } from './components';
 
 function Driver({}) {
   const [data, setData] = useState([]);
+  const [formAction, setFormAction] = useState({});
+  const [openForm, setOpenForm] = useState(true);
 
   const callApi = async () => {
     const api = await MonitorApi.getAllDriver();
     setData(api);
-    console.log('api', api);
   };
 
   useEffect(() => {
@@ -64,6 +67,15 @@ function Driver({}) {
     );
   };
 
+  const onAdd = () => {
+    setFormAction({ action: 'add', actionText: 'Thêm', title: "Thêm chủ xe mới" });
+    setOpenForm(true);
+  };
+
+  const hanldeCloseForm = () => {
+    setOpenForm(false);
+  };
+
   const columns = [
     {
       title: '#',
@@ -102,10 +114,21 @@ function Driver({}) {
     <Layout className="px-4">
       <Header className="border-1" title={'Quản lý chủ xe'} />
       <Content className="w-100 py-3">
-        <Card className="box">
-          <Typography.Title type="primary" level={4}>
-            Danh sách:
-          </Typography.Title>
+        <DriverForm formAction={formAction} isOpen={openForm} onClose={hanldeCloseForm} />
+        <Card
+          title={
+            <Typography.Title type="primary" level={4}>
+              Danh sách:
+            </Typography.Title>
+          }
+          extra={
+            <Space>
+              <Button type="primary" ghost icon={<PlusOutlined />} onClick={onAdd}>
+                Thêm chủ xe
+              </Button>
+            </Space>
+          }
+          className="box">
           <Table
             columns={columns}
             expandable={{
