@@ -28,7 +28,7 @@ function Map({}) {
             <Radio.Button value="C">Khu C</Radio.Button>
           </Radio.Group>
         </Flex>
-        <TransformBlock className="mt-2">
+        <TransformBlock className="mt-2" style={{ backgroundColor: token.neutral5 }}>
           <MapInteractionCSS>
             <MapContainer zone={zone} preview={false} />
           </MapInteractionCSS>

@@ -1,347 +1,317 @@
-export const SLOTS_A = () => {
-  return [
-    ...SLOTS_A1,
-    ...SLOTS_A2,
-    ...SLOTS_A3,
-    ...SLOTS_A4,
-    ...SLOTS_A5,
-    ...SLOTS_A6,
-    ...SLOTS_A7
-  ];
-};
-
-const SLOTS_A1 = [
+export const SLOTS_A = [
   {
     slotId: 'A101',
     occupied: true,
-    top: 62,
-    left: 133,
+    top: 66,
+    left: 137,
     rotate: 90
   },
   {
     slotId: 'A102',
     occupied: true,
-    top: 62,
-    left: 184,
+    top: 66,
+    left: 188,
     rotate: 90
   },
   {
     slotId: 'A103',
     occupied: true,
-    top: 62,
-    left: 237,
+    top: 66,
+    left: 241,
     rotate: 90
   },
   {
     slotId: 'A104',
     occupied: true,
-    top: 62,
-    left: 289,
+    top: 66,
+    left: 293,
     rotate: 90
   },
   {
     slotId: 'A105',
     occupied: true,
-    top: 62,
-    left: 340,
+    top: 66,
+    left: 344,
     rotate: 90
   },
   {
     slotId: 'A106',
     occupied: true,
-    top: 62,
-    left: 392,
+    top: 66,
+    left: 396,
     rotate: 90
   },
   {
     slotId: 'A107',
     occupied: true,
-    top: 62,
-    left: 524,
+    top: 66,
+    left: 528,
     rotate: 90
   },
   {
     slotId: 'A108',
     occupied: true,
-    top: 62,
-    left: 575,
+    top: 66,
+    left: 579,
     rotate: 90
   },
   {
     slotId: 'A109',
     occupied: true,
-    top: 62,
-    left: 627,
+    top: 66,
+    left: 631,
     rotate: 90
-  }
-];
-
-const SLOTS_A2 = [
+  },
   {
     slotId: 'A201',
     occupied: true,
-    top: 133,
-    left: 52,
+    top: 137,
+    left: 56,
     rotate: 0
   },
   {
     slotId: 'A202',
     occupied: true,
-    top: 184,
-    left: 52,
+    top: 188,
+    left: 56,
     rotate: 0
   },
   {
     slotId: 'A203',
     occupied: true,
-    top: 235,
-    left: 52,
+    top: 239,
+    left: 56,
     rotate: 0
   },
   {
     slotId: 'A204',
     occupied: true,
-    top: 286,
-    left: 52,
+    top: 290,
+    left: 56,
     rotate: 0
   },
   {
     slotId: 'A205',
     occupied: true,
-    top: 337,
-    left: 52,
+    top: 341,
+    left: 56,
     rotate: 0
   },
   {
     slotId: 'A106',
     occupied: true,
-    top: 388,
-    left: 52,
+    top: 392,
+    left: 56,
     rotate: 0
-  }
-];
-
-const SLOTS_A3 = [
+  },
   {
     slotId: 'A301',
     occupied: true,
-    top: 180,
-    left: 202,
+    top: 184,
+    left: 206,
     rotate: 180
   },
   {
     slotId: 'A302',
     occupied: true,
-    top: 230,
-    left: 202,
+    top: 234,
+    left: 206,
     rotate: 180
   },
   {
     slotId: 'A303',
     occupied: true,
-    top: 284,
-    left: 202,
+    top: 288,
+    left: 206,
     rotate: 180
   },
   {
     slotId: 'A304',
     occupied: true,
-    top: 334,
-    left: 202,
+    top: 338,
+    left: 206,
     rotate: 180
   },
   {
     slotId: 'A305',
     occupied: true,
-    top: 180,
-    left: 276,
+    top: 184,
+    left: 280,
     rotate: 0
   },
   {
     slotId: 'A306',
     occupied: true,
-    top: 230,
-    left: 276,
+    top: 234,
+    left: 280,
     rotate: 0
   },
   {
     slotId: 'A307',
     occupied: true,
-    top: 284,
-    left: 276,
+    top: 288,
+    left: 280,
     rotate: 0
   },
   {
     slotId: 'A308',
     occupied: true,
-    top: 334,
-    left: 276,
+    top: 338,
+    left: 280,
     rotate: 0
-  }
-];
-
-const SLOTS_A4 = [
+  },
   {
     slotId: 'A401',
     occupied: true,
-    top: 180,
-    left: 408,
+    top: 184,
+    left: 412,
     rotate: 0
   },
   {
     slotId: 'A402',
     occupied: true,
-    top: 334,
-    left: 408,
+    top: 338,
+    left: 412,
     rotate: 0
-  }
-];
-
-const SLOTS_A5 = [
+  },
   {
     slotId: 'A501',
     occupied: true,
-    top: 180,
-    left: 536,
+    top: 184,
+    left: 540,
     rotate: 180
   },
   {
     slotId: 'A502',
     occupied: true,
-    top: 230,
-    left: 536,
+    top: 234,
+    left: 540,
     rotate: 180
   },
   {
     slotId: 'A503',
     occupied: true,
-    top: 284,
-    left: 536,
+    top: 288,
+    left: 540,
     rotate: 180
   },
   {
     slotId: 'A504',
     occupied: true,
-    top: 334,
-    left: 536,
+    top: 338,
+    left: 540,
     rotate: 180
   },
   {
     slotId: 'A505',
     occupied: true,
-    top: 180,
-    left: 612,
+    top: 184,
+    left: 616,
     rotate: 0
   },
   {
     slotId: 'A506',
     occupied: true,
-    top: 230,
-    left: 612,
+    top: 234,
+    left: 616,
     rotate: 0
   },
   {
     slotId: 'A507',
     occupied: true,
-    top: 284,
-    left: 612,
+    top: 288,
+    left: 616,
     rotate: 0
   },
   {
     slotId: 'A508',
     occupied: true,
-    top: 334,
-    left: 612,
+    top: 338,
+    left: 616,
     rotate: 0
-  }
-];
-
-const SLOTS_A6 = [
+  },
   {
     slotId: 'A601',
     occupied: true,
-    top: 202,
-    left: 754,
+    top: 206,
+    left: 758,
     rotate: 180
   },
   {
     slotId: 'A602',
     occupied: true,
-    top: 253,
-    left: 754,
+    top: 257,
+    left: 758,
     rotate: 180
   },
   {
     slotId: 'A603',
     occupied: true,
-    top: 304,
-    left: 754,
+    top: 308,
+    left: 758,
     rotate: 180
-  }
-];
-
-const SLOTS_A7 = [
+  },
   {
     slotId: 'A701',
     occupied: true,
-    top: 455,
-    left: 132,
+    top: 459,
+    left: 136,
     rotate: -90
   },
   {
     slotId: 'A702',
     occupied: true,
-    top: 455,
-    left: 184,
+    top: 459,
+    left: 188,
     rotate: -90
   },
   {
     slotId: 'A703',
     occupied: true,
-    top: 455,
-    left: 236,
+    top: 459,
+    left: 240,
     rotate: -90
   },
   {
     slotId: 'A704',
     occupied: true,
-    top: 455,
-    left: 288,
+    top: 459,
+    left: 292,
     rotate: -90
   },
   {
     slotId: 'A705',
     occupied: true,
-    top: 455,
-    left: 340,
+    top: 459,
+    left: 344,
     rotate: -90
   },
   {
     slotId: 'A706',
     occupied: true,
-    top: 455,
-    left: 392,
+    top: 459,
+    left: 396,
     rotate: -90
   },
   {
     slotId: 'A707',
     occupied: true,
-    top: 455,
-    left: 524,
+    top: 459,
+    left: 528,
     rotate: -90
   },
   {
     slotId: 'A708',
     occupied: true,
-    top: 455,
-    left: 576,
+    top: 459,
+    left: 580,
     rotate: -90
   },
   {
     slotId: 'A709',
     occupied: true,
-    top: 455,
-    left: 628,
+    top: 459,
+    left: 632,
     rotate: -90
   }
 ];

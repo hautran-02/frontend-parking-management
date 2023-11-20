@@ -34,6 +34,16 @@ function MapContainer({ zone, width, height, ...props }) {
     setVehWidth(newWidth);
   }, [zone]);
 
+  console.log(
+    SLOTS_C.map((e) => {
+      return {
+        ...e,
+        top: e.top + 4,
+        left: e.left + 4
+      };
+    })
+  );
+
   return (
     <>
       <div>
