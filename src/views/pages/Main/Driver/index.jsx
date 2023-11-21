@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { TileLayout } from '@progress/kendo-react-layout';
 import { Badge, Card, Col, Layout, Row, Table, Typography, Space, Button } from 'antd';
 import { Content, Footer, Header } from '~/views/layouts';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { MonitorApi } from '~/api';
 import dayjs from 'dayjs';
 import { DriverForm } from './components';
@@ -68,8 +68,22 @@ function Driver({}) {
   };
 
   const onAdd = () => {
-    setFormAction({ action: 'add', actionText: 'Thêm', title: "Thêm chủ xe mới" });
+    setFormAction({ action: 'add', actionText: 'Thêm', title: 'Thêm chủ xe mới' });
     setOpenForm(true);
+  };
+
+  const onEdit = (values) => {
+    setFormAction({
+      action: 'edit',
+      actionText: 'Chỉnh sửa',
+      title: 'Chỉnh sửa thông tin chủ xe',
+      payload: { ...values }
+    });
+    setOpenForm(true);
+  };
+
+  const onDelete = (values) => {
+    //hanlde Delete
   };
 
   const hanldeCloseForm = () => {
@@ -108,6 +122,29 @@ function Driver({}) {
       dataIndex: 'createdAt',
       key: 'createdAt',
       render: (_, record, index) => dayjs(record.createdAt).format('L')
+    },
+    {
+      title: '',
+      dataIndex: 'actions',
+      key: 'actions',
+      render: (_, record, index) => (
+        <Space>
+          <Button
+            icon={<EditOutlined />}
+            type="text"
+            onClick={() => {
+              onEdit(record);
+            }}
+          />
+          <Button
+            icon={<DeleteOutlined />}
+            type="text"
+            onClick={() => {
+              onDelete(record);
+            }}
+          />
+        </Space>
+      )
     }
   ];
   return (
@@ -136,6 +173,7 @@ function Driver({}) {
               defaultExpandedRowKeys: ['0']
             }}
             dataSource={data}
+            rowKey={(record) => record._id}
           />
         </Card>
       </Content>

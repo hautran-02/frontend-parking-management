@@ -13,24 +13,32 @@ const formItemLayout = {
 };
 
 function DriverForm({ isOpen, onClose, formAction }) {
-  const handleOk = () => {
+  const [form] = Form.useForm();
+
+  const hanldeClose = () => {
+    form.resetFields();
     onClose();
   };
 
   useEffect(() => {
     if (formAction.action === 'edit') {
-      // set Form
+      form.setFieldsValue({ ...formAction.payload });
     }
   }, [formAction]);
+
+  const onFinish = (values) => {
+    console.log('onFinish', values);
+  };
 
   return (
     <Modal
       title={formAction.title || 'Thêm chủ xe'}
       open={isOpen}
-      destroyOnClose
+      onCancel={hanldeClose}
+      destroyOnClose={true}
       classNames={{ footer: 'd-none' }}>
       <div className="container-fluid pt-3">
-        <Form {...formItemLayout} style={{ maxWidth: 4000 }}>
+        <Form form={form} onFinish={onFinish} {...formItemLayout} style={{ maxWidth: 4000 }}>
           <Form.Item name={'name'} label="Họ và tên" rules={[{ required: true }]}>
             <Input placeholder="Nguyễn Văn A" id="nameInput" />
           </Form.Item>
@@ -94,9 +102,19 @@ function DriverForm({ isOpen, onClose, formAction }) {
                   </Card>
                 ))}
 
-                <Button type="dashed" onClick={() => add()} block>
-                  + Thêm một xe
-                </Button>
+                <Form.Item
+                  shouldUpdate={(pre, curr) => pre.vehicle !== curr.vehicle}
+                  wrapperCol={{ span: 24 }}>
+                  {({ getFieldValue }) => {
+                    const currVeh = getFieldValue('vehicle');
+                    const disabled = (currVeh?.length || 0) >= 2;
+                    return (
+                      <Button disabled={disabled} type="dashed" onClick={() => add()} block>
+                        + Thêm một xe
+                      </Button>
+                    );
+                  }}
+                </Form.Item>
               </div>
             )}
           </Form.List>
@@ -106,9 +124,9 @@ function DriverForm({ isOpen, onClose, formAction }) {
               span: 8,
               offset: 16
             }}
-            className='mt-4'>
+            className="mt-4">
             <Space>
-              <Button onClick={onClose}>Hủy</Button>
+              <Button onClick={hanldeClose}>Hủy</Button>
               <Button htmlType="submit" type="primary">
                 Thêm
               </Button>
