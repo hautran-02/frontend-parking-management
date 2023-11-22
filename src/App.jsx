@@ -3,13 +3,14 @@ import Authen from './views/pages/Authen';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import Main from './views/pages/Main';
 import AppContext from './context';
-import { ConfigProvider, message } from 'antd';
+import { ConfigProvider, message, theme } from 'antd';
 import customAntdTheme from './shared/CustomAntdTheme';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@progress/kendo-theme-default/dist/all.css';
 import { dayjsSetup } from './config';
 import dayjs from 'dayjs';
 import PageError from './views/pages/PageError';
+import { ThemeProvider } from 'styled-components';
 
 function Auth({ children }) {
   const { state } = useContext(AppContext);
@@ -28,6 +29,7 @@ function App() {
   const { mess } = state;
   const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
+  const { token } = theme.useToken();
 
   dayjsSetup();
 
@@ -39,30 +41,33 @@ function App() {
         content
       });
     }
-  }, [mess]);1
+  }, [mess]);
+  1;
 
   return (
     <div className="app">
       {contextHolder}
-      <Routes>
-        <Route path="/auth/login" element={<Authen />} />
-        <Route
-          path="/*"
-          element={
-            <Auth>
-              <Main />
-            </Auth>
-          }
-          errorElement={
-            <PageError
-              status="500"
-              title={false}
-              subTitle="Không tìm thấy trang"
-              btn={{ text: 'Về trang chủ', onClick: () => <Navigate to={'/dashboard'} /> }}
-            />
-          }
-        />
-      </Routes>
+      <ThemeProvider theme={{ ...token }}>
+        <Routes>
+          <Route path="/auth/login" element={<Authen />} />
+          <Route
+            path="/*"
+            element={
+              <Auth>
+                <Main />
+              </Auth>
+            }
+            errorElement={
+              <PageError
+                status="500"
+                title={false}
+                subTitle="Không tìm thấy trang"
+                btn={{ text: 'Về trang chủ', onClick: () => <Navigate to={'/dashboard'} /> }}
+              />
+            }
+          />
+        </Routes>
+      </ThemeProvider>
     </div>
   );
 }

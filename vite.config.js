@@ -7,12 +7,13 @@ import svgr from "vite-plugin-svgr";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: './',
   esbuild: {
     loader: "jsx",
   },
   resolve: {
-    alias: [{ find: "~", replacement: path.resolve(__dirname, "./src") }],
+    alias: {
+      '~/': path.resolve(__dirname, './src')
+    }
   },
   plugins: [react(), jsconfigPaths(), svgr()],
   optimizeDeps: {
