@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Form, Modal, Input, Select, Button, Space, Card } from 'antd';
 import { ValidateNumberPhone } from '~/services/RegularService';
-import { MinusCircleOutlined, PlusOutlined, CloseOutlined } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
 const formItemLayout = {
   labelCol: {
@@ -12,7 +12,7 @@ const formItemLayout = {
   }
 };
 
-function DriverForm({ isOpen, onClose, formAction }) {
+function EmployeeForm({ isOpen, onClose, formAction }) {
   const [form] = Form.useForm();
 
   const hanldeClose = () => {
@@ -71,54 +71,22 @@ function DriverForm({ isOpen, onClose, formAction }) {
           <Form.Item name={'address'} label="Địa chỉ">
             <Input placeholder="Số 1 Võ Văn Ngân, Linh Chiểu" id="addressInput" />
           </Form.Item>
-          <Form.Item label="Danh sách xe"></Form.Item>
-
-          <Form.List name="vehicle">
-            {(fields, { add, remove }) => (
-              <div
-                style={{
-                  display: 'flex',
-                  rowGap: 16,
-                  flexDirection: 'column'
-                }}>
-                {fields.map((field) => (
-                  <Card
-                    size="small"
-                    title={`Xe ${field.name + 1}`}
-                    key={field.key}
-                    extra={
-                      <CloseOutlined
-                        onClick={() => {
-                          remove(field.name);
-                        }}
-                      />
-                    }>
-                    <Form.Item label="Biển số xe" name={[field.name, 'licenePlate']}>
-                      <Input />
-                    </Form.Item>
-                    <Form.Item label="Loại xe" name={[field.name, 'type']}>
-                      <Input />
-                    </Form.Item>
-                  </Card>
-                ))}
-
-                <Form.Item
-                  shouldUpdate={(pre, curr) => pre.vehicle !== curr.vehicle}
-                  wrapperCol={{ span: 24 }}>
-                  {({ getFieldValue }) => {
-                    const currVeh = getFieldValue('vehicle');
-                    const disabled = (currVeh?.length || 0) >= 2;
-                    return (
-                      <Button disabled={disabled} type="dashed" onClick={() => add()} block>
-                        + Thêm một xe
-                      </Button>
-                    );
-                  }}
-                </Form.Item>
-              </div>
-            )}
-          </Form.List>
-
+          <Form.Item
+            name={'username'}
+            label="Tên tài khoản"
+            validateDebounce={1000}
+            rules={[{ required: true, message: false }]}>
+            <Input placeholder="example" id="usernameinput" />
+          </Form.Item>
+          <Form.Item
+            name={'password'}
+            label="Mật khẩu"
+            rules={[{ required: true, message: false }]}>
+            <Input.Password
+              placeholder="Example@123"
+              iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+            />
+          </Form.Item>
           <Form.Item
             wrapperCol={{
               span: 8,
@@ -138,4 +106,4 @@ function DriverForm({ isOpen, onClose, formAction }) {
   );
 }
 
-export default DriverForm;
+export default EmployeeForm;

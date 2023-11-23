@@ -5,11 +5,10 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import Home from './Home';
 import Map from './Map';
 import Driver from './Driver';
+import { publicRoutes } from '~/routes';
 
 function Main({}) {
-  const {
-    token
-  } = theme.useToken();
+  const { token } = theme.useToken();
 
   console.log(token);
 
@@ -17,11 +16,10 @@ function Main({}) {
     <Layout className="vh-100">
       <Sider style={{ background: token.colorBgContainer }} />
       <Routes>
+        {publicRoutes.map((route) => (
+          <Route {...route} />
+        ))}
         <Route path="*" element={<Navigate to="/dashboard" />} />
-        <Route path="/dashboard" element={<Home />} />
-        <Route path="/map" element={<Map />} />
-        <Route path="/driver" element={<Driver />} />
-        {/* <Route path="/kpi" element={<Kpi {...auth} />} /> */}
       </Routes>
     </Layout>
   );

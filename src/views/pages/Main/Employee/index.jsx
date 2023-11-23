@@ -5,12 +5,12 @@ import { Content, Footer, Header } from '~/views/layouts';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { MonitorApi } from '~/api';
 import dayjs from 'dayjs';
-import { DriverForm } from './components';
+import { EmployeeForm } from './components';
 
 function Employee({}) {
   const [data, setData] = useState([]);
   const [formAction, setFormAction] = useState({});
-  const [openForm, setOpenForm] = useState(true);
+  const [openForm, setOpenForm] = useState(false);
 
   const callApi = async () => {
     const api = await MonitorApi.getAllDriver();
@@ -21,54 +21,8 @@ function Employee({}) {
     callApi();
   }, []);
 
-  const expandedRowRender = (subData) => {
-    const columns = [
-      {
-        title: 'Biển số xe',
-        dataIndex: 'licenePlate',
-        key: 'licenePlate'
-      },
-      {
-        title: 'Loại xe',
-        dataIndex: 'type',
-        key: 'type'
-      },
-      {
-        title: 'Trạng thái',
-        key: 'status',
-        render: (_, record) => {
-          let config = {
-            status: 'success',
-            text: 'Còn hoạt động'
-          };
-          if (record._destroy) {
-            config = {
-              status: 'error',
-              text: 'Dừng hoạt động'
-            };
-          }
-          return <Badge {...config} />;
-        }
-      },
-      {
-        title: 'Ngày đăng ký',
-        dataIndex: 'createdAt',
-        key: 'createdAt'
-      }
-    ];
-    const newData = subData?.vehicle || [];
-    return (
-      <div className="container-fluid">
-        <Typography.Title type="primary" level={5}>
-          Danh sách xe:
-        </Typography.Title>
-        <Table columns={columns} dataSource={newData} pagination={false} />
-      </div>
-    );
-  };
-
   const onAdd = () => {
-    setFormAction({ action: 'add', actionText: 'Thêm', title: 'Thêm chủ xe mới' });
+    setFormAction({ action: 'add', actionText: 'Thêm', title: 'Thêm nhân viên mới' });
     setOpenForm(true);
   };
 
@@ -76,7 +30,7 @@ function Employee({}) {
     setFormAction({
       action: 'edit',
       actionText: 'Chỉnh sửa',
-      title: 'Chỉnh sửa thông tin chủ xe',
+      title: 'Chỉnh sửa thông tin nhân viên',
       payload: { ...values }
     });
     setOpenForm(true);
@@ -149,9 +103,9 @@ function Employee({}) {
   ];
   return (
     <Layout className="px-4">
-      <Header className="border-1" title={'Quản lý chủ xe'} />
+      <Header className="border-1" title={'Quản lý nhân viên'} />
       <Content className="w-100 py-3">
-        <DriverForm formAction={formAction} isOpen={openForm} onClose={hanldeCloseForm} />
+        <EmployeeForm formAction={formAction} isOpen={openForm} onClose={hanldeCloseForm} />
         <Card
           title={
             <Typography.Title type="primary" level={4}>
@@ -161,20 +115,12 @@ function Employee({}) {
           extra={
             <Space>
               <Button type="primary" ghost icon={<PlusOutlined />} onClick={onAdd}>
-                Thêm chủ xe
+                Thêm nhân viên
               </Button>
             </Space>
           }
           className="box">
-          <Table
-            columns={columns}
-            expandable={{
-              expandedRowRender,
-              defaultExpandedRowKeys: ['0']
-            }}
-            dataSource={data}
-            rowKey={(record) => record._id}
-          />
+          <Table columns={columns} dataSource={data} rowKey={(record) => record._id} />
         </Card>
       </Content>
       <Footer />

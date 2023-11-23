@@ -10,7 +10,7 @@ import { DriverForm } from './components';
 function Driver({}) {
   const [data, setData] = useState([]);
   const [formAction, setFormAction] = useState({});
-  const [openForm, setOpenForm] = useState(true);
+  const [openForm, setOpenForm] = useState(false);
 
   const callApi = async () => {
     const api = await MonitorApi.getAllDriver();
