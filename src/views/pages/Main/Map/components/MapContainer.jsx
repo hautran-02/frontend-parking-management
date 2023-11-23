@@ -82,7 +82,7 @@ function MapContainer({ zone, width, height, ...props }) {
                 backgroundColor: token.cyan1,
                 boxShadow: token.boxShadowSecondary
               }}
-              getPopupContainer={() => document.querySelector('#mapWrappter')}>
+              getPopupContainer={() => document.querySelector('#root')}>
               <img
                 className="image-container"
                 src={Car}
