@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { TileLayout } from '@progress/kendo-react-layout';
-import { Badge, Card, Col, Layout, Row, Table, Typography, Space, Button } from 'antd';
+import { Badge, Card, Col, Layout, Row, Table, Typography, Space, Button, Modal } from 'antd';
 import { Content, Footer, Header } from '~/views/layouts';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { MonitorApi } from '~/api';
+import { UserApi } from '~/api';
 import dayjs from 'dayjs';
 import { EmployeeForm } from './components';
+import { useSearchParams, useParams } from 'react-router-dom';
+import { GetAllParams } from '~/services/RegularService';
 
 function Employee({}) {
   const [data, setData] = useState([]);
   const [formAction, setFormAction] = useState({});
   const [openForm, setOpenForm] = useState(false);
+  const [openFormEdit, setOpenFormEdit] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  // const { pageSize, pageIndex, name, address, phone, email, username } = searchParams;
+  const params = GetAllParams(searchParams);
+  const { pageSize, pageIndex } = params;
 
   const callApi = async () => {
-    const api = await MonitorApi.getAllDriver();
-    setData(api);
+    const api = await UserApi.getEmployee({ ...params });
+    setData(api.data);
   };
 
   useEffect(() => {
@@ -27,6 +34,7 @@ function Employee({}) {
   };
 
   const onEdit = (values) => {
+    values.user = values.user.username;
     setFormAction({
       action: 'edit',
       actionText: 'Chỉnh sửa',
@@ -40,7 +48,8 @@ function Employee({}) {
     //hanlde Delete
   };
 
-  const hanldeCloseForm = () => {
+  const hanldeCloseForm = (values) => {
+    console.log('values', values);
     setOpenForm(false);
   };
 
@@ -48,7 +57,7 @@ function Employee({}) {
     {
       title: '#',
       dataIndex: 'key',
-      render: (_, prop, index) => index
+      render: (_, prop, index) => index + 1
     },
     {
       title: 'Tên',
@@ -68,7 +77,7 @@ function Employee({}) {
     },
     {
       title: 'Địa chỉ',
-      dataIndex: 'adress',
+      dataIndex: 'address',
       key: 'address'
     },
     {
@@ -105,7 +114,20 @@ function Employee({}) {
     <Layout className="px-4">
       <Header className="border-1" title={'Quản lý nhân viên'} />
       <Content className="w-100 py-3">
-        <EmployeeForm formAction={formAction} isOpen={openForm} onClose={hanldeCloseForm} />
+        <Modal
+          title={formAction.title}
+          open={openForm}
+          onCancel={() => {
+            setOpenForm(false);
+          }}
+          destroyOnClose={true}
+          classNames={{ footer: 'd-none' }}>
+          <EmployeeForm
+            formAction={formAction}
+            onClose={hanldeCloseForm}
+            noChangeAccount={formAction.action === 'edit'}
+          />
+        </Modal>
         <Card
           title={
             <Typography.Title type="primary" level={4}>

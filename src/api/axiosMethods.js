@@ -6,16 +6,19 @@ export const GET = ({ url, headers, payload, responseType = 'json' }) => new Pro
         .then(resolve)
         .catch(reject)
 })
+
 export const POST = ({ url, payload }) => new Promise(async (resolve, reject) => {
     axiosClient.post(url, payload,)
         .then(resolve)
         .catch(reject)
 })
+
 export const PUT = ({ url, headers, payload }) => new Promise(async (resolve, reject) => {
     axiosClient.put(url, payload, { headers })
         .then(resolve)
         .catch(reject)
 })
+
 export const DELETE = ({ url, headers }) => new Promise(async (resolve, reject) => {
     axiosClient.delete(url, { headers })
         .then(resolve)

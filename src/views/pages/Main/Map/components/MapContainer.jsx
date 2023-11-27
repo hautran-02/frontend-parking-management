@@ -46,16 +46,6 @@ function MapContainer({ zone, width, height, ...props }) {
 
   const callApi = () => {};
 
-  console.log(
-    SLOTS_C.map((e) => {
-      return {
-        ...e,
-        top: e.top + 4,
-        left: e.left + 4
-      };
-    })
-  );
-
   return (
     <>
       <div id="mapWrappter">
@@ -63,6 +53,7 @@ function MapContainer({ zone, width, height, ...props }) {
           const { width, top, left, slotId, rotate } = veh;
           return (
             <DetailFloorStyled
+              key={slotId + ix}
               title={
                 <Flex justify="space-between">
                   <Typography.Title

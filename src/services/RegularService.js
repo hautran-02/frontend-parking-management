@@ -78,3 +78,11 @@ export const ValidateNumberPhone = (phoneNumber) => {
   // Test if the cleaned number matches the pattern
   return vietnamesePhoneNumberPattern.test(cleanedNumber);
 };
+
+export const GetAllParams = (searchParams) => {
+  const params = {};
+  searchParams.forEach((value, key) => {
+    params[key] = value;
+  });
+  return params;
+};
