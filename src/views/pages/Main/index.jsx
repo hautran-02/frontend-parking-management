@@ -6,12 +6,10 @@ import Home from './Home';
 import Map from './Map';
 import Driver from './Driver';
 import { publicRoutes } from '~/routes';
+import { addManyUser } from './data';
 
 function Main({}) {
   const { token } = theme.useToken();
-
-  console.log(token);
-
   return (
     <Layout className="vh-100">
       <Sider style={{ background: token.colorBgContainer }} />

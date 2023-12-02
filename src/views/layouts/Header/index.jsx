@@ -5,7 +5,6 @@ import DEFAULT_AVATAR from '~/assets/images/avatar.png';
 import { DownOutlined, SettingTwoTone } from '@ant-design/icons';
 import AppContext from '~/context';
 import { useNavigate } from 'react-router-dom';
-import { EmployeeForm } from '~/views/pages/Main/Employee/components';
 
 const items = [
   {

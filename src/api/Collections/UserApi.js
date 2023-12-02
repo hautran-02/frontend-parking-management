@@ -19,9 +19,17 @@ export default {
     });
   },
 
+  addMany: (payload) => {
+    const url = `${DOMAIN}/user/addMany`;
+    return POST({
+      url,
+      payload
+    });
+  },
+
   editEmployee: (_id, payload) => {
     const url = `${DOMAIN}/user/employee?_id=${_id}`;
-    return PUT({
+    return POST({
       url,
       payload
     });

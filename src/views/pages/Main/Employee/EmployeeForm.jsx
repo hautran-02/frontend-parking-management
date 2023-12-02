@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Modal, Input, Select, Button, Space, Card } from 'antd';
 import { ValidateNumberPhone } from '~/services/RegularService';
 import { EyeInvisibleOutlined, EyeTwoTone, RedoOutlined } from '@ant-design/icons';
+import { UserApi } from '~/api';
 
 const formItemLayout = {
   labelCol: {
@@ -16,10 +17,11 @@ const DEFAULT_PASSWORD = 'Parking@123';
 
 function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
 
-  const hanldeClose = (values) => {
+  const hanldeClose = (action, values) => {
     form.resetFields();
-    onClose(values);
+    onClose(action, values);
   };
 
   useEffect(() => {
@@ -31,7 +33,48 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
   }, [formAction]);
 
   const onFinish = (values) => {
-    hanldeClose(values);
+    if (formAction.action === 'add') {
+      hanldeAdd(values);
+    } else {
+      hanldeEdit(values);
+    }
+  };
+
+  const hanldeEdit = async (values) => {
+    try {
+      setLoading(true);
+      values.account = {
+        username: values.user,
+        password: values.pass,
+        role: 'Employee'
+      };
+      delete values.pass;
+      delete values.user;
+      const api = await UserApi.addEmployee(values);
+    } catch {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const hanldeAdd = async (values) => {
+    try {
+      setLoading(true);
+      values.account = {
+        username: values.user,
+        password: values.pass,
+        role: 'Employee'
+      };
+      delete values.pass;
+      delete values.user;
+      const api = await UserApi.addEmployee(values);
+      
+      onClose();
+    } catch (error) {
+      console.log('error', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const randomPassword = () => {

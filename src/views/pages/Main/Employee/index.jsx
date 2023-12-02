@@ -5,9 +5,9 @@ import { Content, Footer, Header } from '~/views/layouts';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { UserApi } from '~/api';
 import dayjs from 'dayjs';
-import { EmployeeForm } from './components';
 import { useSearchParams, useParams } from 'react-router-dom';
 import { GetAllParams } from '~/services/RegularService';
+import EmployeeForm from './EmployeeForm';
 
 function Employee({}) {
   const [data, setData] = useState([]);
@@ -18,6 +18,7 @@ function Employee({}) {
   // const { pageSize, pageIndex, name, address, phone, email, username } = searchParams;
   const params = GetAllParams(searchParams);
   const { pageSize, pageIndex } = params;
+  const [loading, setLoading] = useState(false);
 
   const callApi = async () => {
     const api = await UserApi.getEmployee({ ...params });
@@ -48,9 +49,8 @@ function Employee({}) {
     //hanlde Delete
   };
 
-  const hanldeCloseForm = (values) => {
-    console.log('values', values);
-    setOpenForm(false);
+  const hanldeCloseForm = () => {
+    setOpenForm(false)
   };
 
   const columns = [
