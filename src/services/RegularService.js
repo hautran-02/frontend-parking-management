@@ -79,8 +79,8 @@ export const ValidateNumberPhone = (phoneNumber) => {
   return vietnamesePhoneNumberPattern.test(cleanedNumber);
 };
 
-export const GetAllParams = (searchParams) => {
-  const params = {};
+export const GetAllParams = (searchParams, defaultParams) => {
+  const params = defaultParams;
   searchParams.forEach((value, key) => {
     params[key] = value;
   });

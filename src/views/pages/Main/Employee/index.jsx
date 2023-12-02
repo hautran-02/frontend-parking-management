@@ -1,6 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { TileLayout } from '@progress/kendo-react-layout';
-import { Badge, Card, Col, Layout, Row, Table, Typography, Space, Button, Modal } from 'antd';
+import {
+  Badge,
+  Card,
+  Col,
+  Layout,
+  Row,
+  Table,
+  Typography,
+  Space,
+  Button,
+  Modal,
+  Pagination
+} from 'antd';
 import { Content, Footer, Header } from '~/views/layouts';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { UserApi } from '~/api';
@@ -8,26 +20,42 @@ import dayjs from 'dayjs';
 import { useSearchParams, useParams } from 'react-router-dom';
 import { GetAllParams } from '~/services/RegularService';
 import EmployeeForm from './EmployeeForm';
+import CustomedTable from '~/components/Table';
 
 function Employee({}) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({
+    data: [],
+    totalCount: 0,
+    totalPage: 0
+  });
+  const { totalCount, totalPage } = data;
   const [formAction, setFormAction] = useState({});
   const [openForm, setOpenForm] = useState(false);
   const [openFormEdit, setOpenFormEdit] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
-  // const { pageSize, pageIndex, name, address, phone, email, username } = searchParams;
-  const params = GetAllParams(searchParams);
-  const { pageSize, pageIndex } = params;
+  const [searchParams, setSearchParams] = useSearchParams({
+    pageSize: '10',
+    pageIndex: '1'
+  });
+  const pageIndex = Number(searchParams.get('pageIndex'));
+  const pageSize = Number(searchParams.get('pageSize'));
   const [loading, setLoading] = useState(false);
 
   const callApi = async () => {
-    const api = await UserApi.getEmployee({ ...params });
-    setData(api.data);
+    try {
+      setLoading(true);
+      console.log('pageSize', pageSize, pageIndex);
+      const api = await UserApi.get({ ...searchParams, pageSize, pageIndex });
+      console.log('api', api);
+      setData(api);
+    } catch {
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     callApi();
-  }, []);
+  }, [searchParams.toString()]);
 
   const onAdd = () => {
     setFormAction({ action: 'add', actionText: 'Thêm', title: 'Thêm nhân viên mới' });
@@ -50,14 +78,14 @@ function Employee({}) {
   };
 
   const hanldeCloseForm = () => {
-    setOpenForm(false)
+    setOpenForm(false);
   };
 
   const columns = [
     {
       title: '#',
       dataIndex: 'key',
-      render: (_, prop, index) => index + 1
+      render: (_, prop, index) => (pageIndex - 1) * pageSize + index + 1
     },
     {
       title: 'Tên',
@@ -110,6 +138,7 @@ function Employee({}) {
       )
     }
   ];
+
   return (
     <Layout className="px-4">
       <Header className="border-1" title={'Quản lý nhân viên'} />
@@ -141,8 +170,33 @@ function Employee({}) {
               </Button>
             </Space>
           }
-          className="box">
-          <Table columns={columns} dataSource={data} rowKey={(record) => record._id} />
+          classNme="box">
+          <Table
+            columns={columns}
+            dataSource={data.data || []}
+            rowKey={(record) => record._id}
+            pagination={false}
+            loading={loading}
+          />
+          <Row className="mt-4 w-100" justify={'end'}>
+            {data.totalCount ? (
+              <Pagination
+                total={totalCount}
+                showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
+                pageSize={pageSize}
+                current={pageIndex}
+                loading={loading}
+                pageSizeOptions={[10, 20, 30]}
+                onChange={(page, pageSize) => {
+                  setSearchParams({
+                    ...Object.fromEntries(searchParams.entries()),
+                    pageIndex: page,
+                    pageSize
+                  });
+                }}
+              />
+            ) : null}
+          </Row>
         </Card>
       </Content>
       <Footer />

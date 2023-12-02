@@ -26,7 +26,6 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
 
   useEffect(() => {
     if (formAction.action === 'edit') {
-      console.log(formAction);
       form.setFieldsValue({ ...formAction.payload });
     } else {
     }

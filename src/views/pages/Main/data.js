@@ -520,8 +520,5 @@ export const users = () => {
 
 export const addManyUser = async () => {
   const userList = users();
-
   const rs = await UserApi.addMany(userList);
-
-  console.log(rs);
 };

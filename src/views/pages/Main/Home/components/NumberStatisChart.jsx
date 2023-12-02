@@ -73,7 +73,6 @@ function NumberStatisChart({}) {
       //object d
       startDate = startDate.format('L'); //DD/MM/YYYY 20/11/2023
       endDate = endDate.format('L');
-      console.log(startDate, endDate);
       const api = await MonitorApi.getVehicleInOutNumber({ startDate, endDate });
       const result = api;
       //hanlde Data
