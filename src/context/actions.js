@@ -86,3 +86,10 @@ export const onMess = async (payload) => {
     payload
   };
 };
+
+export const onNoti = async (payload) => {
+  return {
+    type: 'noti',
+    payload
+  };
+};

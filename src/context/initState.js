@@ -13,6 +13,7 @@ const getIsLogin = () => {
 const initState = {
   auth: getIsLogin(),
   mess: null,
+  noti: null,
 };
 
 export default initState;

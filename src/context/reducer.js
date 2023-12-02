@@ -12,6 +12,12 @@ const reducer = (state, action) => {
         mess: action.payload,
       };
     }
+    case "noti": {
+      return {
+        ...state,
+        noti: action.payload,
+      };
+    }
     default:
       return state;
   }

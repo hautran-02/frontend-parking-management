@@ -3,6 +3,7 @@ import { Form, Modal, Input, Select, Button, Space, Card } from 'antd';
 import { ValidateNumberPhone } from '~/services/RegularService';
 import { EyeInvisibleOutlined, EyeTwoTone, RedoOutlined } from '@ant-design/icons';
 import { UserApi } from '~/api';
+import { onNoti } from '~/context/actions';
 
 const formItemLayout = {
   labelCol: {
@@ -66,11 +67,13 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
       };
       delete values.pass;
       delete values.user;
-      const api = await UserApi.addEmployee(values);
-      
+      const api = await UserApi.add(values);
+      if (api) {
+        onNoti({ message: 'Thêm nhân viên thành công' });
+      }
       onClose();
     } catch (error) {
-      console.log('error', error);
+      onNoti({ message: 'Thêm nhân viên thành công' });
     } finally {
       setLoading(false);
     }

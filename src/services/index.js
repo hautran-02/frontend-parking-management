@@ -1,3 +1,3 @@
 import ChartService from './ChartService';
-
-export { ChartService };
+import ErrorService from './ErrorService';
+export { ChartService, ErrorService };

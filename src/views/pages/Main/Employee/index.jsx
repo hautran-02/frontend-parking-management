@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { TileLayout } from '@progress/kendo-react-layout';
 import {
   Badge,
@@ -11,7 +11,9 @@ import {
   Space,
   Button,
   Modal,
-  Pagination
+  Pagination,
+  Select,
+  Input
 } from 'antd';
 import { Content, Footer, Header } from '~/views/layouts';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
@@ -21,8 +23,11 @@ import { useSearchParams, useParams } from 'react-router-dom';
 import { GetAllParams } from '~/services/RegularService';
 import EmployeeForm from './EmployeeForm';
 import CustomedTable from '~/components/Table';
+import AppContext from '~/context';
+import { ErrorService } from '~/services';
 
 function Employee({}) {
+  const { actions } = useContext(AppContext);
   const [data, setData] = useState({
     data: [],
     totalCount: 0,
@@ -38,16 +43,25 @@ function Employee({}) {
   });
   const pageIndex = Number(searchParams.get('pageIndex'));
   const pageSize = Number(searchParams.get('pageSize'));
+  const params = { pageSize, pageIndex };
+  for (let [key, value] of searchParams.entries()) {
+    params[key] = value;
+  }
+  const name = searchParams.get('name');
+  const phone = searchParams.get('phone');
+  const email = searchParams.get('email');
+
   const [loading, setLoading] = useState(false);
 
   const callApi = async () => {
     try {
       setLoading(true);
-      console.log('pageSize', pageSize, pageIndex);
-      const api = await UserApi.get({ ...searchParams, pageSize, pageIndex });
-      console.log('api', api);
+      const api = await UserApi.get({ ...params, pageSize, pageIndex });
       setData(api);
-    } catch {
+    } catch (error) {
+      ErrorService.hanldeError(error, actions.onNoti);
+
+      setData({ data: [], pageSize: 0, pageIndex: 0 });
     } finally {
       setLoading(false);
     }
@@ -139,6 +153,19 @@ function Employee({}) {
     }
   ];
 
+  const onEnterFilter = (e) => {
+    const { value, name } = e.target;
+    setSearchParams({ ...params, [name]: value });
+  };
+
+  const onChangeFilter = (e) => {
+    const { value, name } = e.target;
+    if (!value) {
+      delete params[name];
+      setSearchParams({ ...params });
+    }
+  };
+
   return (
     <Layout className="px-4">
       <Header className="border-1" title={'Quản lý nhân viên'} />
@@ -155,6 +182,7 @@ function Employee({}) {
             formAction={formAction}
             onClose={hanldeCloseForm}
             noChangeAccount={formAction.action === 'edit'}
+            onNoti={actions.onNoti}
           />
         </Modal>
         <Card
@@ -171,6 +199,48 @@ function Employee({}) {
             </Space>
           }
           classNme="box">
+          <Row className="mt-2 mb-4 w-100">
+            <Row>
+              <Space>
+                <Typography.Title level={5} className="mb-0">
+                  Bộ lọc:
+                </Typography.Title>
+                <Input
+                  style={{
+                    width: 200
+                  }}
+                  placeholder="Tên"
+                  name="name"
+                  defaultValue={name}
+                  onPressEnter={onEnterFilter}
+                  onChange={onChangeFilter}
+                  allowClear={true}
+                />
+                <Input
+                  style={{
+                    width: 200
+                  }}
+                  placeholder="Số điện thoại"
+                  name="phone"
+                  defaultValue={phone}
+                  onPressEnter={onEnterFilter}
+                  onChange={onChangeFilter}
+                  allowClear={true}
+                />
+                <Input
+                  style={{
+                    width: 200
+                  }}
+                  name="email"
+                  placeholder="Email"
+                  defaultValue={email}
+                  onPressEnter={onEnterFilter}
+                  onChange={onChangeFilter}
+                  allowClear={true}
+                />
+              </Space>
+            </Row>
+          </Row>
           <Table
             columns={columns}
             dataSource={data.data || []}
