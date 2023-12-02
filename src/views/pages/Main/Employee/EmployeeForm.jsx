@@ -3,7 +3,7 @@ import { Form, Modal, Input, Select, Button, Space, Card } from 'antd';
 import { ValidateNumberPhone } from '~/services/RegularService';
 import { EyeInvisibleOutlined, EyeTwoTone, RedoOutlined } from '@ant-design/icons';
 import { UserApi } from '~/api';
-import { onNoti } from '~/context/actions';
+import { ErrorService } from '~/services';
 
 const formItemLayout = {
   labelCol: {
@@ -16,7 +16,7 @@ const formItemLayout = {
 
 const DEFAULT_PASSWORD = 'Parking@123';
 
-function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
+function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti }) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
@@ -69,11 +69,11 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
       delete values.user;
       const api = await UserApi.add(values);
       if (api) {
-        onNoti({ message: 'Thêm nhân viên thành công' });
+        onNoti({ message: 'Thêm nhân viên thành công', type: 'success' });
       }
       onClose();
     } catch (error) {
-      onNoti({ message: 'Thêm nhân viên thành công' });
+      ErrorService.hanldeError(error, onNoti)
     } finally {
       setLoading(false);
     }

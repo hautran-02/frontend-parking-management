@@ -34,6 +34,12 @@ axiosClient.interceptors.response.use(
           break;
       }
     }
+    if (response.data && response.data.statusCode) {
+      const { statusCode, message } = response.data;
+      status = statusCode;
+      statusText = message;
+    }
+
     return Promise.reject({
       status,
       statusText,

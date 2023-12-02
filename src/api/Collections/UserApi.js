@@ -4,7 +4,7 @@ const DOMAIN = import.meta.env.VITE_DOMAIN;
 
 export default {
   get: (payload) => {
-    const url = `${DOMAIN}/ser`;
+    const url = `${DOMAIN}/user`;
     return GET({
       url,
       payload
