@@ -11,6 +11,14 @@ export default {
     });
   },
 
+  getDrivers: (payload) => {
+    const url = `${DOMAIN}/user/driver/filter`;
+    return GET({
+      url,
+      payload
+    });
+  },
+
   getEmployee: (payload) => {
     const url = `${DOMAIN}/user/employee`;
     return GET({
@@ -21,6 +29,14 @@ export default {
 
   add: (payload) => {
     const url = `${DOMAIN}/user`;
+    return POST({
+      url,
+      payload
+    });
+  },
+
+  addDriver: (payload) => {
+    const url = `${DOMAIN}/user/driver`;
     return POST({
       url,
       payload
@@ -43,8 +59,23 @@ export default {
     });
   },
 
+  editDriver: (_id, payload) => {
+    const url = `${DOMAIN}/driver/update?_id=${_id}`;
+    return PUT({
+      url,
+      payload
+    });
+  },
+
   delete: (_id) => {
     const url = `${DOMAIN}/user?_id=${_id}`;
+    return DELETE({
+      url
+    });
+  },
+
+  deleteDriver: (_id) => {
+    const url = `${DOMAIN}/user/driver/delete?_id=${_id}`;
     return DELETE({
       url
     });

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Modal, Input, Select, Button, Space, Card } from 'antd';
-import { ValidateNumberPhone } from '~/services/RegularService';
 import { EyeInvisibleOutlined, EyeTwoTone, RedoOutlined } from '@ant-design/icons';
 import { UserApi } from '~/api';
-import { ErrorService } from '~/services';
+import { ErrorService, ValidateService } from '~/services';
 
 const formItemLayout = {
   labelCol: {
@@ -22,7 +21,7 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti, on
 
   const hanldeClose = (action, values) => {
     form.resetFields();
-    onClose(action, values);
+    onClose({});
   };
 
   useEffect(() => {
@@ -107,7 +106,7 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti, on
             { required: true, message: false },
             ({ getFieldValue }) => ({
               validator(_, value) {
-                if (ValidateNumberPhone(value)) {
+                if (ValidateService.phone(value)) {
                   return Promise.resolve();
                 }
 

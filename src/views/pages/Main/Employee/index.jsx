@@ -99,7 +99,6 @@ function Employee({}) {
       callApi();
     } catch (error) {
       ErrorService.hanldeError(error, actions.onNoti);
-      setData({ data: [], pageSize: 0, pageIndex: 0 });
     } finally {
       setLoading(false);
     }
@@ -173,7 +172,7 @@ function Employee({}) {
 
   const onEnterFilter = (e) => {
     const { value, name } = e.target;
-    setSearchParams({ ...params, [name]: value });
+    setSearchParams({ ...params, [name]: value.toString().trim() });
   };
 
   const onChangeFilter = (e) => {
@@ -217,7 +216,7 @@ function Employee({}) {
               </Button>
             </Space>
           }
-          classNme="box">
+          className="box">
           <Row className="mt-2 mb-4 w-100">
             <Row>
               <Space>

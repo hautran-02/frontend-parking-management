@@ -68,17 +68,6 @@ export const FloorService = {
   }
 };
 
-export const ValidateNumberPhone = (phoneNumber) => {
-  // Remove any spaces or special characters from the input
-  const cleanedNumber = phoneNumber.replace(/[^\d]/g, '');
-
-  // Define the regex pattern for a Vietnamese phone number
-  const vietnamesePhoneNumberPattern = /^0[2-9][0-9]{8}\b/;
-
-  // Test if the cleaned number matches the pattern
-  return vietnamesePhoneNumberPattern.test(cleanedNumber);
-};
-
 export const GetAllParams = (searchParams, defaultParams) => {
   const params = defaultParams;
   searchParams.forEach((value, key) => {

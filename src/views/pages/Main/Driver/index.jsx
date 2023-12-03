@@ -1,25 +1,62 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { TileLayout } from '@progress/kendo-react-layout';
-import { Badge, Card, Col, Layout, Row, Table, Typography, Space, Button } from 'antd';
+import {
+  Badge,
+  Card,
+  Col,
+  Layout,
+  Row,
+  Table,
+  Typography,
+  Space,
+  Button,
+  Input,
+  Modal,
+  Pagination
+} from 'antd';
 import { Content, Footer, Header } from '~/views/layouts';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { MonitorApi } from '~/api';
+import { UserApi } from '~/api';
 import dayjs from 'dayjs';
 import DriverForm from './DriverForm';
+import { useSearchParams } from 'react-router-dom';
+import AppContext from '~/context';
+import { ErrorService } from '~/services';
 
 function Driver({}) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({
+    data: [],
+    totalCount: 0,
+    totalPage: 0
+  });
+  const { totalCount, totalPage } = data;
   const [formAction, setFormAction] = useState({});
   const [openForm, setOpenForm] = useState(false);
+  const { actions } = useContext(AppContext);
+  const [searchParams, setSearchParams] = useSearchParams({
+    pageSize: '10',
+    pageIndex: '1'
+  });
+  const pageIndex = Number(searchParams.get('pageIndex'));
+  const pageSize = Number(searchParams.get('pageSize'));
+  const params = { pageSize, pageIndex };
+  for (let [key, value] of searchParams.entries()) {
+    params[key] = value;
+  }
+  const name = searchParams.get('name');
+  const phone = searchParams.get('phone');
+  const email = searchParams.get('email');
+  const licenePlate = searchParams.get('licenePlate');
+  const [loading, setLoading] = useState(false);
 
   const callApi = async () => {
-    const api = await MonitorApi.getAllDriver();
+    const api = await UserApi.getDrivers({ ...params, pageSize, pageIndex });
     setData(api);
   };
 
   useEffect(() => {
     callApi();
-  }, []);
+  }, [searchParams.toString()]);
 
   const expandedRowRender = (subData) => {
     const columns = [
@@ -56,13 +93,20 @@ function Driver({}) {
         key: 'createdAt'
       }
     ];
-    const newData = subData?.vehicle || [];
+    const newData = subData?.driver?.vehicle || [];
+    console.log(subData);
+
     return (
       <div className="container-fluid">
         <Typography.Title type="primary" level={5}>
           Danh sách xe:
         </Typography.Title>
-        <Table columns={columns} dataSource={newData} pagination={false} />
+        <Table
+          columns={columns}
+          dataSource={newData}
+          pagination={false}
+          rowKey={(record) => record._id}
+        />
       </div>
     );
   };
@@ -73,6 +117,8 @@ function Driver({}) {
   };
 
   const onEdit = (values) => {
+    console.log(values);
+    values.licenePlate = values.driver?.vehicle[0]?.licenePlate || null;
     setFormAction({
       action: 'edit',
       actionText: 'Chỉnh sửa',
@@ -82,19 +128,34 @@ function Driver({}) {
     setOpenForm(true);
   };
 
-  const onDelete = (values) => {
-    //hanlde Delete
+  const onDelete = async (values) => {
+    try {
+      setLoading(true);
+      const api = await UserApi.deleteDriver(values._id);
+      setData(api);
+      actions.onMess({
+        content: 'Xóa thành công',
+        type: 'success'
+      });
+      callApi();
+    } catch (error) {
+      ErrorService.hanldeError(error, actions.onNoti);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const hanldeCloseForm = () => {
+  const hanldeCloseForm = ({ reload }) => {
     setOpenForm(false);
+    if (reload) callApi();
   };
 
   const columns = [
     {
       title: '#',
       dataIndex: 'key',
-      render: (_, prop, index) => index
+      width: 60,
+      render: (_, prop, index) => (pageIndex - 1) * pageSize + index + 1
     },
     {
       title: 'Tên',
@@ -121,11 +182,13 @@ function Driver({}) {
       title: 'Ngày tham gia',
       dataIndex: 'createdAt',
       key: 'createdAt',
+      width: 180,
       render: (_, record, index) => dayjs(record.createdAt).format('L')
     },
     {
       title: '',
       dataIndex: 'actions',
+      width: 120,
       key: 'actions',
       render: (_, record, index) => (
         <Space>
@@ -147,11 +210,40 @@ function Driver({}) {
       )
     }
   ];
+
+  const onEnterFilter = (e) => {
+    const { value, name } = e.target;
+    setSearchParams({ ...params, [name]: value.toString().trim() });
+  };
+
+  const onChangeFilter = (e) => {
+    const { value, name } = e.target;
+    if (!value) {
+      delete params[name];
+      setSearchParams({ ...params });
+    }
+  };
+
   return (
     <Layout className="px-4">
       <Header className="border-1" title={'Quản lý chủ xe'} />
       <Content className="w-100 py-3">
-        <DriverForm formAction={formAction} isOpen={openForm} onClose={hanldeCloseForm} />
+        <Modal
+          title={formAction.title}
+          open={openForm}
+          onCancel={() => {
+            setOpenForm(false);
+          }}
+          destroyOnClose={true}
+          classNames={{ footer: 'd-none' }}>
+          <DriverForm
+            formAction={formAction}
+            isOpen={openForm}
+            onClose={hanldeCloseForm}
+            onNoti={actions.onNoti}
+            onMess={actions.onMess}
+          />
+        </Modal>
         <Card
           title={
             <Typography.Title type="primary" level={4}>
@@ -166,15 +258,89 @@ function Driver({}) {
             </Space>
           }
           className="box">
+          <Row className="mt-2 mb-4 w-100">
+            <Row>
+              <Space>
+                <Typography.Title level={5} className="mb-0">
+                  Bộ lọc:
+                </Typography.Title>
+                <Input
+                  style={{
+                    width: 200
+                  }}
+                  placeholder="Tên"
+                  name="name"
+                  defaultValue={name}
+                  onPressEnter={onEnterFilter}
+                  onChange={onChangeFilter}
+                  allowClear={true}
+                />
+                <Input
+                  style={{
+                    width: 200
+                  }}
+                  placeholder="Số điện thoại"
+                  name="phone"
+                  defaultValue={phone}
+                  onPressEnter={onEnterFilter}
+                  onChange={onChangeFilter}
+                  allowClear={true}
+                />
+                <Input
+                  style={{
+                    width: 320
+                  }}
+                  name="email"
+                  placeholder="Email"
+                  defaultValue={email}
+                  onPressEnter={onEnterFilter}
+                  onChange={onChangeFilter}
+                  allowClear={true}
+                />
+                <Input
+                  style={{
+                    width: 200
+                  }}
+                  name="licenePlate"
+                  placeholder="Biển số xe"
+                  defaultValue={licenePlate}
+                  onPressEnter={onEnterFilter}
+                  onChange={onChangeFilter}
+                  allowClear={true}
+                />
+              </Space>
+            </Row>
+          </Row>
           <Table
             columns={columns}
             expandable={{
               expandedRowRender,
               defaultExpandedRowKeys: ['0']
             }}
-            dataSource={data}
+            pagination={false}
+            dataSource={data.data || []}
             rowKey={(record) => record._id}
+            scroll={{ y: 600, scrollToFirstRowOnChange: true }}
           />
+          <Row className="mt-4 w-100" justify={'end'}>
+            {data.totalCount ? (
+              <Pagination
+                total={totalCount}
+                showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
+                pageSize={pageSize}
+                current={pageIndex}
+                loading={loading}
+                pageSizeOptions={[10, 20, 30]}
+                onChange={(page, pageSize) => {
+                  setSearchParams({
+                    ...Object.fromEntries(searchParams.entries()),
+                    pageIndex: page,
+                    pageSize
+                  });
+                }}
+              />
+            ) : null}
+          </Row>
         </Card>
       </Content>
       <Footer />
