@@ -3,13 +3,14 @@ import Authen from './views/pages/Authen';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import Main from './views/pages/Main';
 import AppContext from './context';
-import { ConfigProvider, message } from 'antd';
+import { ConfigProvider, message, notification, theme } from 'antd';
 import customAntdTheme from './shared/CustomAntdTheme';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@progress/kendo-theme-default/dist/all.css';
 import { dayjsSetup } from './config';
 import dayjs from 'dayjs';
 import PageError from './views/pages/PageError';
+import { ThemeProvider } from 'styled-components';
 
 function Auth({ children }) {
   const { state } = useContext(AppContext);
@@ -25,44 +26,62 @@ function Auth({ children }) {
 function App() {
   //Message Function
   const { state } = useContext(AppContext);
-  const { mess } = state;
+  const { mess, noti } = state;
   const [messageApi, contextHolder] = message.useMessage();
+  const [notiApi, notiContextHolder] = notification.useNotification();
   const navigate = useNavigate();
+  const { token } = theme.useToken();
 
   dayjsSetup();
 
   useEffect(() => {
     if (mess) {
-      const { type, content } = mess;
+      const { type, content, duration = 3 } = mess;
       messageApi.open({
         type,
-        content
+        content,
+        duration
       });
     }
-  }, [mess]);1
+  }, [mess]);
+
+  useEffect(() => {
+    if (noti) {
+      const { message, description, type = 'info', placement = 'bottomRight' } = noti;
+      notiApi[type]({
+        message,
+        description,
+        placement,
+        
+      });
+    }
+  }, [noti]);
 
   return (
     <div className="app">
       {contextHolder}
-      <Routes>
-        <Route path="/auth/login" element={<Authen />} />
-        <Route
-          path="/*"
-          element={
-            <Auth>
-              <Main />
-            </Auth>
-          }
-          errorElement={
-            <PageError
-              status="500"
-              title={false}
-              subTitle="Không tìm thấy trang"
-              btn={{ text: 'Về trang chủ', onClick: () => <Navigate to={'/dashboard'} /> }}
-            />
-          }
-        />
-      </Routes>
+      {notiContextHolder}
+      <ThemeProvider theme={{ ...token }}>
+        <Routes>
+          <Route path="/auth/login" element={<Authen />} />
+          <Route
+            path="/*"
+            element={
+              <Auth>
+                <Main />
+              </Auth>
+            }
+            errorElement={
+              <PageError
+                status="500"
+                title={false}
+                subTitle="Không tìm thấy trang"
+                btn={{ text: 'Về trang chủ', onClick: () => <Navigate to={'/dashboard'} /> }}
+              />
+            }
+          />
+        </Routes>
+      </ThemeProvider>
     </div>
   );
 }

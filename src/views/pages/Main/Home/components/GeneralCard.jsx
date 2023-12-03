@@ -101,15 +101,15 @@ function GeneralCard({ zone = 'A' }) {
 
   useEffect(() => {
     callApi();
-    const interval = setInterval(
-      () => {
-        callApi();
-      },
-      import.meta.env.VITE_INTERVAL_TIME
-    );
+    // const interval = setInterval(
+    //   () => {
+    //     callApi();
+    //   },
+    //   import.meta.env.VITE_INTERVAL_TIME
+    // );
 
     return () => {
-      clearInterval(interval);
+      // clearInterval(interval);
     };
   }, []);
 

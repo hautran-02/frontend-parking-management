@@ -26,6 +26,7 @@ function EventBlock({}) {
   };
 
   useEffect(() => {
+    //callApi()
     setData(DefaultEvents);
   }, []);
 

@@ -13,12 +13,11 @@ export const onLogin = async (params) => {
     if (rs) {
       isLogin = true;
       info = {
-        username,
-        password
+        username
       };
       type = 'success';
       content = 'Đăng nhập thành công';
-      Cookies.set("access_token", rs.accessToken);
+      Cookies.set('access_token', rs.accessToken);
       localStorage.setItem(
         'auth',
         JSON.stringify({
@@ -30,7 +29,7 @@ export const onLogin = async (params) => {
       content = 'Tên đăng nhập hoặc mật khẩu không đúng';
     }
   } catch (error) {
-    type="error";
+    type = 'error';
     content = 'Login Error';
   } finally {
     onComplete(type, content);
@@ -83,6 +82,13 @@ export const logout = async () => {
 export const onMess = async (payload) => {
   return {
     type: 'mess',
+    payload
+  };
+};
+
+export const onNoti = async (payload) => {
+  return {
+    type: 'noti',
     payload
   };
 };

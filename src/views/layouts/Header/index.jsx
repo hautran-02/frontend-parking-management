@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Avatar, Button, Dropdown, Flex, Image, Layout, Space, Typography, theme } from 'antd';
 import FULL_LOGO from '~/assets/logo/logo-text.svg';
 import DEFAULT_AVATAR from '~/assets/images/avatar.png';
@@ -10,7 +10,12 @@ const items = [
   {
     label: 'Chỉnh sửa thông tin',
     key: 'editProfile',
-    disabled: true
+    disabled: false
+  },
+  {
+    label: 'Thay đổi mật khẩu',
+    key: 'changePassword',
+    disabled: false
   },
   {
     label: <Typography.Text type="danger">Đăng xuất</Typography.Text>,
@@ -24,6 +29,8 @@ function Header({ title }) {
   } = theme.useToken();
   const { state, actions } = useContext(AppContext);
   const { auth } = state;
+  const [formAction, setFormAction] = useState({});
+  const [openForm, setOpenForm] = useState(false);
   const navigate = useNavigate();
 
   const hanldeLogout = async () => {
@@ -31,9 +38,15 @@ function Header({ title }) {
     navigate('/auth/login');
   };
 
+  const onChangePassword = () => {};
+
   const hanldeClickProfile = ({ key }) => {
     if (key === 'logout') {
       hanldeLogout();
+    } else if (key === 'editProfile') {
+      onEdit();
+    } else {
+      onChangePassword();
     }
   };
 
@@ -42,6 +55,20 @@ function Header({ title }) {
       navigate('/auth/login');
     }
   }, [state.auth]);
+
+  const onEdit = (values) => {
+    setFormAction({
+      action: 'edit',
+      actionText: 'Chỉnh sửa',
+      title: 'Chỉnh sửa thông tin cá nhân',
+      payload: { ...values }
+    });
+    setOpenForm(true);
+  };
+
+  const hanldeCloseForm = () => {
+    setOpenForm(false);
+  };
 
   return (
     <Layout.Header
@@ -80,6 +107,7 @@ function Header({ title }) {
           </Space>
         </Space>
       </Flex>
+      {/* <EmployeeForm formAction={formAction} isOpen={openForm} onClose={hanldeCloseForm} noChangeAccount /> */}
     </Layout.Header>
   );
 }

@@ -1,251 +1,251 @@
 export const SLOTS_B = [
   {
-    slotId: 'B101',
+    position: 'B101',
     occupied: true,
     top: 159,
     left: 37,
     rotate: 0
   },
   {
-    slotId: 'B102',
+    position: 'B102',
     occupied: true,
     top: 218,
     left: 37,
     rotate: 0
   },
   {
-    slotId: 'B103',
+    position: 'B103',
     occupied: true,
     top: 277,
     left: 37,
     rotate: 0
   },
   {
-    slotId: 'B104',
+    position: 'B104',
     occupied: true,
     top: 338,
     left: 37,
     rotate: 0
   },
   {
-    slotId: 'B105',
+    position: 'B105',
     occupied: true,
     top: 398,
     left: 37,
     rotate: 0
   },
   {
-    slotId: 'B106',
+    position: 'B106',
     occupied: true,
     top: 460,
     left: 37,
     rotate: 0
   },
   {
-    slotId: 'B201',
+    position: 'B201',
     occupied: true,
     top: 159,
     left: 234,
     rotate: 180
   },
   {
-    slotId: 'B202',
+    position: 'B202',
     occupied: true,
     top: 218,
     left: 234,
     rotate: 180
   },
   {
-    slotId: 'B203',
+    position: 'B203',
     occupied: true,
     top: 277,
     left: 234,
     rotate: 180
   },
   {
-    slotId: 'B204',
+    position: 'B204',
     occupied: true,
     top: 338,
     left: 234,
     rotate: 180
   },
   {
-    slotId: 'B205',
+    position: 'B205',
     occupied: true,
     top: 398,
     left: 234,
     rotate: 180
   },
   {
-    slotId: 'B206',
+    position: 'B206',
     occupied: true,
     top: 460,
     left: 234,
     rotate: 180
   },
   {
-    slotId: 'B301',
+    position: 'B301',
     occupied: true,
     top: 159,
     left: 326,
     rotate: 0
   },
   {
-    slotId: 'B302',
+    position: 'B302',
     occupied: true,
     top: 218,
     left: 326,
     rotate: 0
   },
   {
-    slotId: 'B303',
+    position: 'B303',
     occupied: true,
     top: 277,
     left: 326,
     rotate: 0
   },
   {
-    slotId: 'B304',
+    position: 'B304',
     occupied: true,
     top: 338,
     left: 326,
     rotate: 0
   },
   {
-    slotId: 'B305',
+    position: 'B305',
     occupied: true,
     top: 398,
     left: 326,
     rotate: 0
   },
   {
-    slotId: 'B306',
+    position: 'B306',
     occupied: true,
     top: 460,
     left: 326,
     rotate: 0
   },
   {
-    slotId: 'B401',
+    position: 'B401',
     occupied: true,
     top: 159,
     left: 500,
     rotate: 180
   },
   {
-    slotId: 'B402',
+    position: 'B402',
     occupied: true,
     top: 218,
     left: 500,
     rotate: 180
   },
   {
-    slotId: 'B403',
+    position: 'B403',
     occupied: true,
     top: 277,
     left: 500,
     rotate: 180
   },
   {
-    slotId: 'B404',
+    position: 'B404',
     occupied: true,
     top: 338,
     left: 500,
     rotate: 180
   },
   {
-    slotId: 'B405',
+    position: 'B405',
     occupied: true,
     top: 398,
     left: 500,
     rotate: 180
   },
   {
-    slotId: 'B406',
+    position: 'B406',
     occupied: true,
     top: 460,
     left: 500,
     rotate: 180
   },
   {
-    slotId: 'B501',
+    position: 'B501',
     occupied: true,
     top: 159,
     left: 594,
     rotate: 0
   },
   {
-    slotId: 'B502',
+    position: 'B502',
     occupied: true,
     top: 218,
     left: 594,
     rotate: 0
   },
   {
-    slotId: 'B503',
+    position: 'B503',
     occupied: true,
     top: 277,
     left: 594,
     rotate: 0
   },
   {
-    slotId: 'B504',
+    position: 'B504',
     occupied: true,
     top: 338,
     left: 594,
     rotate: 0
   },
   {
-    slotId: 'B505',
+    position: 'B505',
     occupied: true,
     top: 398,
     left: 594,
     rotate: 0
   },
   {
-    slotId: 'B506',
+    position: 'B506',
     occupied: true,
     top: 460,
     left: 594,
     rotate: 0
   },
   {
-    slotId: 'B601',
+    position: 'B601',
     occupied: true,
     top: 159,
     left: 778,
     rotate: 180
   },
   {
-    slotId: 'B602',
+    position: 'B602',
     occupied: true,
     top: 218,
     left: 778,
     rotate: 180
   },
   {
-    slotId: 'B603',
+    position: 'B603',
     occupied: true,
     top: 277,
     left: 778,
     rotate: 180
   },
   {
-    slotId: 'B604',
+    position: 'B604',
     occupied: true,
     top: 338,
     left: 778,
     rotate: 180
   },
   {
-    slotId: 'B605',
+    position: 'B605',
     occupied: true,
     top: 398,
     left: 778,
     rotate: 180
   },
   {
-    slotId: 'B606',
+    position: 'B606',
     occupied: true,
     top: 460,
     left: 778,

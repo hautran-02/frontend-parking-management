@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { TileLayout } from '@progress/kendo-react-layout';
 import {
   Badge,
@@ -10,20 +10,24 @@ import {
   Typography,
   Space,
   Button,
-  Input,
   Modal,
-  Pagination
+  Pagination,
+  Select,
+  Input
 } from 'antd';
 import { Content, Footer, Header } from '~/views/layouts';
 import { PlusOutlined, EditOutlined, DeleteOutlined, DeleteFilled } from '@ant-design/icons';
 import { UserApi } from '~/api';
 import dayjs from 'dayjs';
-import DriverForm from './DriverForm';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useParams } from 'react-router-dom';
+import { GetAllParams } from '~/services/RegularService';
+import EmployeeForm from './EmployeeForm';
+import CustomedTable from '~/components/Table';
 import AppContext from '~/context';
 import { ErrorService } from '~/services';
 
-function Driver({}) {
+function Employee({}) {
+  const { actions } = useContext(AppContext);
   const [data, setData] = useState({
     data: [],
     totalCount: 0,
@@ -32,7 +36,7 @@ function Driver({}) {
   const { totalCount, totalPage } = data;
   const [formAction, setFormAction] = useState({});
   const [openForm, setOpenForm] = useState(false);
-  const { actions } = useContext(AppContext);
+  const [openFormEdit, setOpenFormEdit] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams({
     pageSize: '10',
     pageIndex: '1'
@@ -46,15 +50,14 @@ function Driver({}) {
   const name = searchParams.get('name');
   const phone = searchParams.get('phone');
   const email = searchParams.get('email');
-  const licenePlate = searchParams.get('licenePlate');
-  const [loading, setLoading] = useState(false);
   const [selectedRows, setSeletedRows] = useState([]);
+  const [loading, setLoading] = useState(false);
   const isMounted = useRef(false);
 
   const callApi = async () => {
     try {
       setLoading(true);
-      const api = await UserApi.getDrivers({ ...params, pageSize, pageIndex });
+      const api = await UserApi.getEmployee({ ...params, pageSize, pageIndex });
       setData(api);
       isMounted.current = true;
     } catch (error) {
@@ -78,71 +81,17 @@ function Driver({}) {
     }
   }, [data]);
 
-  const expandedRowRender = (subData) => {
-    const columns = [
-      {
-        title: 'Biển số xe',
-        dataIndex: 'licenePlate',
-        key: 'licenePlate'
-      },
-      {
-        title: 'Loại xe',
-        dataIndex: 'type',
-        key: 'type'
-      },
-      {
-        title: 'Trạng thái',
-        key: 'status',
-        render: (_, record) => {
-          let config = {
-            status: 'success',
-            text: 'Còn hoạt động'
-          };
-          if (record._destroy) {
-            config = {
-              status: 'error',
-              text: 'Dừng hoạt động'
-            };
-          }
-          return <Badge {...config} />;
-        }
-      },
-      {
-        title: 'Ngày đăng ký',
-        dataIndex: 'createdAt',
-        key: 'createdAt'
-      }
-    ];
-    const newData = subData?.driver?.vehicle || [];
-    console.log(subData);
-
-    return (
-      <div className="container-fluid">
-        <Typography.Title type="primary" level={5}>
-          Danh sách xe:
-        </Typography.Title>
-        <Table
-          columns={columns}
-          dataSource={newData}
-          pagination={false}
-          rowKey={(record) => record._id}
-        />
-      </div>
-    );
-  };
-
   const onAdd = () => {
-    setFormAction({ action: 'add', actionText: 'Thêm', title: 'Thêm chủ xe mới' });
+    setFormAction({ action: 'add', actionText: 'Thêm', title: 'Thêm nhân viên mới' });
     setOpenForm(true);
   };
 
   const onEdit = (values) => {
-    console.log(values);
-    values.licenePlate = values.driver?.vehicle[0]?.licenePlate || null;
+    values.user = values.account.username;
     setFormAction({
       action: 'edit',
       actionText: 'Chỉnh sửa',
-      title: 'Chỉnh sửa thông tin chủ xe',
+      title: 'Chỉnh sửa thông tin nhân viên',
       payload: { ...values }
     });
     setOpenForm(true);
@@ -150,12 +99,8 @@ function Driver({}) {
 
   const onDelete = async (values) => {
     try {
-      actions.onMess({
-        content: 'Đang xóa',
-        type: 'loading',
-        duration: 1
-      });
-      const api = await UserApi.deleteDriver(values._id);
+      setLoading(true);
+      const api = await UserApi.delete(values._id);
       setData(api);
       actions.onMess({
         content: 'Xóa thành công',
@@ -165,6 +110,7 @@ function Driver({}) {
     } catch (error) {
       ErrorService.hanldeError(error, actions.onNoti);
     } finally {
+      setLoading(false);
     }
   };
 
@@ -219,7 +165,7 @@ function Driver({}) {
     },
     {
       title: 'Địa chỉ',
-      dataIndex: 'adress',
+      dataIndex: 'address',
       key: 'address'
     },
     {
@@ -232,8 +178,8 @@ function Driver({}) {
     {
       title: '',
       dataIndex: 'actions',
-      width: 120,
       key: 'actions',
+      width: 120,
       render: (_, record, index) => (
         <Space>
           <Button
@@ -257,9 +203,7 @@ function Driver({}) {
 
   const onEnterFilter = (e) => {
     const { value, name } = e.target;
-    if (value) {
-      setSearchParams({ ...params, [name]: value.toString().trim() });
-    }
+    setSearchParams({ ...params, [name]: value.toString().trim() });
   };
 
   const onChangeFilter = (e) => {
@@ -283,7 +227,7 @@ function Driver({}) {
 
   return (
     <Layout className="px-4">
-      <Header className="border-1" title={'Quản lý chủ xe'} />
+      <Header className="border-1" title={'Quản lý nhân viên'} />
       <Content className="w-100 py-3">
         <Modal
           title={formAction.title}
@@ -293,10 +237,10 @@ function Driver({}) {
           }}
           destroyOnClose={true}
           classNames={{ footer: 'd-none' }}>
-          <DriverForm
+          <EmployeeForm
             formAction={formAction}
-            isOpen={openForm}
             onClose={hanldeCloseForm}
+            noChangeAccount={formAction.action === 'edit'}
             onNoti={actions.onNoti}
             onMess={actions.onMess}
           />
@@ -315,7 +259,7 @@ function Driver({}) {
                 </Button>
               )}
               <Button type="primary" ghost icon={<PlusOutlined />} onClick={onAdd}>
-                Thêm chủ xe
+                Thêm nhân viên
               </Button>
             </Space>
           }
@@ -350,22 +294,11 @@ function Driver({}) {
                 />
                 <Input
                   style={{
-                    width: 320
+                    width: 200
                   }}
                   name="email"
                   placeholder="Email"
                   defaultValue={email}
-                  onPressEnter={onEnterFilter}
-                  onChange={onChangeFilter}
-                  allowClear={true}
-                />
-                <Input
-                  style={{
-                    width: 200
-                  }}
-                  name="licenePlate"
-                  placeholder="Biển số xe"
-                  defaultValue={licenePlate}
                   onPressEnter={onEnterFilter}
                   onChange={onChangeFilter}
                   allowClear={true}
@@ -375,18 +308,14 @@ function Driver({}) {
           </Row>
           <Table
             columns={columns}
-            expandable={{
-              expandedRowRender,
-              defaultExpandedRowKeys: ['0']
-            }}
+            dataSource={data.data || []}
+            rowKey={(record) => record._id}
+            pagination={false}
             rowSelection={{
               type: 'checkbox',
               ...rowSelection
             }}
             loading={loading}
-            pagination={false}
-            dataSource={data.data || []}
-            rowKey={(record) => record._id}
             scroll={{ y: 600, scrollToFirstRowOnChange: true }}
           />
           <Row className="mt-4 w-100" justify={'end'}>
@@ -396,7 +325,7 @@ function Driver({}) {
                 showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
                 pageSize={pageSize}
                 current={pageIndex}
-                disabled={loading}
+                loading={loading}
                 showSizeChanger={true}
                 pageSizeOptions={[10, 20, 30]}
                 onChange={(page, pageSize) => {
@@ -416,4 +345,4 @@ function Driver({}) {
   );
 }
 
-export default Driver;
+export default Employee;

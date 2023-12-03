@@ -51,4 +51,12 @@ export default createGlobalStyle`
     .ct-border {
         border: 1px solid #f0f0f0;
     }
+
+    .ant-spin-nested-loading {
+        &.h-100 {
+            > div {
+                height: 100%;
+            }
+        }
+    }
 `;
