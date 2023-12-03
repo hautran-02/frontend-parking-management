@@ -27,6 +27,7 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti }) 
 
   useEffect(() => {
     if (formAction.action === 'edit') {
+      console.log(formAction);
       form.setFieldsValue({ ...formAction.payload });
     } else {
     }
@@ -41,19 +42,16 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti }) 
   };
 
   const hanldeEdit = async (values) => {
+    console.log(values);
     try {
       setLoading(true);
-      values.account = {
-        username: values.user,
-        password: values.pass,
-        role: 'Employee'
-      };
-      delete values.pass;
+      delete values.account;
       delete values.user;
-      const api = await UserApi.addEmployee(values);
+      const api = await UserApi.edit(formAction.payload._id, values);
       if (api) {
         onNoti({ message: 'Chỉnh sửa nhân viên thành công', type: 'success' });
       }
+      onClose();
     } catch (error) {
       ErrorService.hanldeError(error, onNoti);
     } finally {

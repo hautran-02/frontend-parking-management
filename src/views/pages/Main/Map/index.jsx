@@ -64,8 +64,8 @@ function Map({}) {
             <Radio.Button value="C">Khu C</Radio.Button>
           </Radio.Group>
         </Flex>
-        <TransformBlock className="mt-2" style={{ backgroundColor: token.neutral5 }}>
-          <Spin spinning={loading}>
+        <TransformBlock className="mt-2 overflow-hidden" style={{ backgroundColor: token.neutral5 }}>
+          <Spin spinning={loading} wrapperClassName='h-100 w-100'>
             <MapInteractionCSS>
               <div className="map-wrapper">
                 {useMemo(() => {

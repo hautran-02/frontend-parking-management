@@ -56,7 +56,7 @@ function Employee({}) {
   const callApi = async () => {
     try {
       setLoading(true);
-      const api = await UserApi.get({ ...params, pageSize, pageIndex });
+      const api = await UserApi.getEmployee({ ...params, pageSize, pageIndex });
       setData(api);
     } catch (error) {
       ErrorService.hanldeError(error, actions.onNoti);
@@ -77,7 +77,7 @@ function Employee({}) {
   };
 
   const onEdit = (values) => {
-    values.user = values.user.username;
+    values.user = values.account.username;
     setFormAction({
       action: 'edit',
       actionText: 'Chỉnh sửa',
@@ -87,8 +87,23 @@ function Employee({}) {
     setOpenForm(true);
   };
 
-  const onDelete = (values) => {
-    //hanlde Delete
+  const onDelete = async (values) => {
+    try {
+      setLoading(true);
+      const api = await UserApi.delete(values._id);
+      setData(api);
+      actions.onNoti({
+        message: 'Xóa thành công',
+        description: `Nhân viên: ${values.name}`,
+        type: 'success'
+      });
+      callApi();
+    } catch (error) {
+      ErrorService.hanldeError(error, actions.onNoti);
+      setData({ data: [], pageSize: 0, pageIndex: 0 });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const hanldeCloseForm = () => {
@@ -99,6 +114,7 @@ function Employee({}) {
     {
       title: '#',
       dataIndex: 'key',
+      width: 60,
       render: (_, prop, index) => (pageIndex - 1) * pageSize + index + 1
     },
     {
@@ -126,12 +142,14 @@ function Employee({}) {
       title: 'Ngày tham gia',
       dataIndex: 'createdAt',
       key: 'createdAt',
+      width: 180,
       render: (_, record, index) => dayjs(record.createdAt).format('L')
     },
     {
       title: '',
       dataIndex: 'actions',
       key: 'actions',
+      width: 120,
       render: (_, record, index) => (
         <Space>
           <Button

@@ -1,4 +1,4 @@
-import { GET, POST, PUT } from '../axiosMethods';
+import { DELETE, GET, POST, PUT } from '../axiosMethods';
 
 const DOMAIN = import.meta.env.VITE_DOMAIN;
 
@@ -35,11 +35,18 @@ export default {
     });
   },
 
-  editEmployee: (_id, payload) => {
-    const url = `${DOMAIN}/user/employee?_id=${_id}`;
-    return POST({
+  edit: (_id, payload) => {
+    const url = `${DOMAIN}/user?_id=${_id}`;
+    return PUT({
       url,
       payload
+    });
+  },
+
+  delete: (_id) => {
+    const url = `${DOMAIN}/user?_id=${_id}`;
+    return DELETE({
+      url
     });
   }
 };

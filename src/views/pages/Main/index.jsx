@@ -6,6 +6,7 @@ import Home from './Home';
 import Map from './Map';
 import Driver from './Driver';
 import { publicRoutes } from '~/routes';
+import { users } from './data';
 
 function Main({}) {
   const { token } = theme.useToken();
