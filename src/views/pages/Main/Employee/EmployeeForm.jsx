@@ -51,7 +51,11 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti }) 
       delete values.pass;
       delete values.user;
       const api = await UserApi.addEmployee(values);
-    } catch {
+      if (api) {
+        onNoti({ message: 'Chỉnh sửa nhân viên thành công', type: 'success' });
+      }
+    } catch (error) {
+      ErrorService.hanldeError(error, onNoti);
     } finally {
       setLoading(false);
     }
@@ -73,7 +77,7 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti }) 
       }
       onClose();
     } catch (error) {
-      ErrorService.hanldeError(error, onNoti)
+      ErrorService.hanldeError(error, onNoti);
     } finally {
       setLoading(false);
     }

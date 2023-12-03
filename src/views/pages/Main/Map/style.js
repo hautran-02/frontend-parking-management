@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Popover } from 'antd';
+import styled, { css } from 'styled-components';
+import { Image, Popover } from 'antd';
 
 export const TransformBlock = styled.div`
   height: 96%;
@@ -24,6 +24,19 @@ export const TransformBlock = styled.div`
   }
   .slot {
     position: absolute;
+  }
+
+  .map-wrapper {
+    animation: loadingAnimation 1s forwards ease-in-out;
+    animation-delay: 10s;
+    @keyframes loadingAnimation {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
   }
 
   .image-container {

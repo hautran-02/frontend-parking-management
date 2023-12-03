@@ -34,11 +34,49 @@ function MapContainer({ zone, width, height, ...props }) {
         break;
     }
 
-    newVehs = newVehs.map((e) => {
-      return {
-        ...e,
-        width: newWidth
-      };
+    newVehs = newVehs.map((veh, ix) => {
+      const { top, left, slotId, rotate } = veh;
+      const width = newWidth;
+      return (
+        <React.Fragment key={slotId + ix}>
+          <DetailFloorStyled
+            key={slotId + ix}
+            title={
+              <Flex justify="space-between">
+                <Typography.Title
+                  id="location"
+                  level={5}
+                  className="detail-slot-title my-0"
+                  style={{ color: token.green7 }}>
+                  {`Khu ${zone} - ${slotId}`}
+                </Typography.Title>
+                <Tag color="cyan">{dayjs().format('L LTS')}</Tag>
+              </Flex>
+            }
+            content={<DetailSlot {...veh} zone={zone} />}
+            overlayInnerStyle={{
+              border: '1px solid',
+              borderColor: token.cyan,
+              backgroundColor: token.cyan1,
+              boxShadow: token.boxShadowSecondary
+            }}
+            getPopupContainer={() => document.querySelector('#root')}>
+            <img
+              id={slotId}
+              key={slotId + ix}
+              {...veh}
+              className="image-container"
+              src={Car}
+              style={{
+                transform: `rotate(${rotate}deg)`,
+                width,
+                top,
+                left
+              }}
+            />
+          </DetailFloorStyled>
+        </React.Fragment>
+      );
     });
 
     setVehs(newVehs);
@@ -48,46 +86,70 @@ function MapContainer({ zone, width, height, ...props }) {
 
   return (
     <>
-      <div id="mapWrappter">
-        {vehs.map((veh, ix) => {
-          const { width, top, left, slotId, rotate } = veh;
-          return (
-            <DetailFloorStyled
-              key={slotId + ix}
-              title={
-                <Flex justify="space-between">
-                  <Typography.Title
-                    id="location"
-                    level={5}
-                    className="detail-slot-title my-0"
-                    style={{ color: token.green7 }}>
-                    {`Khu ${zone} - ${slotId}`}
-                  </Typography.Title>
-                  <Tag color="cyan">{dayjs().format('L LTS')}</Tag>
-                </Flex>
-              }
-              content={<DetailSlot {...veh} zone={zone} />}
-              overlayInnerStyle={{
-                border: '1px solid',
-                borderColor: token.cyan,
-                backgroundColor: token.cyan1,
-                boxShadow: token.boxShadowSecondary
-              }}
-              getPopupContainer={() => document.querySelector('#root')}>
-              <img
-                className="image-container"
-                src={Car}
-                style={{
-                  transform: `rotate(${rotate}deg)`,
-                  width,
-                  top,
-                  left
-                }}
-                y
-              />
-            </DetailFloorStyled>
-          );
-        })}
+      <div id={'map' + zone} key={'map' + zone} className="map-wrapper">
+        {useMemo(() => {
+          let newVehs;
+          let newWidth = 50;
+          switch (zone) {
+            case 'A':
+              newVehs = SLOTS_A;
+              newWidth = 52;
+              break;
+            case 'B':
+              newVehs = SLOTS_B;
+              newWidth = 76;
+              break;
+            case 'C':
+              newVehs = SLOTS_C;
+              newWidth = 68;
+              break;
+          }
+
+          return newVehs.map((veh, ix) => {
+            const { top, left, slotId, rotate } = veh;
+            const width = newWidth;
+            return (
+              <React.Fragment key={slotId + ix}>
+                <DetailFloorStyled
+                  key={slotId + ix}
+                  title={
+                    <Flex justify="space-between">
+                      <Typography.Title
+                        id="location"
+                        level={5}
+                        className="detail-slot-title my-0"
+                        style={{ color: token.green7 }}>
+                        {`Khu ${zone} - ${slotId}`}
+                      </Typography.Title>
+                      <Tag color="cyan">{dayjs().format('L LTS')}</Tag>
+                    </Flex>
+                  }
+                  content={<DetailSlot {...veh} zone={zone} />}
+                  overlayInnerStyle={{
+                    border: '1px solid',
+                    borderColor: token.cyan,
+                    backgroundColor: token.cyan1,
+                    boxShadow: token.boxShadowSecondary
+                  }}
+                  getPopupContainer={() => document.querySelector('#root')}>
+                  <img
+                    id={slotId}
+                    key={slotId + ix}
+                    {...veh}
+                    className="image-container"
+                    src={Car}
+                    style={{
+                      transform: `rotate(${rotate}deg)`,
+                      width,
+                      top,
+                      left
+                    }}
+                  />
+                </DetailFloorStyled>
+              </React.Fragment>
+            );
+          });
+        }, [zone])}
         {useMemo(() => {
           let rs;
           switch (zone) {
@@ -137,7 +199,7 @@ function DetailSlot({ slotId, zone, occupied, vehicle, driver }) {
       <Row className="detail-slot" gutter={{ xs: 4, sm: 8, md: 12 }}>
         <Col span={8}>
           <Flex vertical={true} align="center" gap={4}>
-            <Image id="eventLisenceImg" src={IMG_LISENCE} />
+            <Image id="eventLisenceImg" src={IMG_LISENCE} preview={false} />
             <Typography.Text id="eventLisencePlate" strong>
               {vehicle.licenePlate}
             </Typography.Text>

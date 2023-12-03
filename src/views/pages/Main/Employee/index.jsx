@@ -247,6 +247,7 @@ function Employee({}) {
             rowKey={(record) => record._id}
             pagination={false}
             loading={loading}
+            scroll={{ y: 600, scrollToFirstRowOnChange: true }}
           />
           <Row className="mt-4 w-100" justify={'end'}>
             {data.totalCount ? (

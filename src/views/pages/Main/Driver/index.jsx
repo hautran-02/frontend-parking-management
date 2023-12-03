@@ -5,7 +5,7 @@ import { Content, Footer, Header } from '~/views/layouts';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { MonitorApi } from '~/api';
 import dayjs from 'dayjs';
-import { DriverForm } from './components';
+import DriverForm from './DriverForm';
 
 function Driver({}) {
   const [data, setData] = useState([]);
