@@ -98,7 +98,7 @@ export const SLOTS_A = [
     rotate: 0
   },
   {
-    position: 'A106',
+    position: 'A206',
     occupied: true,
     top: 392,
     left: 56,

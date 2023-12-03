@@ -9,5 +9,13 @@ export default {
       url,
       payload
     });
-  }
+  },
+
+  getStatus: (payload) => {
+    const url = `${DOMAIN}/parking/getStatus`;
+    return GET({
+      url,
+      payload
+    });
+  },
 };

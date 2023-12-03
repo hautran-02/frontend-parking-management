@@ -27,6 +27,12 @@ export const TransformBlock = styled.div`
   }
 
   .map-wrapper {
+  }
+
+  .image-container {
+    position: absolute;
+    z-index: 3;
+    transition: transform 0.2s;
     animation: loadingAnimation 1s forwards ease-in-out;
     animation-delay: 10s;
     @keyframes loadingAnimation {
@@ -37,12 +43,6 @@ export const TransformBlock = styled.div`
         opacity: 1;
       }
     }
-  }
-
-  .image-container {
-    position: absolute;
-    z-index: 3;
-    transition: transform 0.2s;
 
     &:hover {
       opacity: 0.8;
