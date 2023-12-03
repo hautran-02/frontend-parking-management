@@ -92,9 +92,8 @@ function Employee({}) {
       setLoading(true);
       const api = await UserApi.delete(values._id);
       setData(api);
-      actions.onNoti({
-        message: 'Xóa thành công',
-        description: `Nhân viên: ${values.name}`,
+      actions.onMess({
+        content: 'Xóa thành công',
         type: 'success'
       });
       callApi();
@@ -106,8 +105,9 @@ function Employee({}) {
     }
   };
 
-  const hanldeCloseForm = () => {
+  const hanldeCloseForm = ({ reload }) => {
     setOpenForm(false);
+    if(reload) callApi()
   };
 
   const columns = [
@@ -201,6 +201,7 @@ function Employee({}) {
             onClose={hanldeCloseForm}
             noChangeAccount={formAction.action === 'edit'}
             onNoti={actions.onNoti}
+            onMess={actions.onMess}
           />
         </Modal>
         <Card

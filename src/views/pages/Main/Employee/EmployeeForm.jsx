@@ -16,7 +16,7 @@ const formItemLayout = {
 
 const DEFAULT_PASSWORD = 'Parking@123';
 
-function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti }) {
+function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti, onMess }) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
@@ -49,9 +49,9 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti }) 
       delete values.user;
       const api = await UserApi.edit(formAction.payload._id, values);
       if (api) {
-        onNoti({ message: 'Chỉnh sửa nhân viên thành công', type: 'success' });
+        onMess({ content: 'Chỉnh sửa nhân viên thành công', type: 'success' });
       }
-      onClose();
+      onClose({ reload: true });
     } catch (error) {
       ErrorService.hanldeError(error, onNoti);
     } finally {
@@ -71,9 +71,9 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti }) 
       delete values.user;
       const api = await UserApi.add(values);
       if (api) {
-        onNoti({ message: 'Thêm nhân viên thành công', type: 'success' });
+        onMess({ content: 'Thêm nhân viên thành công', type: 'success' });
       }
-      onClose();
+      onClose({ reload: true });
     } catch (error) {
       ErrorService.hanldeError(error, onNoti);
     } finally {
