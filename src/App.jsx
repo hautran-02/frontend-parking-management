@@ -36,10 +36,11 @@ function App() {
 
   useEffect(() => {
     if (mess) {
-      const { type, content } = mess;
+      const { type, content, duration = 3 } = mess;
       messageApi.open({
         type,
-        content
+        content,
+        duration
       });
     }
   }, [mess]);

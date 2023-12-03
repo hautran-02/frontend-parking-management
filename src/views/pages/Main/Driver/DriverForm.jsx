@@ -29,7 +29,6 @@ function DriverForm({ isOpen, onClose, formAction, onNoti, onMess }) {
   }, [formAction]);
 
   const hanldeEdit = async (values) => {
-    console.log(values);
     try {
       setLoading(true);
       const api = await UserApi.editDriver(formAction.payload._id, values);
@@ -69,7 +68,7 @@ function DriverForm({ isOpen, onClose, formAction, onNoti, onMess }) {
 
   return (
     <div className="container-fluid pt-3">
-      <Form form={form} onFinish={onFinish} {...formItemLayout} style={{ maxWidth: 4000 }}>
+      <Form form={form} onFinish={onFinish} disabled={loading} {...formItemLayout} style={{ maxWidth: 4000 }}>
         <Form.Item name={'name'} label="Họ và tên" rules={[{ required: true }]}>
           <Input placeholder="Nguyễn Văn A" id="nameInput" />
         </Form.Item>

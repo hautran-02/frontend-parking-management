@@ -38,8 +38,6 @@ function Map({}) {
       setLoading(true);
       const api = await ParkingApi.getStatus({ zone });
       const newSlots = api[0].slots;
-      console.log('newSlot', newSlots);
-
       setSlots(newSlots);
     } catch {
       setSlots([]);
@@ -50,7 +48,7 @@ function Map({}) {
 
   useEffect(() => {
     //hanlde change Zone
-    callApi();
+    // callApi();
   }, [zone]);
 
   return (
@@ -102,6 +100,8 @@ function Map({}) {
                       map = <MapC />;
                       break;
                   }
+
+                  console.log(slots);
 
                   const newSlots = slots.map((slot, ix) => {
                     const [vehicle] = vehicles.filter((e) => e.position === slot.position);

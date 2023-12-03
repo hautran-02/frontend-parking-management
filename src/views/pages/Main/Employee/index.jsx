@@ -275,6 +275,7 @@ function Employee({}) {
                 pageSize={pageSize}
                 current={pageIndex}
                 loading={loading}
+                showSizeChanger={true}
                 pageSizeOptions={[10, 20, 30]}
                 onChange={(page, pageSize) => {
                   setSearchParams({

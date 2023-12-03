@@ -50,8 +50,16 @@ function Driver({}) {
   const [loading, setLoading] = useState(false);
 
   const callApi = async () => {
-    const api = await UserApi.getDrivers({ ...params, pageSize, pageIndex });
-    setData(api);
+    try {
+      setLoading(true);
+      const api = await UserApi.getDrivers({ ...params, pageSize, pageIndex });
+      setData(api);
+    } catch (error) {
+      ErrorService.hanldeError(error, actions.onNoti);
+      setData({ data: [], pageSize: 0, pageIndex: 0 });
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -130,7 +138,11 @@ function Driver({}) {
 
   const onDelete = async (values) => {
     try {
-      setLoading(true);
+      actions.onMess({
+        content: 'Đang xóa',
+        type: 'loading',
+        duration: 1,
+      });
       const api = await UserApi.deleteDriver(values._id);
       setData(api);
       actions.onMess({
@@ -141,7 +153,6 @@ function Driver({}) {
     } catch (error) {
       ErrorService.hanldeError(error, actions.onNoti);
     } finally {
-      setLoading(false);
     }
   };
 
@@ -213,7 +224,9 @@ function Driver({}) {
 
   const onEnterFilter = (e) => {
     const { value, name } = e.target;
-    setSearchParams({ ...params, [name]: value.toString().trim() });
+    if (value) {
+      setSearchParams({ ...params, [name]: value.toString().trim() });
+    }
   };
 
   const onChangeFilter = (e) => {
@@ -317,6 +330,7 @@ function Driver({}) {
               expandedRowRender,
               defaultExpandedRowKeys: ['0']
             }}
+            loading={loading}
             pagination={false}
             dataSource={data.data || []}
             rowKey={(record) => record._id}
@@ -329,7 +343,8 @@ function Driver({}) {
                 showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
                 pageSize={pageSize}
                 current={pageIndex}
-                loading={loading}
+                disabled={loading}
+                showSizeChanger={true}
                 pageSizeOptions={[10, 20, 30]}
                 onChange={(page, pageSize) => {
                   setSearchParams({

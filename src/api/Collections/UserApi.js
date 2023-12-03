@@ -60,7 +60,7 @@ export default {
   },
 
   editDriver: (_id, payload) => {
-    const url = `${DOMAIN}/driver/update?_id=${_id}`;
+    const url = `${DOMAIN}/user/driver?_id=${_id}`;
     return PUT({
       url,
       payload
@@ -75,7 +75,7 @@ export default {
   },
 
   deleteDriver: (_id) => {
-    const url = `${DOMAIN}/user/driver/delete?_id=${_id}`;
+    const url = `${DOMAIN}/user/driver?_id=${_id}`;
     return DELETE({
       url
     });
