@@ -19,8 +19,8 @@ export const PUT = ({ url, headers, payload }) => new Promise(async (resolve, re
         .catch(reject)
 })
 
-export const DELETE = ({ url, headers }) => new Promise(async (resolve, reject) => {
-    axiosClient.delete(url, { headers })
+export const DELETE = ({ url, payload, headers }) => new Promise(async (resolve, reject) => {
+    axiosClient.delete(url, payload, { headers })
         .then(resolve)
         .catch(reject)
 })

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { TileLayout } from '@progress/kendo-react-layout';
 import {
   Badge,
@@ -16,7 +16,7 @@ import {
   Input
 } from 'antd';
 import { Content, Footer, Header } from '~/views/layouts';
-import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { PlusOutlined, EditOutlined, DeleteOutlined, DeleteFilled } from '@ant-design/icons';
 import { UserApi } from '~/api';
 import dayjs from 'dayjs';
 import { useSearchParams, useParams } from 'react-router-dom';
@@ -50,26 +50,36 @@ function Employee({}) {
   const name = searchParams.get('name');
   const phone = searchParams.get('phone');
   const email = searchParams.get('email');
-
+  const [selectedRows, setSeletedRows] = useState([]);
   const [loading, setLoading] = useState(false);
+  const isMounted = useRef(false);
 
   const callApi = async () => {
     try {
       setLoading(true);
       const api = await UserApi.getEmployee({ ...params, pageSize, pageIndex });
       setData(api);
+      isMounted.current = true;
     } catch (error) {
       ErrorService.hanldeError(error, actions.onNoti);
-
       setData({ data: [], pageSize: 0, pageIndex: 0 });
     } finally {
       setLoading(false);
+      setSeletedRows([]);
     }
   };
 
   useEffect(() => {
     callApi();
   }, [searchParams.toString()]);
+
+  useEffect(() => {
+    if (isMounted.current) {
+      if (pageIndex > totalPage) {
+        setSearchParams({ ...params, pageIndex: totalPage });
+      }
+    }
+  }, [data]);
 
   const onAdd = () => {
     setFormAction({ action: 'add', actionText: 'Thêm', title: 'Thêm nhân viên mới' });
@@ -104,9 +114,30 @@ function Employee({}) {
     }
   };
 
+  const onDeleteMany = async () => {
+    try {
+      actions.onMess({
+        content: 'Đang xóa',
+        type: 'loading',
+        duration: 1
+      });
+      const ids = selectedRows.map((e) => e._id);
+      const api = await UserApi.deleteManyDriver(ids);
+      setData(api);
+      actions.onMess({
+        content: 'Xóa tất cả thành công',
+        type: 'success'
+      });
+      callApi();
+    } catch (error) {
+      ErrorService.hanldeError(error, actions.onNoti);
+    } finally {
+    }
+  };
+
   const hanldeCloseForm = ({ reload }) => {
     setOpenForm(false);
-    if(reload) callApi()
+    if (reload) callApi();
   };
 
   const columns = [
@@ -183,6 +214,17 @@ function Employee({}) {
     }
   };
 
+  const rowSelection = {
+    onChange: (_, selectedRows) => {
+      setSeletedRows(selectedRows);
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.name === 'Disabled User',
+      // Column configuration not to be checked
+      name: record.name
+    })
+  };
+
   return (
     <Layout className="px-4">
       <Header className="border-1" title={'Quản lý nhân viên'} />
@@ -211,6 +253,11 @@ function Employee({}) {
           }
           extra={
             <Space>
+              {selectedRows.length > 0 && (
+                <Button type="primary" icon={<DeleteFilled />} onClick={onDeleteMany} danger>
+                  Xóa
+                </Button>
+              )}
               <Button type="primary" ghost icon={<PlusOutlined />} onClick={onAdd}>
                 Thêm nhân viên
               </Button>
@@ -264,6 +311,10 @@ function Employee({}) {
             dataSource={data.data || []}
             rowKey={(record) => record._id}
             pagination={false}
+            rowSelection={{
+              type: 'checkbox',
+              ...rowSelection
+            }}
             loading={loading}
             scroll={{ y: 600, scrollToFirstRowOnChange: true }}
           />

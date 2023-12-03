@@ -86,7 +86,12 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti, on
 
   return (
     <div className="container-fluid pt-3">
-      <Form form={form} onFinish={onFinish} {...formItemLayout} style={{ maxWidth: 4000 }}>
+      <Form
+        form={form}
+        onFinish={onFinish}
+        disabled={loading}
+        {...formItemLayout}
+        style={{ maxWidth: 4000 }}>
         <Form.Item name={'name'} label="Họ và tên" rules={[{ required: true }]}>
           <Input placeholder="Nguyễn Văn A" id="nameInput" />
         </Form.Item>

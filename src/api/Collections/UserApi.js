@@ -74,10 +74,30 @@ export default {
     });
   },
 
+  deleteMany: (ids) => {
+    const url = `${DOMAIN}/user/deleteMany`;
+    return POST({
+      url,
+      payload: {
+        ids
+      }
+    });
+  },
+
   deleteDriver: (_id) => {
     const url = `${DOMAIN}/user/driver?_id=${_id}`;
     return DELETE({
       url
+    });
+  },
+
+  deleteManyDriver: (ids) => {
+    const url = `${DOMAIN}/user/driver/deletes`;
+    return POST({
+      url,
+      payload: {
+        ids
+      }
     });
   }
 };

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { TileLayout } from '@progress/kendo-react-layout';
 import {
   Badge,
@@ -15,7 +15,7 @@ import {
   Pagination
 } from 'antd';
 import { Content, Footer, Header } from '~/views/layouts';
-import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { PlusOutlined, EditOutlined, DeleteOutlined, DeleteFilled } from '@ant-design/icons';
 import { UserApi } from '~/api';
 import dayjs from 'dayjs';
 import DriverForm from './DriverForm';
@@ -48,23 +48,35 @@ function Driver({}) {
   const email = searchParams.get('email');
   const licenePlate = searchParams.get('licenePlate');
   const [loading, setLoading] = useState(false);
+  const [selectedRows, setSeletedRows] = useState([]);
+  const isMounted = useRef(false);
 
   const callApi = async () => {
     try {
       setLoading(true);
       const api = await UserApi.getDrivers({ ...params, pageSize, pageIndex });
       setData(api);
+      isMounted.current = true;
     } catch (error) {
       ErrorService.hanldeError(error, actions.onNoti);
       setData({ data: [], pageSize: 0, pageIndex: 0 });
     } finally {
       setLoading(false);
+      setSeletedRows([]);
     }
   };
 
   useEffect(() => {
     callApi();
   }, [searchParams.toString()]);
+
+  useEffect(() => {
+    if (isMounted.current) {
+      if (pageIndex > totalPage) {
+        setSearchParams({ ...params, pageIndex: totalPage });
+      }
+    }
+  }, [data]);
 
   const expandedRowRender = (subData) => {
     const columns = [
@@ -141,12 +153,33 @@ function Driver({}) {
       actions.onMess({
         content: 'Đang xóa',
         type: 'loading',
-        duration: 1,
+        duration: 1
       });
       const api = await UserApi.deleteDriver(values._id);
       setData(api);
       actions.onMess({
         content: 'Xóa thành công',
+        type: 'success'
+      });
+      callApi();
+    } catch (error) {
+      ErrorService.hanldeError(error, actions.onNoti);
+    } finally {
+    }
+  };
+
+  const onDeleteMany = async () => {
+    try {
+      actions.onMess({
+        content: 'Đang xóa',
+        type: 'loading',
+        duration: 1
+      });
+      const ids = selectedRows.map((e) => e._id);
+      const api = await UserApi.deleteManyDriver(ids);
+      setData(api);
+      actions.onMess({
+        content: 'Xóa tất cả thành công',
         type: 'success'
       });
       callApi();
@@ -237,6 +270,17 @@ function Driver({}) {
     }
   };
 
+  const rowSelection = {
+    onChange: (_, selectedRows) => {
+      setSeletedRows(selectedRows);
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.name === 'Disabled User',
+      // Column configuration not to be checked
+      name: record.name
+    })
+  };
+
   return (
     <Layout className="px-4">
       <Header className="border-1" title={'Quản lý chủ xe'} />
@@ -265,6 +309,11 @@ function Driver({}) {
           }
           extra={
             <Space>
+              {selectedRows.length > 0 && (
+                <Button type="primary" icon={<DeleteFilled />} onClick={onDeleteMany} danger>
+                  Xóa
+                </Button>
+              )}
               <Button type="primary" ghost icon={<PlusOutlined />} onClick={onAdd}>
                 Thêm chủ xe
               </Button>
@@ -329,6 +378,10 @@ function Driver({}) {
             expandable={{
               expandedRowRender,
               defaultExpandedRowKeys: ['0']
+            }}
+            rowSelection={{
+              type: 'checkbox',
+              ...rowSelection
             }}
             loading={loading}
             pagination={false}
