@@ -12,78 +12,9 @@ import { DetailFloorStyled, InnerDetailFloorStyled } from '../style';
 import dayjs from 'dayjs';
 
 function MapContainer({ zone, width, height, ...props }) {
-  const [vehs, setVehs] = useState([]);
   const { token } = theme.useToken();
-  const [vehWidth, setVehWidth] = useState();
-
-  useEffect(() => {
-    let newVehs;
-    let newWidth = 50;
-    switch (zone) {
-      case 'A':
-        newVehs = SLOTS_A;
-        newWidth = 52;
-        break;
-      case 'B':
-        newVehs = SLOTS_B;
-        newWidth = 76;
-        break;
-      case 'C':
-        newVehs = SLOTS_C;
-        newWidth = 68;
-        break;
-    }
-
-    newVehs = newVehs.map((veh, ix) => {
-      const { top, left, slotId, rotate } = veh;
-      const width = newWidth;
-      return (
-        <React.Fragment key={slotId + ix}>
-          <DetailFloorStyled
-            key={slotId + ix}
-            title={
-              <Flex justify="space-between">
-                <Typography.Title
-                  id="location"
-                  level={5}
-                  className="detail-slot-title my-0"
-                  style={{ color: token.green7 }}>
-                  {`Khu ${zone} - ${slotId}`}
-                </Typography.Title>
-                <Tag color="cyan">{dayjs().format('L LTS')}</Tag>
-              </Flex>
-            }
-            content={<DetailSlot {...veh} zone={zone} />}
-            overlayInnerStyle={{
-              border: '1px solid',
-              borderColor: token.cyan,
-              backgroundColor: token.cyan1,
-              boxShadow: token.boxShadowSecondary
-            }}
-            getPopupContainer={() => document.querySelector('#root')}>
-            <img
-              id={slotId}
-              key={slotId + ix}
-              {...veh}
-              className="image-container"
-              src={Car}
-              style={{
-                transform: `rotate(${rotate}deg)`,
-                width,
-                top,
-                left
-              }}
-            />
-          </DetailFloorStyled>
-        </React.Fragment>
-      );
-    });
-
-    setVehs(newVehs);
-  }, [zone]);
-
   const callApi = () => {};
-
+  
   return (
     <>
       <div id={'map' + zone} key={'map' + zone} className="map-wrapper">
@@ -106,12 +37,12 @@ function MapContainer({ zone, width, height, ...props }) {
           }
 
           return newVehs.map((veh, ix) => {
-            const { top, left, slotId, rotate } = veh;
+            const { top, left, position, rotate } = veh;
             const width = newWidth;
             return (
-              <React.Fragment key={slotId + ix}>
+              <React.Fragment key={position + ix}>
                 <DetailFloorStyled
-                  key={slotId + ix}
+                  key={position + ix}
                   title={
                     <Flex justify="space-between">
                       <Typography.Title
@@ -119,7 +50,7 @@ function MapContainer({ zone, width, height, ...props }) {
                         level={5}
                         className="detail-slot-title my-0"
                         style={{ color: token.green7 }}>
-                        {`Khu ${zone} - ${slotId}`}
+                        {`Khu ${zone} - ${position}`}
                       </Typography.Title>
                       <Tag color="cyan">{dayjs().format('L LTS')}</Tag>
                     </Flex>
@@ -133,8 +64,8 @@ function MapContainer({ zone, width, height, ...props }) {
                   }}
                   getPopupContainer={() => document.querySelector('#root')}>
                   <img
-                    id={slotId}
-                    key={slotId + ix}
+                    id={position}
+                    key={position + ix}
                     {...veh}
                     className="image-container"
                     src={Car}
@@ -149,6 +80,7 @@ function MapContainer({ zone, width, height, ...props }) {
               </React.Fragment>
             );
           });
+
         }, [zone])}
         {useMemo(() => {
           let rs;
@@ -172,7 +104,7 @@ function MapContainer({ zone, width, height, ...props }) {
 
 export default MapContainer;
 
-function DetailSlot({ slotId, zone, occupied, vehicle, driver }) {
+function DetailSlot({ position, zone, occupied, vehicle, driver }) {
   const { token } = theme.useToken();
   const { colorTextSecondary } = token;
 
