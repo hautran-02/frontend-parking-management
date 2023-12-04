@@ -1,10 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Avatar, Button, Dropdown, Flex, Image, Layout, Space, Typography, theme } from 'antd';
+import {
+  Avatar,
+  Button,
+  Dropdown,
+  Flex,
+  Image,
+  Layout,
+  Modal,
+  Space,
+  Typography,
+  theme
+} from 'antd';
 import FULL_LOGO from '~/assets/logo/logo-text.svg';
 import DEFAULT_AVATAR from '~/assets/images/avatar.png';
 import { DownOutlined, SettingTwoTone } from '@ant-design/icons';
 import AppContext from '~/context';
 import { useNavigate } from 'react-router-dom';
+import EmployeeForm from '~/views/pages/Main/Employee/EmployeeForm';
 
 const items = [
   {
@@ -56,7 +68,7 @@ function Header({ title }) {
     }
   }, [state.auth]);
 
-  const onEdit = (values) => {
+  const onEdit = () => {
     setFormAction({
       action: 'edit',
       actionText: 'Chỉnh sửa',
@@ -93,6 +105,7 @@ function Header({ title }) {
             <Avatar src={DEFAULT_AVATAR} size={40} />
             <Dropdown
               menu={{ items, onClick: hanldeClickProfile }}
+              getPopupContainer={() => document.querySelector('#root')}
               trigger={['click']}
               placement="bottomRight">
               <a onClick={(e) => e.preventDefault()}>
@@ -107,7 +120,21 @@ function Header({ title }) {
           </Space>
         </Space>
       </Flex>
-      {/* <EmployeeForm formAction={formAction} isOpen={openForm} onClose={hanldeCloseForm} noChangeAccount /> */}
+      <Modal
+        title={formAction.title}
+        open={openForm}
+        onCancel={() => {
+          setOpenForm(false);
+        }}
+        destroyOnClose={true}
+        classNames={{ footer: 'd-none' }}>
+        <EmployeeForm
+          formAction={formAction}
+          isOpen={openForm}
+          onClose={hanldeCloseForm}
+          noChangeAccount
+        />
+      </Modal>
     </Layout.Header>
   );
 }

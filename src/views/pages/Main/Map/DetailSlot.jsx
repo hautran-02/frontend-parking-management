@@ -3,7 +3,7 @@ import { Image, Row, Col, Flex, Typography, theme } from 'antd';
 import IMG_LISENCE from '~/assets/images/lisence.png';
 import { InnerDetailFloorStyled } from './style';
 
-function DetailSlot({ position, zone, occupied, vehicle, driver }) {
+function DetailSlot({ position, zone, vehicle, driver }) {
   const { token } = theme.useToken();
   const { colorTextSecondary } = token;
 

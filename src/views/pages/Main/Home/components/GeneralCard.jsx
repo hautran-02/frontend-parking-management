@@ -67,7 +67,9 @@ function GeneralCard({ zone = 'A' }) {
           fontSize: 26,
           color: '#000'
         },
-        formatter: (e) => data.occupied.toString()
+        formatter: (e) => {
+          return data.occupied;
+        }
       },
       content: {
         offsetY: -24,

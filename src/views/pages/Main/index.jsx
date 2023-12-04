@@ -14,8 +14,8 @@ function Main({}) {
     <Layout className="vh-100">
       <Sider style={{ background: token.colorBgContainer }} />
       <Routes>
-        {publicRoutes.map((route) => (
-          <Route {...route} />
+        {publicRoutes.map((route, ix) => (
+          <Route {...route} key={'route' + ix} />
         ))}
         <Route path="*" element={<Navigate to="/dashboard" />} />
       </Routes>

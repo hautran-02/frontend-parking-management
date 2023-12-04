@@ -34,11 +34,15 @@ function EventBlock({}) {
     <div>
       <Typography.Title level={4}>Sự kiện</Typography.Title>
       <List split={false}>
-        <VirtualList data={data} height={720} itemKey="event" onScroll={onScroll}>
+        <VirtualList
+          data={data}
+          height={720}
+          onScroll={onScroll}
+          itemKey={() => Math.random() * 1000000000}>
           {(item, index) => {
             const color = item.type === 'in' ? inColor : outColor;
             return (
-              <List.Item key={'Event' + index}>
+              <List.Item>
                 <Card
                   title={item.time.format('L LTS')}
                   className="event-card"
@@ -47,7 +51,7 @@ function EventBlock({}) {
                     backgroundColor: color.secondary,
                     border: `2px solid ${color.primary}`
                   }}>
-                  <div id='eventTag' className='event-tag'>
+                  <div id="eventTag" className="event-tag">
                     <CustomedTag entity={item.type} entityType="event">
                       {item.type === 'in' ? 'Xe vào' : 'Xe ra'}
                     </CustomedTag>
@@ -61,7 +65,11 @@ function EventBlock({}) {
                     </Col>
                     <Col span={16}>
                       <Flex justify="space-evenly" vertical={true} align="start">
-                        <Typography.Title id="eventZone" level={5} className='mb-0' style={{ color: color.primary }}>
+                        <Typography.Title
+                          id="eventZone"
+                          level={5}
+                          className="mb-0"
+                          style={{ color: color.primary }}>
                           {'Khu ' + item.zone}
                         </Typography.Title>
                         <Typography.Text id="eventDriverName">
