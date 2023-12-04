@@ -14,7 +14,6 @@ function CustomedDateRangePicker({ limit = [14, 'd'], ...restProps }) {
       const newDisable = (current) => {
         return current && current > (start.add(14, "d") || curr > dayjs());
       };
-      console.log('rs', newDisable);
       setDisabledDate(newDisable);
     } else {
     }

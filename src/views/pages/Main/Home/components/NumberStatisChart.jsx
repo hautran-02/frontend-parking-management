@@ -74,9 +74,7 @@ function NumberStatisChart({}) {
       startDate = startDate.format('L'); //DD/MM/YYYY 20/11/2023
       endDate = endDate.format('L');
       const api = await MonitorApi.getVehicleInOutNumber({ startDate, endDate });
-      console.log(api);
       const result = api.sort((a, b) => dayjs(a.date, 'L') - dayjs(b.date, 'L'));
-      console.log('after', result);
       //hanlde Data
 
       const newData = [];
@@ -112,7 +110,6 @@ function NumberStatisChart({}) {
 
       setData(newData);
     } catch (error) {
-      console.log(error);
     }
   };
 

@@ -26,7 +26,6 @@ function Authen({}) {
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
   };
 
   

@@ -114,7 +114,6 @@ function Driver({}) {
       }
     ];
     const newData = subData?.driver?.vehicle || [];
-    console.log(subData);
 
     return (
       <div className="container-fluid">
@@ -137,7 +136,6 @@ function Driver({}) {
   };
 
   const onEdit = (values) => {
-    console.log(values);
     values.licenePlate = values.driver?.vehicle[0]?.licenePlate || null;
     setFormAction({
       action: 'edit',

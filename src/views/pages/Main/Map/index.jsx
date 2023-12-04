@@ -1,8 +1,6 @@
 import React, { Suspense, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Layout, Flex, Radio, theme, Typography, Tag, Spin, Skeleton } from 'antd';
 import { Content, Footer, Header } from '~/views/layouts';
-import { lazyRetry } from '~/utils';
-import { MapContainer } from './components';
 import { DetailFloorStyled, TransformBlock } from './style';
 import { MapInteractionCSS } from 'react-map-interaction';
 import { useSearchParams } from 'react-router-dom';
@@ -48,7 +46,7 @@ function Map({}) {
 
   useEffect(() => {
     //hanlde change Zone
-    // callApi();
+    callApi();
   }, [zone]);
 
   return (
@@ -62,8 +60,10 @@ function Map({}) {
             <Radio.Button value="C">Khu C</Radio.Button>
           </Radio.Group>
         </Flex>
-        <TransformBlock className="mt-2 overflow-hidden" style={{ backgroundColor: token.neutral5 }}>
-          <Spin spinning={loading} wrapperClassName='h-100 w-100'>
+        <TransformBlock
+          className="mt-2 overflow-hidden"
+          style={{ backgroundColor: token.neutral5 }}>
+          <Spin spinning={loading} wrapperClassName="h-100 w-100">
             <MapInteractionCSS>
               <div className="map-wrapper">
                 {useMemo(() => {
@@ -101,8 +101,6 @@ function Map({}) {
                       break;
                   }
 
-                  console.log(slots);
-
                   const newSlots = slots.map((slot, ix) => {
                     const [vehicle] = vehicles.filter((e) => e.position === slot.position);
                     if (vehicle) {
@@ -124,7 +122,14 @@ function Map({}) {
                                 <Tag color="cyan">{dayjs().format('L LTS')}</Tag>
                               </Flex>
                             }
-                            content={<DetailSlot {...vehicle} zone={zone} />}
+                            content={
+                              <DetailSlot
+                                {...vehicle}
+                                zone={zone}
+                                vehicle={slot?.parkingTurn?.vehicles}
+                                driver={slot?.parkingTurn?.persons}
+                              />
+                            }
                             overlayInnerStyle={{
                               border: '1px solid',
                               borderColor: token.cyan,

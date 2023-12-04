@@ -26,7 +26,6 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti, on
 
   useEffect(() => {
     if (formAction.action === 'edit') {
-      console.log(formAction);
       form.setFieldsValue({ ...formAction.payload });
     } else {
     }
@@ -41,7 +40,6 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti, on
   };
 
   const hanldeEdit = async (values) => {
-    console.log(values);
     try {
       setLoading(true);
       delete values.account;
