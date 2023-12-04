@@ -1,14 +1,19 @@
 import { Column, Line } from '@ant-design/plots';
 import { Card, DatePicker, Space, Typography, theme } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import CardBlock from '~/components/CardBlock';
 import { DefaultNumberStatisChart } from '../data';
-import { ChartService } from '~/services';
+import { ChartService, ErrorService } from '~/services';
 import dayjs from 'dayjs';
+import AppContext from '~/context';
+import { MonitorApi } from '~/api';
+import { CustomedDateRangePicker } from '~/components';
 
+const zones = ['A', 'B', 'C'];
 function RevenueChart({}) {
+  const { state, actions } = useContext(AppContext);
   const [data, setData] = useState([]);
-  const [dates, setDates] = useState([dayjs().startOf('week'), dayjs().endOf('week')]);
+  const [dates, setDates] = useState([dayjs().add(-7, 'd').startOf('d'), dayjs().endOf('d')]);
   const defaultConfig = ChartService.defaultConfig;
   const { token } = theme.useToken();
   const color = [token['purple'], token['magenta'], token['orange2']];
@@ -59,8 +64,57 @@ function RevenueChart({}) {
     setDates(dates);
   };
 
+  const callApi = async () => {
+    try {
+      let [startDate, endDate] = dates;
+      const dateArr = ChartService.generateRange(startDate, endDate, 'd', 'L');
+      //object d
+      startDate = startDate.format('L'); //DD/MM/YYYY 20/11/2023
+      endDate = endDate.format('L');
+      const api = await MonitorApi.getRevenue({ startDate, endDate });
+      const result = api.sort((a, b) => dayjs(a.date, 'L') - dayjs(b.date, 'L'));
+      //hanlde Data
+
+      const newData = [];
+      const defaultValue = 0;
+      dateArr.map((date) => {
+        let value = null;
+        const [el] = result.slice(0, 1);
+
+        if (el && el.date === date) {
+          result.shift();
+          zones.map((zone) => {
+            value = el.data[zone] || defaultValue;
+
+            newData.push({
+              date,
+              value,
+              zone,
+              isData: true
+            });
+          });
+        } else {
+          zones.map((zone) => {
+            value = defaultValue;
+            newData.push({
+              date,
+              value,
+              zone,
+              isData: false
+            });
+          });
+        }
+      });
+
+      setData(newData);
+    } catch (error) {
+      console.log(error);
+      ErrorService.hanldeError(error, actions.onNoti);
+    }
+  };
+
   useEffect(() => {
-    setData(DefaultNumberStatisChart());
+    callApi();
   }, [dates]);
 
   return (
@@ -69,7 +123,7 @@ function RevenueChart({}) {
       extra={
         <Space>
           <Typography.Text>Thời gian:</Typography.Text>
-          <DatePicker.RangePicker
+          <CustomedDateRangePicker
             onChange={onChangeDate}
             format={'DD/MM/YYYY'}
             value={dates}

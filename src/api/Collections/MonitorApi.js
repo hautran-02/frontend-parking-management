@@ -17,14 +17,22 @@ export default {
     const url = `${DOMAIN}/parkingTurn/Reports/GetVehicleInOutNumber`;
     return GET({
       url,
-      payload,
+      payload
+    });
+  },
+
+  getRevenue: (payload) => {
+    const url = `${DOMAIN}/parkingTurn/Reports/GetRevenue`;
+    return GET({
+      url,
+      payload
     });
   },
 
   getAllDriver: () => {
     const url = `${DOMAIN}/user/driver`;
     return GET({
-      url,
+      url
     });
   }
 };

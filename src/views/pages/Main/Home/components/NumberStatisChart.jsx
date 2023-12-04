@@ -3,7 +3,7 @@ import { Card, DatePicker, Space, Typography, theme } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
 import CardBlock from '~/components/CardBlock';
 import { DefaultNumberStatisChart } from '../data';
-import { ChartService } from '~/services';
+import { ChartService, ErrorService } from '~/services';
 import dayjs from 'dayjs';
 import AppContext from '~/context';
 import { MonitorApi } from '~/api';
@@ -14,7 +14,7 @@ const zones = ['A', 'B', 'C'];
 function NumberStatisChart({}) {
   const { state, actions } = useContext(AppContext);
   const [data, setData] = useState([]);
-  const [dates, setDates] = useState([dayjs().startOf('week'), dayjs().endOf('week')]);
+  const [dates, setDates] = useState([dayjs().add(-7, 'd').startOf('d'), dayjs().endOf('d')]);
   const defaultConfig = ChartService.defaultConfig;
   const { token } = theme.useToken();
   const color = [token['purple'], token['magenta'], token['orange2']];
@@ -110,6 +110,7 @@ function NumberStatisChart({}) {
 
       setData(newData);
     } catch (error) {
+      ErrorService.hanldeError(error, actions.onNoti);
     }
   };
 
