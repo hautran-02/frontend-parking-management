@@ -99,5 +99,13 @@ export default {
         ids
       }
     });
+  },
+
+  changePassword: (payload) => {
+    const url = `${DOMAIN}/user/changePassword`;
+    return POST({
+      url,
+      payload,
+    });
   }
 };

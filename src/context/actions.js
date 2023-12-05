@@ -90,3 +90,10 @@ export const onNoti = async (payload) => {
     payload
   };
 };
+
+export const onSetChangePassword = async (payload) => {
+  return {
+    type: 'onChangePassword',
+    payload: !payload
+  };
+};

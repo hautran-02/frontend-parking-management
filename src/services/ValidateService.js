@@ -15,5 +15,10 @@ export default {
     const regex = /^\d{2}[A-Z]-\d{4,5}$/;
 
     return regex.test(licensePlate);
+  },
+
+  password: (password) => {
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    return regex.test(password);
   }
 };

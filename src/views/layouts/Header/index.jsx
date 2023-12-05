@@ -50,7 +50,9 @@ function Header({ title }) {
     navigate('/auth/login');
   };
 
-  const onChangePassword = () => {};
+  const onChangePassword = () => {
+    actions.onSetChangePassword();
+  };
 
   const hanldeClickProfile = ({ key }) => {
     if (key === 'logout') {

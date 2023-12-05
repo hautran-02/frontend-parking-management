@@ -14,6 +14,7 @@ const initState = {
   auth: getIsLogin(),
   mess: null,
   noti: null,
+  onChangePassword: false,
 };
 
 export default initState;
