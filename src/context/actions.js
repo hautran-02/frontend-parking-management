@@ -9,12 +9,10 @@ export const onLogin = async (params) => {
   const { username, password, onComplete } = params;
 
   try {
-    const rs = await AccountApi.login({ username, password, role: 'admin' });
+    const rs = await AccountApi.login({ username, password, role: 'Admin' });
     if (rs) {
-      isLogin = true;
-      info = {
-        username
-      };
+      isLogin = rs;
+      info = rs?.person || {};
       type = 'success';
       content = 'Đăng nhập thành công';
       Cookies.set('access_token', rs.accessToken);

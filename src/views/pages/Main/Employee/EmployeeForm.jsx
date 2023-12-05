@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Form, Modal, Input, Select, Button, Space, Card } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, RedoOutlined } from '@ant-design/icons';
 import { UserApi } from '~/api';
 import { ErrorService, ValidateService } from '~/services';
+import AppContext from '~/context';
 
 const formItemLayout = {
   labelCol: {
@@ -15,9 +16,11 @@ const formItemLayout = {
 
 const DEFAULT_PASSWORD = 'Parking@123';
 
-function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti, onMess }) {
+function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const { state, actions } = useContext(AppContext);
+  const { onNoti, onMess } = actions;
 
   const hanldeClose = (action, values) => {
     form.resetFields();

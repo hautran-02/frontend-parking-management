@@ -22,7 +22,7 @@ function Authen({}) {
   const onFinish = (values) => {
     const { username, password } = values;
     setLoading(true);
-    actions.onLogin({ username, password, onComplete });
+    actions.onLogin({ username, password, role: "Admin", onComplete });
   };
 
   const onFinishFailed = (errorInfo) => {

@@ -69,11 +69,13 @@ function Header({ title }) {
   }, [state.auth]);
 
   const onEdit = () => {
+    const { info } = auth;
+    info.user = info?.account?.username || '';
     setFormAction({
       action: 'edit',
       actionText: 'Chỉnh sửa',
       title: 'Chỉnh sửa thông tin cá nhân',
-      payload: { ...values }
+      payload: { ...info }
     });
     setOpenForm(true);
   };
