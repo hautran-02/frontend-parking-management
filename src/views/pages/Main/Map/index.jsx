@@ -102,6 +102,7 @@ function Map({}) {
                   }
 
                   const newSlots = slots.map((slot, ix) => {
+                    console.log();
                     const [vehicle] = vehicles.filter((e) => e.position === slot.position);
                     if (vehicle) {
                       const { top, left, position, rotate } = vehicle;
@@ -119,7 +120,9 @@ function Map({}) {
                                   style={{ color: token.green7 }}>
                                   {`Khu ${zone} - ${position}`}
                                 </Typography.Title>
-                                <Tag color="cyan">{dayjs().format('L LTS')}</Tag>
+                                <Tag color="cyan">
+                                  {dayjs(slot?.parkingTurn?.start, 'x').format('L LTS')}
+                                </Tag>
                               </Flex>
                             }
                             content={

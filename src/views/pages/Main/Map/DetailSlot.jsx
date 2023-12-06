@@ -3,6 +3,18 @@ import { Image, Row, Col, Flex, Typography, theme } from 'antd';
 import IMG_LISENCE from '~/assets/images/lisence.png';
 import { InnerDetailFloorStyled } from './style';
 
+const eventNames = {
+  in: 'Xe vào',
+  out: 'Xe ra'
+};
+
+const personInfo = {
+  name: 'Chủ xe',
+  job: 'Nghề nghiệp',
+  department: 'Đơn vị',
+  phone: 'SĐT'
+};
+
 function DetailSlot({ position, zone, vehicle, driver }) {
   const { token } = theme.useToken();
   const { colorTextSecondary } = token;
@@ -25,6 +37,20 @@ function DetailSlot({ position, zone, vehicle, driver }) {
   //   _destroy: false
   // };
 
+  let driverInfo = [];
+  let i = 0;
+  for (const [key, value] of Object.entries(personInfo)) {
+    driverInfo.push(
+      <Typography.Text key={'info' + i}>
+        <span className="label">{value}</span>
+        <span className="value">
+          {': '} {(driver && driver[key]) || 'Không xác định'}
+        </span>
+      </Typography.Text>
+    );
+    i++;
+  }
+
   return (
     <InnerDetailFloorStyled>
       <Row className="detail-slot" gutter={{ xs: 4, sm: 8, md: 12 }}>
@@ -38,26 +64,7 @@ function DetailSlot({ position, zone, vehicle, driver }) {
         </Col>
         <Col span={16}>
           <Flex justify="space-evenly" vertical={true} align="start">
-            <Typography.Text id="eventDriverName" strong>
-              <span className="label">Chủ xe: </span>
-              <span className="value">{driver.name}</span>
-            </Typography.Text>
-            <Typography.Text id="eventDriverJob" strong>
-              <span className="label">Nghề nghiệp: </span>
-              <span className="value">{driver.job}</span>
-            </Typography.Text>
-            <Typography.Text id="eventDriverDepartment" strong>
-              <span className="label">Đơn vị: </span>
-              <span className="value">{driver.department}</span>
-            </Typography.Text>
-            <Typography.Text id="eventDriverPhone" strong>
-              <span className="label">SĐT: </span>
-              <span className="value">{driver.phone}</span>
-            </Typography.Text>
-            <Typography.Text id="eventDriverEmail" strong>
-              <span className="label">Email: </span>
-              <span className="value">{driver.email}</span>
-            </Typography.Text>
+          {driverInfo}
           </Flex>
         </Col>
       </Row>

@@ -1,4 +1,5 @@
 import { Card, Col, Flex, Image, Row, Typography, theme } from 'antd';
+import dayjs from 'dayjs';
 import React from 'react';
 import IMG_LISENCE from '~/assets/images/lisence.png';
 import CustomedTag from '~/components/CustomedTag';
@@ -16,7 +17,6 @@ const personInfo = {
 };
 
 function EventCard({ item }) {
-  console.log(item);
   const { token } = theme.useToken();
   const { geekblue6, blue2, colorTextSecondary, colorText, gold2, gold7 } = token;
   const inColor = {
@@ -28,12 +28,24 @@ function EventCard({ item }) {
     secondary: gold2
   };
 
-  const { name, parkingTurn, vehicle, person } = item;
+  const { name, parkingTurn, vehicle, person = {} } = item;
   const color = name === 'in' ? inColor : outColor;
-
+  let rs = [];
+  let i = 0;
+  for (const [key, value] of Object.entries(personInfo)) {
+    rs.push(
+      <Typography.Text key={'info' + i}>
+        <span className="label">{value}</span>
+        <span className="value">
+          {': '} {(person && person[key]) || 'Không xác định'}
+        </span>
+      </Typography.Text>
+    );
+    i++;
+  }
   return (
     <Card
-      title={item.createdAt}
+      title={dayjs(item.createdAt, 'X').format('L LTS')}
       className="event-card"
       style={{
         width: '99%',
@@ -61,23 +73,7 @@ function EventCard({ item }) {
               style={{ color: color.primary }}>
               {'Khu ' + item.zone}
             </Typography.Title>
-
-            {() => {
-              let rs = [];
-              let i = 0;
-              for (const [key, value] of Object.entries(person)) {
-                rs.push(
-                  personInfo[key] && (
-                    <Typography.Text key={'info' + i}>
-                      <span className="label">{personInfo[key]}</span>
-                      <span className="value">{value}</span>
-                    </Typography.Text>
-                  )
-                );
-                i++;
-              }
-              return rs;
-            }}
+            {rs}
             {/* <Typography.Text id="eventDriverName">
               <span className="label">Chủ xe: </span>
               <span className="value">{item.driver.name}</span>
