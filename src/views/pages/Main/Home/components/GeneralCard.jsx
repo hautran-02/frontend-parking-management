@@ -68,7 +68,7 @@ function GeneralCard({ zone = 'A' }) {
           color: '#000'
         },
         formatter: (e) => {
-          return data.occupied;
+          return data.occupied.toString();
         }
       },
       content: {

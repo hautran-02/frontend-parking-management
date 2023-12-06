@@ -1,28 +1,22 @@
 import {
-  Card,
-  Col,
-  Collapse,
   Divider,
-  Flex,
-  Image,
-  Row,
   Skeleton,
-  Space,
   Typography,
   theme
 } from 'antd';
-import React, { useEffect, useState } from 'react';
-import VirtualList from 'rc-virtual-list';
-import { Avatar, List } from 'antd';
-import { DefaultEvents } from '../data';
-import IMG_LISENCE from '~/assets/images/lisence.png';
-import CustomedTag from '~/components/CustomedTag';
+import React, { useEffect, useRef, useState } from 'react';
+import { List } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
-const { Meta } = Card;
+import EventCard from './EventCard';
+import { MonitorApi } from '~/api';
+import { ErrorService } from '~/services';
 
 function EventBlock({}) {
   const [data, setData] = useState([]);
   const { token } = theme.useToken();
+  const [pageSize, setPageSize] = useState(50);
+  const [pageIndex, setPageIndex] = useState(1);
+  const isMounted = useRef(false);
   const { geekblue6, blue2, colorTextSecondary, colorText, gold2, gold7 } = token;
   const inColor = {
     primary: geekblue6,
@@ -38,9 +32,18 @@ function EventBlock({}) {
     }
   };
 
+  const callApi = async () => {
+    try {
+      const api = await MonitorApi.getEvents({ pageSize, pageIndex });
+      setData(api.data);
+    } catch (error) {
+      ErrorService.hanldeError(error);
+    } finally {
+    }
+  };
+
   useEffect(() => {
-    //callApi()
-    setData(DefaultEvents);
+    callApi();
   }, []);
 
   return (
@@ -73,56 +76,7 @@ function EventBlock({}) {
               const color = item.type === 'in' ? inColor : outColor;
               return (
                 <List.Item key={item.email}>
-                  <Card
-                    title={item.time.format('L LTS')}
-                    className="event-card"
-                    style={{
-                      width: '99%',
-                      backgroundColor: color.secondary,
-                      border: `2px solid ${color.primary}`
-                    }}>
-                    <div id="eventTag" className="event-tag">
-                      <CustomedTag entity={item.type} entityType="event">
-                        {item.type === 'in' ? 'Xe vào' : 'Xe ra'}
-                      </CustomedTag>
-                    </div>
-                    <Row gutter={{ xs: 4, sm: 8, md: 12 }}>
-                      <Col span={8}>
-                        <Flex vertical={true} align="center" gap={4}>
-                          <Image id="eventLisenceImg" src={IMG_LISENCE} />
-                          <Typography.Text id="eventLisencePlate">{item.license}</Typography.Text>
-                        </Flex>
-                      </Col>
-                      <Col span={16}>
-                        <Flex justify="space-evenly" vertical={true} align="start">
-                          <Typography.Title
-                            id="eventZone"
-                            level={5}
-                            className="mb-0"
-                            style={{ color: color.primary }}>
-                            {'Khu ' + item.zone}
-                          </Typography.Title>
-                          <Typography.Text id="eventDriverName">
-                            <span className="label">Chủ xe: </span>
-                            <span className="value">{item.driver.name}</span>
-                          </Typography.Text>
-                          <Typography.Text id="eventDriverJob">
-                            <span className="label">Nghề nghiệp: </span>
-                            <span className="value">{item.driver.job}</span>
-                          </Typography.Text>
-                          <Typography.Text id="eventDriverDepartment">
-                            <span className="label">Đơn vị: </span>
-                            <span className="value">{item.driver.department}</span>
-                          </Typography.Text>
-                          <Typography.Text id="eventDriverPhone">
-                            {' '}
-                            <span className="label">SĐT: </span>
-                            <span className="value">{item.driver.phone}</span>
-                          </Typography.Text>
-                        </Flex>
-                      </Col>
-                    </Row>
-                  </Card>
+                  {/* <EventCard item={item} /> */}
                 </List.Item>
               );
             }}

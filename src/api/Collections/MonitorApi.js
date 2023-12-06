@@ -34,5 +34,13 @@ export default {
     return GET({
       url
     });
+  },
+
+  getEvents: (payload) => {
+    const url = `${DOMAIN}/parkingTurn/event`;
+    return GET({
+      url,
+      payload
+    });
   }
 };
