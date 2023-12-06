@@ -6,10 +6,9 @@ export const onLogin = async (params) => {
   let type = 'error';
   let content = '';
   let info = {};
-  const { username, password, onComplete } = params;
-
+  const { username, password, onComplete, role } = params;
   try {
-    const rs = await AccountApi.login({ username, password, role: 'Admin' });
+    const rs = await AccountApi.login({ username, password, role });
     if (rs) {
       isLogin = rs;
       info = rs?.person || {};

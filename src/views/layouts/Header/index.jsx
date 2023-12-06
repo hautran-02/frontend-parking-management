@@ -115,7 +115,7 @@ function Header({ title }) {
               <a onClick={(e) => e.preventDefault()}>
                 <Space>
                   <Typography.Title level={5} style={{ margin: 0 }}>
-                    Trần Trung Hậu
+                    {state?.auth?.info?.name}
                   </Typography.Title>
                   <DownOutlined />
                 </Space>

@@ -102,7 +102,6 @@ function Map({}) {
                   }
 
                   const newSlots = slots.map((slot, ix) => {
-                    console.log();
                     const [vehicle] = vehicles.filter((e) => e.position === slot.position);
                     if (vehicle) {
                       const { top, left, position, rotate } = vehicle;
