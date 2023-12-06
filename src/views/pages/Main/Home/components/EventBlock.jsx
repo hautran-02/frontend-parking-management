@@ -76,7 +76,7 @@ function EventBlock({}) {
               const color = item.type === 'in' ? inColor : outColor;
               return (
                 <List.Item key={item.email}>
-                  {/* <EventCard item={item} /> */}
+                  <EventCard item={item} />
                 </List.Item>
               );
             }}
