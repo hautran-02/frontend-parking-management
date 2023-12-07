@@ -1,10 +1,16 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const axiosClient = axios.create({
   headers: {
     'Content-Type': 'application/json'
   },
   timeout: 55000
+});
+
+axiosClient.interceptors.request.use((config) => {
+  config.headers['Authorization'] = `bearer ${Cookies.get('access_token')}`;
+  return config;
 });
 
 axiosClient.interceptors.response.use(
