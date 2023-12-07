@@ -99,3 +99,11 @@ export const onSetChangePassword = async (payload) => {
     payload: !payload
   };
 };
+
+export const onEventParking = async (payload) => {
+  console.log(onEventParking, payload);
+  return {
+    type: 'parkingEvent',
+    payload: payload
+  };
+};

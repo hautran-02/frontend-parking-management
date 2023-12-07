@@ -45,9 +45,8 @@ function Map({}) {
   };
 
   useEffect(() => {
-    //hanlde change Zone
     callApi();
-  }, [zone]);
+  }, [zone, state.parkingEvent]);
 
   return (
     <Layout className="px-4">

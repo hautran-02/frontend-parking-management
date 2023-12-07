@@ -9,11 +9,33 @@ import { publicRoutes } from '~/routes';
 import { users } from './data';
 import AppContext from '~/context';
 import { PasswordForm } from '~/views/components/Form';
+import socket from '~/socket';
+import { useEffect } from 'react';
 
 function Main({}) {
   const { token } = theme.useToken();
   const { state, actions } = useContext(AppContext);
   const { auth } = state;
+
+  useEffect(() => {
+    const hanldeNotiParking = (event) => {
+      actions.onEventParking(event);
+    };
+    //config websocket
+    socket.on('connect', () => {
+      console.log('socket successful');
+    });
+
+    socket.on('notification-parking', hanldeNotiParking);
+
+    return () => {
+      socket.off('connect', () => {
+        console.log('socket successful');
+      });
+
+      socket.off('notification-parking', hanldeNotiParking);
+    };
+  }, []);
 
   return (
     <Layout className="vh-100">

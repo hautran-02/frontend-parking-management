@@ -1,17 +1,15 @@
-import {
-  Divider,
-  Skeleton,
-  Typography,
-  theme
-} from 'antd';
+import { Divider, Skeleton, Typography, theme } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { List } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import EventCard from './EventCard';
 import { MonitorApi } from '~/api';
 import { ErrorService } from '~/services';
+import AppContext from '~/context';
+import { useContext } from 'react';
 
 function EventBlock({}) {
+  const { state, actions } = useContext(AppContext);
   const [data, setData] = useState([]);
   const { token } = theme.useToken();
   const [pageSize, setPageSize] = useState(50);
@@ -44,7 +42,7 @@ function EventBlock({}) {
 
   useEffect(() => {
     callApi();
-  }, []);
+  }, [state.parkingEvent]);
 
   return (
     <div>

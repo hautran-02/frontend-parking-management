@@ -116,7 +116,7 @@ function NumberStatisChart({}) {
 
   useEffect(() => {
     callApi();
-  }, [dates]);
+  }, [dates, state.parkingEvent]);
 
   return (
     <Card

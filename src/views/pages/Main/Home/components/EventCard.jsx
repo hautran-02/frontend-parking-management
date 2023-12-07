@@ -57,7 +57,7 @@ function EventCard({ item }) {
 
   return (
     <Card
-      title={dayjs(item.createdAt, 'X').format('L LTS')}
+      title={dayjs(item.createdAt, 'x').format('L LTS')}
       className="event-card"
       style={{
         width: '99%',

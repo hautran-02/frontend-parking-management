@@ -26,6 +26,13 @@ const reducer = (state, action) => {
       };
     }
 
+    case 'parkingEvent': {
+      return {
+        ...state,
+        parkingEvent: action.payload
+      };
+    }
+
     default:
       return state;
   }

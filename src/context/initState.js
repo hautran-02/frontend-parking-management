@@ -15,6 +15,7 @@ const initState = {
   mess: null,
   noti: null,
   onChangePassword: false,
+  parkingEvent: null,
 };
 
 export default initState;
