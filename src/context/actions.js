@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import { AccountApi } from '../api';
+import dayjs from 'dayjs';
 
 export const onLogin = async (params) => {
   let isLogin = false;
@@ -10,16 +11,19 @@ export const onLogin = async (params) => {
   try {
     const rs = await AccountApi.login({ username, password, role });
     if (rs) {
-      isLogin = rs;
+      isLogin = true;
       info = rs?.person || {};
       type = 'success';
       content = 'Đăng nhập thành công';
-      Cookies.set('access_token', rs.accessToken);
+      Cookies.set('access_token', rs.accessToken, { expires: 7 });
+
+      const expirationTime = dayjs().unix() + 5;
       localStorage.setItem(
         'auth',
         JSON.stringify({
           isLogin,
-          info
+          info,
+          expDate: expirationTime
         })
       );
     } else {
@@ -68,7 +72,6 @@ export const checkAuthenSevice = async ({ onError = null, onFinish = null }) => 
 export const logout = async () => {
   localStorage.removeItem('isLogin');
   Cookies.remove('access_token');
-  localStorage.clear();
 
   return {
     type: 'auth',

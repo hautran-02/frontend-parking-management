@@ -1,10 +1,48 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
+import LexendThinFont from '~/assets/fonts/lexend/Lexend-Thin.ttf';
+import LexendLightFont from '~/assets/fonts/lexend/Lexend-Light.ttf';
+import LexendRegularFont from '~/assets/fonts/lexend/Lexend-Regular.ttf';
+import LexendMediumFont from '~/assets/fonts/lexend/Lexend-Medium.ttf';
+import LexendSemiBoldFont from '~/assets/fonts/lexend/Lexend-SemiBold.ttf';
+import LexendBoldFont from '~/assets/fonts/lexend/Lexend-Bold.ttf';
 
 export default createGlobalStyle`
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+    }
+
+    @font-face {
+        font-family: 'lexend';
+        font-display: block;
+        font-style:normal;
+        src: url(${LexendRegularFont})  format('truetype');
+    }
+    @font-face {
+        font-family: 'lexend';
+        font-weight: 300;
+        font-display: block;
+        src: url(${LexendLightFont})  format('truetype');
+    }
+    @font-face {
+        font-family: 'lexend';
+        font-weight: 500;
+        font-display: block;
+        src: url(${LexendMediumFont})  format('truetype');
+    }
+
+    @font-face {
+        font-family: 'lexend';
+        font-weight: 600;
+        font-display: block;
+        src: url(${LexendSemiBoldFont})  format('truetype');
+    }
+    @font-face {
+        font-family: 'lexend';
+        font-weight: 700;
+        font-display: block;
+        src: url(${LexendBoldFont})  format('truetype');
     }
 
     :root {
@@ -15,7 +53,7 @@ export default createGlobalStyle`
     iframe#webpack-dev-server-client-overlay{display:none!important}
 
     body {
-        font-family: 'lexend', sans-serif;
+        font-family: 'Lexend', sans-serif;
     }
 
     html {

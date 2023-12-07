@@ -31,6 +31,7 @@ function App() {
   const [notiApi, notiContextHolder] = notification.useNotification();
   const navigate = useNavigate();
   const { token } = theme.useToken();
+  console.log(localStorage.getItem("auth"));
 
   dayjsSetup();
 
@@ -51,8 +52,7 @@ function App() {
       notiApi[type]({
         message,
         description,
-        placement,
-        
+        placement
       });
     }
   }, [noti]);

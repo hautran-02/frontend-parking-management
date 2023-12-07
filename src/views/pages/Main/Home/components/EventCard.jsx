@@ -28,10 +28,21 @@ function EventCard({ item }) {
     secondary: gold2
   };
 
-  const { name, parkingTurn, vehicle, person = {} } = item;
+  let { name, parkingTurn, vehicle, person = {} } = item;
   const color = name === 'in' ? inColor : outColor;
   let rs = [];
   let i = 0;
+
+  //get Driver info: Department and job
+  if (person && person.driver) {
+    const { driver } = person;
+    person = {
+      ...person,
+      ...driver,
+    };
+    delete person.driver;
+  }
+
   for (const [key, value] of Object.entries(personInfo)) {
     rs.push(
       <Typography.Text key={'info' + i}>
@@ -43,6 +54,7 @@ function EventCard({ item }) {
     );
     i++;
   }
+
   return (
     <Card
       title={dayjs(item.createdAt, 'X').format('L LTS')}
