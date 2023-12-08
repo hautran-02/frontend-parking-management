@@ -1,7 +1,7 @@
 import { Card, Col, Flex, Image, Row, Typography, theme } from 'antd';
 import dayjs from 'dayjs';
 import React from 'react';
-import IMG_LISENCE from '~/assets/images/lisence.png';
+import IMG_DEVELOPING from '~/assets/images/developing.png';
 import CustomedTag from '~/components/CustomedTag';
 
 const eventNames = {
@@ -74,7 +74,10 @@ function EventCard({ item }) {
           <Flex vertical={true} align="center" gap={4}>
             <Image
               id="eventLisenceImg"
-              src='https://dsm01pap005files.storage.live.com/y4mmeuP6vkckZbDi5icp6K6jkRxAtNfLEVNV5byVVqb_VC6gcEZw7w6cIjMDCVT0Wfd5eYnb0B6rn-l5QNfGNU1onmZXo6QPn84_QBNlNjXY2W8iKSjd-jUlx0pKt-egoANpwUQRdWPNz0TqB4D1PWMHxbIS1nMG9-U1vdqVRaR8nA1HfwV7vA_6yHByEjQn5vps2mQhwJsZhBYiRQ9s_PUq35JXVw-iCwyAcSdJC-QImU?encodeFailures=1&width=1149&height=621'
+              src={IMG_DEVELOPING}
+              className="p-2"
+              preview={false}
+              style={{ background: '#FFF', width: 120, height: 120 }}
             />
             <Typography.Text id="eventLisencePlate">{vehicle.licenePlate}</Typography.Text>
           </Flex>

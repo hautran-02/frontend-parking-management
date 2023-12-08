@@ -68,7 +68,12 @@ function DriverForm({ isOpen, onClose, formAction, onNoti, onMess }) {
 
   return (
     <div className="container-fluid pt-3">
-      <Form form={form} onFinish={onFinish} disabled={loading} {...formItemLayout} style={{ maxWidth: 4000 }}>
+      <Form
+        form={form}
+        onFinish={onFinish}
+        disabled={loading}
+        {...formItemLayout}
+        style={{ maxWidth: 4000 }}>
         <Form.Item name={'name'} label="Họ và tên" rules={[{ required: true }]}>
           <Input placeholder="Nguyễn Văn A" id="nameInput" />
         </Form.Item>
@@ -100,6 +105,16 @@ function DriverForm({ isOpen, onClose, formAction, onNoti, onMess }) {
         </Form.Item>
         <Form.Item name={'address'} label="Địa chỉ">
           <Input placeholder="Số 1 Võ Văn Ngân, Linh Chiểu" id="addressInput" />
+        </Form.Item>
+        <Form.Item label="Nghề nghiệp" name={['job']} rules={[{ required: true }]}>
+          <Select>
+            <Select.Option value="Giảng viên">Giảng viên</Select.Option>
+            <Select.Option value="Sinh viên">Sinh viên</Select.Option>
+            <Select.Option value="Nhân viên">Nhân viên</Select.Option>
+          </Select>
+        </Form.Item>
+        <Form.Item label="Đơn vị" name={['department']} rules={[{ required: true }]}>
+          <Input placeholder="Công nghệ thông tin" />
         </Form.Item>
         <Form.Item
           label="Biển số xe"

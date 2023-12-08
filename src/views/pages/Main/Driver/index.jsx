@@ -110,7 +110,8 @@ function Driver({}) {
       {
         title: 'Ngày đăng ký',
         dataIndex: 'createdAt',
-        key: 'createdAt'
+        key: 'createdAt',
+        render: (_, record, index) => dayjs(record.createdAt).format('L')
       }
     ];
     const newData = subData?.driver?.vehicle || [];
@@ -217,8 +218,19 @@ function Driver({}) {
     },
     {
       title: 'Địa chỉ',
-      dataIndex: 'adress',
+      dataIndex: 'address',
       key: 'address'
+    },
+    {
+      title: 'Nghề nghiệp',
+      dataIndex: ['driver', 'job'],
+      key: 'job'
+    },
+    {
+      title: 'Đơn vị (Khoa)',
+      dataIndex: ['driver', 'department'],
+      key: 'department',
+      render: (text, record, index) => text
     },
     {
       title: 'Ngày tham gia',

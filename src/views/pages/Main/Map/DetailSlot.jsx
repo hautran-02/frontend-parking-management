@@ -38,6 +38,11 @@ function DetailSlot({ position, zone, vehicle, driver }) {
   // };
 
   let driverInfo = [];
+
+  driver = {
+    ...driver,
+    ...driver?.driver
+  };
   let i = 0;
   for (const [key, value] of Object.entries(personInfo)) {
     driverInfo.push(
@@ -64,7 +69,7 @@ function DetailSlot({ position, zone, vehicle, driver }) {
         </Col>
         <Col span={16}>
           <Flex justify="space-evenly" vertical={true} align="start">
-          {driverInfo}
+            {driverInfo}
           </Flex>
         </Col>
       </Row>
