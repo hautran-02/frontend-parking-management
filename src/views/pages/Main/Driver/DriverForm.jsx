@@ -103,7 +103,7 @@ function DriverForm({ isOpen, onClose, formAction, onNoti, onMess }) {
           ]}>
           <Input placeholder="0357647771" id="phoneInput" addonBefore={'+84'} />
         </Form.Item>
-        <Form.Item name={'address'} label="Địa chỉ">
+        <Form.Item name={'address'} label="Địa chỉ" rules={[{ required: true, message: false }]}>
           <Input placeholder="Số 1 Võ Văn Ngân, Linh Chiểu" id="addressInput" />
         </Form.Item>
         <Form.Item label="Nghề nghiệp" name={['job']} rules={[{ required: true }]}>

@@ -67,7 +67,10 @@ function Map({}) {
           className="mt-2 overflow-hidden"
           style={{ backgroundColor: token.neutral5 }}>
           <Spin spinning={loading} wrapperClassName="h-100 w-100">
-            <MapInteractionCSS>
+            <MapInteractionCSS
+              minScale={1}
+              maxScale={1.2}
+              translationBounds={{ xMin: -100, yMin: -100, xMax: 800, yMax: 600  }}>
               <div className="map-wrapper">
                 {useMemo(() => {
                   let vehicles;

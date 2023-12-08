@@ -122,7 +122,7 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
           ]}>
           <Input placeholder="0357647771" id="phoneInput" addonBefore={'+87'} />
         </Form.Item>
-        <Form.Item name={'address'} label="Địa chỉ">
+        <Form.Item name={'address'} label="Địa chỉ" rules={[{ required: true, message: false }]}>
           <Input placeholder="Số 1 Võ Văn Ngân, Linh Chiểu" id="addressInput" />
         </Form.Item>
         <Form.Item
