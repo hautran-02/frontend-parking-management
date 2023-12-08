@@ -34,5 +34,14 @@ export default {
       url,
       payload
     });
+  },
+
+  exportVehicle: (payload) => {
+    const url = `${DOMAIN}/parkingTurn/outPaking`;
+
+    return POST({
+      url,
+      payload
+    });
   }
 };

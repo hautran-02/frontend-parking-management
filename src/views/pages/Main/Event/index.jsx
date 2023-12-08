@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Button, Card, Col, Form, Input, Layout, Radio, Row, Select, Switch } from 'antd';
 import { Content, Footer, Header } from '~/views/layouts';
 import AppContext from '~/context';
@@ -22,10 +22,15 @@ const zones = ['A', 'B', 'C'];
 function Event({}) {
   const { state, actions } = useContext(AppContext);
   const [drivers, setDrivers] = useState([]);
-  const [parkings, setParkings] = useState([]);
+  const [parkings, setParkings] = useState({});
   const [importForm] = Form.useForm();
+  const [exportForm] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [isSelect, setIsSelect] = useState(true);
+  const occupiedSlots = useMemo(() => {
+    const { A: zoneA, B: zoneB, C: zoneC } = parkings;
+    return [...(zoneA?.slots || []), ...(zoneB?.slots || []), ...(zoneC?.slots || [])];
+  }, [parkings]);
 
   const callApi = async () => {
     try {
@@ -49,11 +54,23 @@ function Event({}) {
   };
   const hanldeImport = async (values) => {
     try {
-      console.log(values);
       await ParkingApi.importVehicle(values);
       actions.onNoti({
         type: 'success',
         message: 'Nhập xe thành công',
+        description: values.licenePlate
+      });
+    } catch (error) {
+      ErrorService.hanldeError(error, actions.onNoti);
+    }
+  };
+
+  const hanldeExport = async (values) => {
+    try {
+      await ParkingApi.exportVehicle(values);
+      actions.onNoti({
+        type: 'success',
+        message: 'Xuất xe thành công',
         description: values.licenePlate
       });
     } catch (error) {
@@ -169,7 +186,47 @@ function Event({}) {
             </Form>
           </Col>
           <Col span={12}>
-            <Card title="Xuất xe">asdfasd</Card>
+            <Form
+              name="exportVehicleForm"
+              form={exportForm}
+              onFinish={hanldeExport}
+              disabled={loading}
+              layout="vertical"
+              {...formItemLayout}
+              style={{ maxWidth: 4000 }}>
+              <Card
+                title="Nhập xe"
+                extra={
+                  <Form.Item className="mb-0">
+                    <Button htmlType="submit" type="primary" danger>
+                      Xuất
+                    </Button>
+                  </Form.Item>
+                }>
+                <Form.Item
+                  name="licenePlate"
+                  label="Biển số xe"
+                  rules={[
+                    { required: true, message: false },
+                    ({}) => ({
+                      validator(_, value) {
+                        if (ValidateService.licensePlate(value)) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject({ message: 'Sai định dạng (VD: 12A-2184)' });
+                      }
+                    })
+                  ]}>
+                  <Select>
+                    {occupiedSlots.map((el) => (
+                      <Select.Option value={el?.parkingTurn?.vehicles?.licenePlate}>
+                        {el?.parkingTurn?.vehicles[0]?.licenePlate}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Card>
+            </Form>
           </Col>
         </Row>
       </Content>
