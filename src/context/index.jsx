@@ -1,7 +1,16 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import React, { useReducer, createContext } from 'react';
-import { logout, checkAuthenSevice, onLogin, onMess, onNoti, onSetChangePassword, onEventParking } from './actions';
+import {
+  logout,
+  checkAuthenSevice,
+  onLogin,
+  onMess,
+  onNoti,
+  onSetChangePassword,
+  onEventParking,
+  onAuthorize
+} from './actions';
 import initState from './initState';
 import reducer from './reducer';
 
@@ -17,7 +26,8 @@ export const AppProvider = ({ children }) => {
     onMess: async (params) => dispatch(await onMess(params)),
     onNoti: async (params) => dispatch(await onNoti(params)),
     onSetChangePassword: async () => dispatch(await onSetChangePassword(state.onChangePassword)),
-    onEventParking: async (params) => dispatch(await onEventParking(params))
+    onEventParking: async (params) => dispatch(await onEventParking(params)),
+    onAuthorize: async (params) => dispatch(await onAuthorize(params))
   };
 
   return <AppContext.Provider value={{ state, dispatch, actions }}>{children}</AppContext.Provider>;

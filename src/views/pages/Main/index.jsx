@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Layout, Modal, theme } from 'antd';
 import { Content, Footer, Header, Sider } from '~/views/layouts';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import Home from './Home';
 import Map from './Map';
 import Driver from './Driver';
@@ -12,11 +12,13 @@ import socket from '~/socket';
 import { useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { addManyDriver } from './data';
+import { AccountApi } from '~/api';
 
 function Main({}) {
   const { token } = theme.useToken();
   const { state, actions } = useContext(AppContext);
   const { auth } = state;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const hanldeNotiParking = (event) => {
@@ -33,13 +35,8 @@ function Main({}) {
       socket.off('connect', () => {
         console.log('socket close');
       });
-
       socket.off('notification-parking', hanldeNotiParking);
     };
-  }, []);
-
-  useEffect(() => {
-    if (!Cookies.get('access_token')) actions.logout();
   }, []);
 
   return (

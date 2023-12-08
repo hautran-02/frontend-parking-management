@@ -33,6 +33,13 @@ const reducer = (state, action) => {
       };
     }
 
+    case 'authorize': {
+      return {
+        ...state,
+        authorize: action.payload
+      };
+    }
+
     default:
       return state;
   }

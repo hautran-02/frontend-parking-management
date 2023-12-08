@@ -636,14 +636,13 @@ export const addManyUser = async () => {
 export const addManyDriver = async () => {
   let driverList = [];
   const names = fullNames();
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 100; i++) {
     const randomNumber = Math.floor(Math.random() * 3);
     const name = names[i];
     const username = generateUsername(name);
     const email = generateEmail(username);
     const jobObj = jobs[randomNumber];
     const job = jobObj.name;
-    console.log(jobObj);
     const deparment = jobObj.departments[Math.floor(Math.random() * jobObj.departments.length)];
     driverList.push({
       name,

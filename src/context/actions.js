@@ -69,6 +69,22 @@ export const checkAuthenSevice = async ({ onError = null, onFinish = null }) => 
   }
 };
 
+export const onAuthorize = async ({ onError }) => {
+  let payload = null;
+  try {
+    const api = await AccountApi.checkToken();
+    payload = api;
+  } catch {
+    onError();
+  } finally {
+  }
+
+  return {
+    type: 'authorize',
+    payload
+  };
+};
+
 export const logout = async () => {
   localStorage.removeItem('isLogin');
   Cookies.remove('access_token');
