@@ -62,7 +62,7 @@ function Employee({}) {
       isMounted.current = true;
     } catch (error) {
       ErrorService.hanldeError(error, actions.onNoti);
-      setData({ data: [], pageSize: 0, pageIndex: 0 });
+      // setData({ data: [], pageSize: 0, pageIndex: 0 });
     } finally {
       setLoading(false);
       setSeletedRows([]);
@@ -75,7 +75,7 @@ function Employee({}) {
 
   useEffect(() => {
     if (isMounted.current) {
-      if (pageIndex > totalPage) {
+      if (pageIndex > totalPage && pageIndex > 1) {
         setSearchParams({ ...params, pageIndex: totalPage });
       }
     }

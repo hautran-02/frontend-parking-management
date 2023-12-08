@@ -72,7 +72,7 @@ function Driver({}) {
 
   useEffect(() => {
     if (isMounted.current) {
-      if (pageIndex > totalPage) {
+      if (pageIndex > totalPage && pageIndex > 1) {
         setSearchParams({ ...params, pageIndex: totalPage });
       }
     }
