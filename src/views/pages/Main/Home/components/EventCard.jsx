@@ -38,7 +38,7 @@ function EventCard({ item }) {
     const { driver } = person;
     person = {
       ...person,
-      ...driver,
+      ...driver
     };
     delete person.driver;
   }
@@ -72,8 +72,11 @@ function EventCard({ item }) {
       <Row gutter={{ xs: 4, sm: 8, md: 12 }}>
         <Col span={8}>
           <Flex vertical={true} align="center" gap={4}>
-            <Image id="eventLisenceImg" src={IMG_LISENCE} />
-            <Typography.Text id="eventLisencePlate">{vehicle.license}</Typography.Text>
+            <Image
+              id="eventLisenceImg"
+              src='https://dsm01pap005files.storage.live.com/y4mmeuP6vkckZbDi5icp6K6jkRxAtNfLEVNV5byVVqb_VC6gcEZw7w6cIjMDCVT0Wfd5eYnb0B6rn-l5QNfGNU1onmZXo6QPn84_QBNlNjXY2W8iKSjd-jUlx0pKt-egoANpwUQRdWPNz0TqB4D1PWMHxbIS1nMG9-U1vdqVRaR8nA1HfwV7vA_6yHByEjQn5vps2mQhwJsZhBYiRQ9s_PUq35JXVw-iCwyAcSdJC-QImU?encodeFailures=1&width=1149&height=621'
+            />
+            <Typography.Text id="eventLisencePlate">{vehicle.licenePlate}</Typography.Text>
           </Flex>
         </Col>
         <Col span={16}>

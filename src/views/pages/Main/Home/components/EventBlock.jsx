@@ -56,15 +56,15 @@ function EventBlock({}) {
         <InfiniteScroll
           dataLength={data.length}
           hasMore={data.length < 50}
-          loader={
-            <Skeleton
-              avatar
-              paragraph={{
-                rows: 1
-              }}
-              active
-            />
-          }
+          // loader={
+          //   <Skeleton
+          //     avatar
+          //     paragraph={{
+          //       rows: 1
+          //     }}
+          //     active
+          //   />
+          // }
           endMessage={<Divider plain>Không còn sự kiện khác</Divider>}
           scrollableTarget="scrollableDiv">
           <List

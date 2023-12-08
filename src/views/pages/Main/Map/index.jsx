@@ -26,14 +26,13 @@ function Map({}) {
   const [slots, setSlots] = useState([]);
   const zone = searchParams.get('zone') || 'A';
   const [loading, setLoading] = useState(false);
-
+  const isMounted = useRef(false);
   const onChangeZone = (e) => {
     setSearchParams({ zone: e.target.value });
   };
 
   const callApi = async () => {
     try {
-      setLoading(true);
       const api = await ParkingApi.getStatus({ zone });
       const newSlots = api[0].slots;
       setSlots(newSlots);
@@ -46,7 +45,12 @@ function Map({}) {
 
   useEffect(() => {
     callApi();
-  }, [zone, state.parkingEvent]);
+  }, [state.parkingEvent]);
+
+  useEffect(() => {
+    setLoading(true);
+    callApi();
+  }, [zone]);
 
   return (
     <Layout className="px-4">

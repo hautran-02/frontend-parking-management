@@ -30,7 +30,7 @@ function Main({}) {
 
     return () => {
       socket.off('connect', () => {
-        console.log('socket successful');
+        console.log('socket close');
       });
 
       socket.off('notification-parking', hanldeNotiParking);
