@@ -138,6 +138,10 @@ function Driver({}) {
 
   const onEdit = (values) => {
     values.licenePlate = values.driver?.vehicle[0]?.licenePlate || null;
+    values = {
+      ...values,
+      ...values?.driver
+    }
     setFormAction({
       action: 'edit',
       actionText: 'Chỉnh sửa',
