@@ -1,8 +1,9 @@
-import { CarOutlined, LineChartOutlined, UserOutlined, UsergroupAddOutlined } from "@ant-design/icons";
+import { CarOutlined, InteractionOutlined, LineChartOutlined, UserOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import Driver from "~/views/pages/Main/Driver";
 import Employee from "~/views/pages/Main/Employee";
 import Home from "~/views/pages/Main/Home";
 import Map from "~/views/pages/Main/Map";
+import Event from "~/views/pages/Main/Event";
 
 // Public routes
 const publicRoutes = [
@@ -33,6 +34,13 @@ const publicRoutes = [
     path: "/employee",
     element: <Employee />,
     icon: <UsergroupAddOutlined />,
+  },
+  {
+    key: 'event',
+    label: 'Nhập xuất xe',
+    path: "/event",
+    element: <Event />,
+    icon: <InteractionOutlined />,
   },
 ];
 

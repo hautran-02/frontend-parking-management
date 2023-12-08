@@ -18,4 +18,21 @@ export default {
       payload
     });
   },
+
+  importVehicle: (payload) => {
+    const { licenePlate, position, zone } = payload;
+    let path = '/createPakingTurn';
+    if (!position) {
+      path = '/createPakingTurnWithoutPosition';
+      if (!zone) {
+        path = '/createPakingTurnWithoutZoneAndPosition';
+      }
+    }
+    const url = `${DOMAIN}/parkingTurn${path}`;
+
+    return POST({
+      url,
+      payload
+    });
+  }
 };
