@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Card, Col, Form, Layout, Radio, Row, Select } from 'antd';
+import { Button, Card, Col, Form, Input, Layout, Radio, Row, Select, Switch } from 'antd';
 import { Content, Footer, Header } from '~/views/layouts';
 import AppContext from '~/context';
 import { ParkingApi, UserApi } from '~/api';
-import { ErrorService } from '~/services';
+import { ErrorService, ValidateService } from '~/services';
 import { SLOTS_A } from '../Map/parkingA';
 import { SLOTS_B } from '../Map/parkingB';
 import { SLOTS_C } from '../Map/parkingC';
@@ -25,7 +25,9 @@ function Event({}) {
   const [parkings, setParkings] = useState([]);
   const [importForm] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const getDrivers = async () => {
+  const [isSelect, setIsSelect] = useState(true);
+
+  const callApi = async () => {
     try {
       const api = await Promise.all([
         UserApi.getDrivers({}),
@@ -47,6 +49,7 @@ function Event({}) {
   };
   const hanldeImport = async (values) => {
     try {
+      console.log(values);
       await ParkingApi.importVehicle(values);
       actions.onNoti({
         type: 'success',
@@ -59,8 +62,8 @@ function Event({}) {
   };
 
   useEffect(() => {
-    getDrivers();
-  }, []);
+    callApi();
+  }, [state.parkingEvent]);
 
   return (
     <Layout className="px-4">
@@ -85,14 +88,41 @@ function Event({}) {
                     </Button>
                   </Form.Item>
                 }>
-                <Form.Item name="licenePlate" label="Biển số xe" rules={[{ required: true }]}>
-                  <Select>
-                    {drivers.map((el) => (
-                      <Select.Option value={el.driver.vehicle[0].licenePlate}>
-                        {el.driver.vehicle[0].licenePlate}
-                      </Select.Option>
-                    ))}
-                  </Select>
+                <Form.Item>
+                  <Switch
+                    checkedChildren="Chọn"
+                    unCheckedChildren="Nhập"
+                    value={isSelect}
+                    onChange={(checked) => {
+                      setIsSelect(checked);
+                    }}
+                  />
+                </Form.Item>
+                <Form.Item
+                  name="licenePlate"
+                  label="Biển số xe"
+                  rules={[
+                    { required: true, message: false },
+                    ({}) => ({
+                      validator(_, value) {
+                        if (ValidateService.licensePlate(value)) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject({ message: 'Sai định dạng (VD: 12A-2184)' });
+                      }
+                    })
+                  ]}>
+                  {isSelect ? (
+                    <Select>
+                      {drivers.map((el) => (
+                        <Select.Option value={el.driver.vehicle[0].licenePlate}>
+                          {el.driver.vehicle[0].licenePlate}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  ) : (
+                    <Input placeholder="A1-013" />
+                  )}
                 </Form.Item>
                 <Form.Item name="zone" label="Khu vực">
                   <Radio.Group>
