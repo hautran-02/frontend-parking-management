@@ -6,11 +6,12 @@ import Home from './Home';
 import Map from './Map';
 import Driver from './Driver';
 import { publicRoutes } from '~/routes';
-import { users } from './data';
 import AppContext from '~/context';
 import { PasswordForm } from '~/views/components/Form';
 import socket from '~/socket';
 import { useEffect } from 'react';
+import Cookies from 'js-cookie';
+import { addManyDriver } from './data';
 
 function Main({}) {
   const { token } = theme.useToken();
@@ -35,6 +36,10 @@ function Main({}) {
 
       socket.off('notification-parking', hanldeNotiParking);
     };
+  }, []);
+
+  useEffect(() => {
+    if (!Cookies.get('access_token')) actions.logout();
   }, []);
 
   return (

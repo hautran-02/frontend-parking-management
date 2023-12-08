@@ -1,5 +1,99 @@
 import { UserApi } from '~/api';
 
+function generateEmail(username) {
+  const email = `${username}@gmail.com`;
+  return email;
+}
+
+function generatePhone() {
+  const uniqueNumbers = new Set();
+
+  while (uniqueNumbers.size < 8) {
+    const randomNumber = Math.floor(Math.random() * 100000000); // Số ngẫu nhiên từ 0 đến 99999999
+    uniqueNumbers.add(randomNumber);
+  }
+
+  // Chuyển set thành mảng và lấy số đầu tiên
+  const uniqueArray = Array.from(uniqueNumbers);
+  const uniqueNumber = uniqueArray[0];
+
+  return `03${uniqueNumber}`;
+}
+
+const teacher_departments = [
+  'Khoa Lý luận Chính trị',
+  'Khoa Khoa học ứng dụng',
+  'Khoa Cơ khí Chế tạo máy',
+  'Khoa Điện - Điện tử',
+  'Khoa Cơ khí Động Lực',
+  'Khoa Kinh tế',
+  'Khoa Công nghệ thông tin',
+  'Khoa In và Truyền thông',
+  'Khoa Công nghệ May và Thời Trang',
+  'Khoa Công nghệ Hóa học và Thực phẩm',
+  'Khoa Xây dựng',
+  'Khoa Ngoại ngữ',
+  'Khoa Đào tạo Chất lượng cao',
+  'Viện Sư phạm Kỹ thuật',
+  'Trường Trung học Kỹ thuật Thực hành'
+];
+
+const emp_departments = [
+  'Phòng Đào tạo',
+  'Phòng Đào tạo không chính quy',
+  'Phòng Tuyển sinh và Công tác Sinh viên',
+  'Phòng Truyền thông',
+  'Phòng Khoa học Công nghệ - Quan hệ Quốc tế',
+  'Phòng Quan hệ Doanh nghiệp',
+  'Phòng Thanh tra - Giáo dục',
+  'Phòng Đảm bảo Chất lượng',
+  'Phòng Tổ chức - Hành chính',
+  'Phòng Kế hoạch - Tài chính',
+  'Phòng Quản trị Cơ sở Vật chất',
+  'Phòng Thiết bị - Vật tư',
+  'Ban quản lý KTX',
+  'Trạm Y tế'
+];
+
+const jobs = [
+  { name: 'Teacher', departments: [...teacher_departments] },
+  { name: 'Employee', departments: [...emp_departments] },
+  { name: 'Student', departments: [...teacher_departments] }
+];
+
+function generateUsername(fullName) {
+  const cleanName = fullName
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+
+  const [ho, tenDem, ten] = cleanName.split(' ');
+
+  const username = `${ten}${tenDem?.charAt(0)}${ho}`;
+
+  return username;
+}
+
+const fullNames = (length = 100) => {
+  // Các họ và tên người Việt Nam
+  const ho = ['Nguyễn', 'Trần', 'Lê', 'Phạm', 'Hoàng', 'Huỳnh', 'Phan', 'Vũ', 'Võ', 'Đặng'];
+  const tenDem = ['Thị', 'Văn', 'Xuân', 'Minh', 'Hoàng', 'Quốc', 'Thành', 'Hữu', 'Đức', 'Tường'];
+  const ten = ['Hương', 'Anh', 'Nam', 'Linh', 'Duy', 'Thu', 'Tâm', 'Tuấn', 'Hải', 'Hạnh'];
+
+  // Hàm tạo họ tên ngẫu nhiên
+  function getRandomName() {
+    const randomHo = ho[Math.floor(Math.random() * ho.length)];
+    const randomTenDem = tenDem[Math.floor(Math.random() * tenDem.length)];
+    const randomTen = ten[Math.floor(Math.random() * ten.length)];
+    return `${randomHo} ${randomTenDem} ${randomTen}`;
+  }
+
+  // Tạo mảng 100 phần tử
+  const mangHoTen = Array.from({ length }, () => getRandomName());
+
+  return mangHoTen;
+};
+
 const names = [
   'Lê Anh Huy',
   'Nguyễn Thị Hương',
@@ -537,4 +631,29 @@ export const users = () => {
 export const addManyUser = async () => {
   const userList = users();
   const rs = await UserApi.addMany(userList);
+};
+
+export const addManyDriver = async () => {
+  let driverList = [];
+  const names = fullNames();
+  for (let i = 0; i < 10; i++) {
+    const randomNumber = Math.floor(Math.random() * 3);
+    const name = names[i];
+    const username = generateUsername(name);
+    const email = generateEmail(username);
+    const jobObj = jobs[randomNumber];
+    const job = jobObj.name;
+    console.log(jobObj);
+    const deparment = jobObj.departments[Math.floor(Math.random() * jobObj.departments.length)];
+    driverList.push({
+      name,
+      address: addresses[i],
+      phone: generatePhone(),
+      email,
+      job,
+      deparment
+    });
+  }
+  console.log('drivers', driverList);
+  // const rs = await UserApi.addMany(userList);
 };
