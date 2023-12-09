@@ -51,7 +51,7 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
       if (api) {
         onMess({ content: 'Chỉnh sửa nhân viên thành công', type: 'success' });
       }
-      onClose({ reload: true });
+      onClose({ reload: true, newValues: api });
     } catch (error) {
       ErrorService.hanldeError(error, onNoti);
     } finally {

@@ -28,9 +28,10 @@ function PasswordForm({ account, isOpen, onClose, noChangeAccount }) {
       if (api) {
         onMess({ content: 'Chỉnh sửa nhân viên thành công', type: 'success' });
       }
-      onClose();
+
+      onClose({ afterAction: actions.logout() });
+      // onClose();
     } catch (error) {
-      error;
       ErrorService.hanldeError(error, onNoti);
     } finally {
       setLoading(false);
@@ -63,7 +64,7 @@ function PasswordForm({ account, isOpen, onClose, noChangeAccount }) {
               required: true
             }
           ]}>
-          <Input.Password visibilityToggle={false} />
+          <Input.Password visibilityToggle={true} />
         </Form.Item>
 
         <Form.Item
@@ -82,7 +83,7 @@ function PasswordForm({ account, isOpen, onClose, noChangeAccount }) {
               }
             })
           ]}>
-          <Input.Password visibilityToggle={false} />
+          <Input.Password visibilityToggle={true} />
         </Form.Item>
 
         {/* Field */}
@@ -103,7 +104,7 @@ function PasswordForm({ account, isOpen, onClose, noChangeAccount }) {
               }
             })
           ]}>
-          <Input.Password visibilityToggle={false} />
+          <Input.Password visibilityToggle={true} />
         </Form.Item>
 
         <Form.Item

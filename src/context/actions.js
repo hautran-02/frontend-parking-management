@@ -46,6 +46,24 @@ export const onLogin = async (params) => {
   // }
 };
 
+export const editProfile = async (state, payload) => {
+  const newValues = {
+    ...state.auth,
+    info: payload
+  };
+
+  localStorage.setItem(
+    'auth',
+    JSON.stringify({
+      ...newValues
+    })
+  );
+  return {
+    type: 'auth',
+    payload: newValues
+  };
+};
+
 export const checkAuthenSevice = async ({ onError = null, onFinish = null }) => {
   let result = await AccountApi.checkToken();
   if (result) {

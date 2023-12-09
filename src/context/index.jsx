@@ -9,7 +9,8 @@ import {
   onNoti,
   onSetChangePassword,
   onEventParking,
-  onAuthorize
+  onAuthorize,
+  editProfile
 } from './actions';
 import initState from './initState';
 import reducer from './reducer';
@@ -27,7 +28,8 @@ export const AppProvider = ({ children }) => {
     onNoti: async (params) => dispatch(await onNoti(params)),
     onSetChangePassword: async () => dispatch(await onSetChangePassword(state.onChangePassword)),
     onEventParking: async (params) => dispatch(await onEventParking(params)),
-    onAuthorize: async (params) => dispatch(await onAuthorize(params))
+    onAuthorize: async (params) => dispatch(await onAuthorize(params)),
+    editProfile: async (params) => dispatch(await editProfile(state, params))
   };
 
   return <AppContext.Provider value={{ state, dispatch, actions }}>{children}</AppContext.Provider>;

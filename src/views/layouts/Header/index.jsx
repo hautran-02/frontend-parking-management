@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import {
   Avatar,
   Button,
@@ -82,7 +82,9 @@ function Header({ title }) {
     setOpenForm(true);
   };
 
-  const hanldeCloseForm = () => {
+  const hanldeCloseForm = ({ newValues }) => {
+    delete newValues.account.password;
+    actions.editProfile(newValues);
     setOpenForm(false);
   };
 
@@ -105,23 +107,27 @@ function Header({ title }) {
           {title}
         </Typography.Title>
         <Space>
-          <Space id="profileUser">
-            <Avatar src={DEFAULT_AVATAR} size={40} />
-            <Dropdown
-              menu={{ items, onClick: hanldeClickProfile }}
-              getPopupContainer={() => document.querySelector('#root')}
-              trigger={['click']}
-              placement="bottomRight">
-              <a onClick={(e) => e.preventDefault()}>
-                <Space>
-                  <Typography.Title level={5} style={{ margin: 0 }}>
-                    {state?.auth?.info?.name}
-                  </Typography.Title>
-                  <DownOutlined />
-                </Space>
-              </a>
-            </Dropdown>
-          </Space>
+          {useMemo(() => {
+            return (
+              <Space id="profileUser">
+                <Avatar src={DEFAULT_AVATAR} size={40} />
+                <Dropdown
+                  menu={{ items, onClick: hanldeClickProfile }}
+                  getPopupContainer={() => document.querySelector('#root')}
+                  trigger={['click']}
+                  placement="bottomRight">
+                  <a onClick={(e) => e.preventDefault()}>
+                    <Space>
+                      <Typography.Title level={5} style={{ margin: 0 }}>
+                        {state?.auth?.info?.name}
+                      </Typography.Title>
+                      <DownOutlined />
+                    </Space>
+                  </a>
+                </Dropdown>
+              </Space>
+            );
+          }, [state.auth])}
         </Space>
       </Flex>
       <Modal

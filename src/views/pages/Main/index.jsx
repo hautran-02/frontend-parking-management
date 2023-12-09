@@ -38,7 +38,7 @@ function Main({}) {
       socket.off('notification-parking', hanldeNotiParking);
     };
   }, []);
-  addManyDriver();
+  // addManyDriver();
   return (
     <Layout className="vh-100">
       <Modal
@@ -52,8 +52,9 @@ function Main({}) {
         <PasswordForm
           account={state.auth?.info?.account}
           isOpen={state.onChangePassword}
-          onClose={() => {
+          onClose={({ afterAction }) => {
             actions.onSetChangePassword();
+            afterAction();
           }}
           noChangeAccount
         />
