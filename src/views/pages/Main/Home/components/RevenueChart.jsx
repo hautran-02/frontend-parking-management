@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 import AppContext from '~/context';
 import { MonitorApi } from '~/api';
 import { CustomedDateRangePicker } from '~/components';
+import { FormatNumber } from '~/services/RegularService';
 
 const zones = ['A', 'B', 'C'];
 function RevenueChart({}) {
@@ -19,7 +20,7 @@ function RevenueChart({}) {
   const color = [token['purple'], token['magenta'], token['orange2']];
   const unit = {
     x: 'Ngày',
-    y: 'Triệu VNĐ'
+    y: 'VNĐ'
   };
 
   const config = {
@@ -52,7 +53,7 @@ function RevenueChart({}) {
           return {
             ...org,
             name: 'Khu ' + org.name,
-            value: Number(org.value).toFixed(2) + ' ' + unit.y
+            value: FormatNumber(org.value, { isEndZeroDecimal: false }) + ' ' + unit.y
           };
         });
         return rs;
