@@ -35,7 +35,7 @@ function EventBlock({}) {
       const api = await MonitorApi.getEvents({ pageSize, pageIndex });
       setData(api.data);
     } catch (error) {
-      ErrorService.hanldeError(error, actions.onNoti);
+      // ErrorService.hanldeError(error, actions.onNoti);
     } finally {
     }
   };

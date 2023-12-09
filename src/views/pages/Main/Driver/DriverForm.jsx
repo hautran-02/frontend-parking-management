@@ -108,9 +108,9 @@ function DriverForm({ isOpen, onClose, formAction, onNoti, onMess }) {
         </Form.Item>
         <Form.Item label="Nghề nghiệp" name={['job']} rules={[{ required: true }]}>
           <Select>
-            <Select.Option value="Giảng viên">Giảng viên</Select.Option>
-            <Select.Option value="Sinh viên">Sinh viên</Select.Option>
-            <Select.Option value="Nhân viên">Nhân viên</Select.Option>
+            <Select.Option value="Teacher">Giảng viên</Select.Option>
+            <Select.Option value="Student">Sinh viên</Select.Option>
+            <Select.Option value="Employee">Nhân viên</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item label="Đơn vị" name={['department']} rules={[{ required: true }]}>

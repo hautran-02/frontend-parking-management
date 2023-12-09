@@ -26,7 +26,7 @@ function Event({}) {
   const [importForm] = Form.useForm();
   const [exportForm] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const [isSelect, setIsSelect] = useState(true);
+  const [isSelect, setIsSelect] = useState(false);
   const occupiedSlots = useMemo(() => {
     const { A: zoneA, B: zoneB, C: zoneC } = parkings;
     return [...(zoneA?.slots || []), ...(zoneB?.slots || []), ...(zoneC?.slots || [])];
@@ -87,7 +87,7 @@ function Event({}) {
       <Header className="border-1" title={'Nhập xuất xe'} />
       <Content className="w-100 py-3">
         <Row gutter={16}>
-          <Col span={12}>
+          <Col span={24} xl={12}>
             <Form
               name="importVehicleForm"
               form={importForm}
@@ -185,7 +185,7 @@ function Event({}) {
               </Card>
             </Form>
           </Col>
-          <Col span={12}>
+          <Col span={24} xl={12}>
             <Form
               name="exportVehicleForm"
               form={exportForm}

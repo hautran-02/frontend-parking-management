@@ -108,8 +108,7 @@ function RevenueChart({}) {
 
       setData(newData);
     } catch (error) {
-      console.log(error);
-      ErrorService.hanldeError(error, actions.onNoti);
+      // ErrorService.hanldeError(error, actions.onNoti);
     }
   };
 

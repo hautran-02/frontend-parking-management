@@ -38,7 +38,7 @@ function Main({}) {
       socket.off('notification-parking', hanldeNotiParking);
     };
   }, []);
-
+  addManyDriver();
   return (
     <Layout className="vh-100">
       <Modal

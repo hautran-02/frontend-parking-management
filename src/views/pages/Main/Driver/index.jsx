@@ -21,7 +21,7 @@ import dayjs from 'dayjs';
 import DriverForm from './DriverForm';
 import { useSearchParams } from 'react-router-dom';
 import AppContext from '~/context';
-import { ErrorService } from '~/services';
+import { ErrorService, JobServices } from '~/services';
 
 function Driver({}) {
   const [data, setData] = useState({
@@ -141,7 +141,7 @@ function Driver({}) {
     values = {
       ...values,
       ...values?.driver
-    }
+    };
     setFormAction({
       action: 'edit',
       actionText: 'Chỉnh sửa',
@@ -228,7 +228,8 @@ function Driver({}) {
     {
       title: 'Nghề nghiệp',
       dataIndex: ['driver', 'job'],
-      key: 'job'
+      key: 'job',
+      render: (text, record, index) => JobServices.getTextByValue(text)
     },
     {
       title: 'Đơn vị (Khoa)',

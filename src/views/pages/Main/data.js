@@ -644,7 +644,9 @@ export const addManyDriver = async () => {
     const jobObj = jobs[randomNumber];
     const job = jobObj.name;
     const deparment = jobObj.departments[Math.floor(Math.random() * jobObj.departments.length)];
+    const licenePlate = generateLicenePlate(/^\d{2}[A-Z]-\d{4,5}$/);
     driverList.push({
+      licenePlate,
       name,
       address: addresses[i],
       phone: generatePhone(),
@@ -656,3 +658,15 @@ export const addManyDriver = async () => {
   console.log('drivers', driverList);
   // const rs = await UserApi.addMany(userList);
 };
+
+function generateLicenePlate(pattern) {
+  const twoDigits = Math.floor(Math.random() * 100)
+    .toString()
+    .padStart(2, '0');
+  const capitalLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+  const fourToFiveDigits = Math.floor(Math.random() * 100000)
+    .toString()
+    .padStart(4, '0');
+
+  return `${twoDigits}${capitalLetter}-${fourToFiveDigits}`;
+}

@@ -110,7 +110,7 @@ function NumberStatisChart({}) {
 
       setData(newData);
     } catch (error) {
-      ErrorService.hanldeError(error, actions.onNoti);
+      // ErrorService.hanldeError(error, actions.onNoti);
     }
   };
 
