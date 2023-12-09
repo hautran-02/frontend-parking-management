@@ -13,7 +13,7 @@ const roles = [
   {
     value: 'Manager',
     label: 'Quản lý'
-  },
+  }
   // {
   //   value: 'Employee',
   //   label: 'Nhân viên'
@@ -37,7 +37,7 @@ function Authen({}) {
   const onFinish = (values) => {
     const { username, password } = values;
     setLoading(true);
-    actions.onLogin({ username, password, role: 'Admin', onComplete });
+    actions.onLogin({ username, password, role: 'Admin', onComplete, onNoti: actions.onNoti });
   };
 
   const onFinishFailed = (errorInfo) => {};
@@ -61,7 +61,7 @@ function Authen({}) {
               style={{
                 width: 400
               }}
-              initialValues={{role: "Admin"}}
+              initialValues={{ role: 'Admin' }}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}>
               <Form.Item

@@ -1,4 +1,4 @@
-import { Divider, Skeleton, Typography, theme } from 'antd';
+import { Button, Divider, Flex, Popconfirm, Row, Skeleton, Space, Typography, theme } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { List } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -7,6 +7,7 @@ import { MonitorApi } from '~/api';
 import { ErrorService } from '~/services';
 import AppContext from '~/context';
 import { useContext } from 'react';
+import { FileExcelOutlined } from '@ant-design/icons';
 
 function EventBlock({}) {
   const { state, actions } = useContext(AppContext);
@@ -44,9 +45,27 @@ function EventBlock({}) {
     callApi();
   }, [state.parkingEvent]);
 
+  const onExport = async () => {
+    try {
+      const api = await MonitorApi.export();
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(new Blob([api]));
+      link.download = `output.xlsx`;
+      link.click();
+    } catch(error) {
+      ErrorService.hanldeError(error, actions.onNoti)
+    }
+  };
+
   return (
     <div>
-      <Typography.Title level={4}>Sự kiện</Typography.Title>
+      <Row justify="space-between" className="pe-4">
+        <Typography.Title level={4}>Sự kiện</Typography.Title>
+        <Popconfirm title="Xuất báo cáo ?" onConfirm={onExport} okText="Đồng ý" cancelText="Hủy">
+          <Button icon={<FileExcelOutlined />} size="large" type="text" />
+        </Popconfirm>
+      </Row>
+
       <div
         id="scrollableDiv"
         style={{

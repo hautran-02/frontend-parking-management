@@ -1,4 +1,4 @@
-import { GET } from '../axiosMethods';
+import { GET, POST } from '../axiosMethods';
 
 const DOMAIN = import.meta.env.VITE_DOMAIN;
 
@@ -41,6 +41,14 @@ export default {
     return GET({
       url,
       payload
+    });
+  },
+
+  export: () => {
+    const url = `${DOMAIN}/parkingTurn/event/export`;
+    return GET({
+      url,
+      responseType: 'blob'
     });
   }
 };

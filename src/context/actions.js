@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie';
 import { AccountApi } from '../api';
 import dayjs from 'dayjs';
+import { ErrorService } from '~/services';
 
 export const onLogin = async (params) => {
   let isLogin = false;
@@ -9,7 +10,7 @@ export const onLogin = async (params) => {
   let info = {};
   const { username, password, onComplete, role } = params;
   try {
-    const rs = await AccountApi.login({ username, password, role });
+    const rs = await AccountApi.login({ username, password, role, onNoti });
     if (rs) {
       isLogin = true;
       info = rs?.person || {};
@@ -32,6 +33,7 @@ export const onLogin = async (params) => {
   } catch (error) {
     type = 'error';
     content = 'Login Error';
+    ErrorService.hanldeError(error, onNoti)
   } finally {
     onComplete(type, content);
   }
