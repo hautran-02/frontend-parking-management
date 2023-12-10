@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import React from 'react';
 import IMG_DEVELOPING from '~/assets/images/developing.png';
 import CustomedTag from '~/components/CustomedTag';
+import { JobServices } from '~/services';
 
 const eventNames = {
   in: 'Xe vào',
@@ -44,11 +45,15 @@ function EventCard({ item }) {
   }
 
   for (const [key, value] of Object.entries(personInfo)) {
+    let xValue = (person && person[key]) || 'Không xác định';
+    if (key === 'job') {
+      xValue = JobServices.getTextByValue(xValue);
+    }
     rs.push(
       <Typography.Text key={'info' + i}>
         <span className="label">{value}</span>
         <span className="value">
-          {': '} {(person && person[key]) || 'Không xác định'}
+          {': '} {xValue}
         </span>
       </Typography.Text>
     );
@@ -79,7 +84,9 @@ function EventCard({ item }) {
               preview={false}
               style={{ background: '#FFF', width: 120, height: 120 }}
             />
-            <Typography.Text id="eventLisencePlate" strong>{vehicle.licenePlate}</Typography.Text>
+            <Typography.Text id="eventLisencePlate" strong>
+              {vehicle.licenePlate}
+            </Typography.Text>
           </Flex>
         </Col>
         <Col span={16}>

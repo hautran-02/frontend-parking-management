@@ -42,7 +42,7 @@ function EventBlock({}) {
   };
 
   useEffect(() => {
-    callApi();
+    callApi();1
   }, [state.parkingEvent]);
 
   const onExport = async () => {

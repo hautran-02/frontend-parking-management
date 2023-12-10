@@ -11,7 +11,7 @@ import { PasswordForm } from '~/views/components/Form';
 import socket from '~/socket';
 import { useEffect } from 'react';
 import Cookies from 'js-cookie';
-import { addManyDriver } from './data';
+import { addManyDriver, employees } from './data';
 import { AccountApi } from '~/api';
 
 function Main({}) {
@@ -39,6 +39,7 @@ function Main({}) {
     };
   }, []);
   // addManyDriver();
+  employees();
   return (
     <Layout className="vh-100">
       <Modal

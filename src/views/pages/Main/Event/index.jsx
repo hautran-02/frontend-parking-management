@@ -130,7 +130,7 @@ function Event({}) {
                     })
                   ]}>
                   {isSelect ? (
-                    <Select>
+                    <Select showSearch>
                       {drivers.map((el) => (
                         <Select.Option value={el.driver.vehicle[0].licenePlate}>
                           {el.driver.vehicle[0].licenePlate}
@@ -195,7 +195,7 @@ function Event({}) {
               {...formItemLayout}
               style={{ maxWidth: 4000 }}>
               <Card
-                title="Nhập xe"
+                title="Xuất xe"
                 extra={
                   <Form.Item className="mb-0">
                     <Button htmlType="submit" type="primary" danger>
@@ -217,7 +217,7 @@ function Event({}) {
                       }
                     })
                   ]}>
-                  <Select>
+                  <Select showSearch>
                     {occupiedSlots.map((el) => (
                       <Select.Option value={el?.parkingTurn?.vehicles?.licenePlate}>
                         {el?.parkingTurn?.vehicles[0]?.licenePlate}

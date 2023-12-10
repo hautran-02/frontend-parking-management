@@ -25,6 +25,7 @@ import EmployeeForm from './EmployeeForm';
 import CustomedTable from '~/components/Table';
 import AppContext from '~/context';
 import { ErrorService } from '~/services';
+import EmployeeApi from '~/api/Collections/EmployeeApi';
 
 function Employee({}) {
   const { actions } = useContext(AppContext);
@@ -57,7 +58,7 @@ function Employee({}) {
   const callApi = async () => {
     try {
       setLoading(true);
-      const api = await UserApi.getEmployee({ ...params, pageSize, pageIndex });
+      const api = await EmployeeApi.get({ ...params, pageSize, pageIndex });
       setData(api);
       isMounted.current = true;
     } catch (error) {

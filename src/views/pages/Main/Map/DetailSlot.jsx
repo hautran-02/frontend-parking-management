@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, Row, Col, Flex, Typography, theme } from 'antd';
 import IMG_LISENCE from '~/assets/images/lisence.png';
 import { InnerDetailFloorStyled } from './style';
+import { JobServices } from '~/services';
 
 const eventNames = {
   in: 'Xe vào',
@@ -45,11 +46,15 @@ function DetailSlot({ position, zone, vehicle, driver }) {
   };
   let i = 0;
   for (const [key, value] of Object.entries(personInfo)) {
+    let xValue = (driver && driver[key]) || 'Không xác định';
+    if (key === 'job') {
+      xValue = JobServices.getTextByValue(xValue);
+    }
     driverInfo.push(
       <Typography.Text key={'info' + i}>
         <span className="label">{value}</span>
         <span className="value">
-          {': '} {(driver && driver[key]) || 'Không xác định'}
+          {': '} {xValue}
         </span>
       </Typography.Text>
     );

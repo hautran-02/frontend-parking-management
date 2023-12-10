@@ -18,6 +18,7 @@ axiosClient.interceptors.response.use(
     return response.data;
   },
   async (error) => {
+    console.log('eror', error);
     let status = null,
       statusText = 'Lỗi không xác định',
       data = [];

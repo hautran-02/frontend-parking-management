@@ -4,6 +4,7 @@ import { EyeInvisibleOutlined, EyeTwoTone, RedoOutlined } from '@ant-design/icon
 import { UserApi } from '~/api';
 import { ErrorService, ValidateService } from '~/services';
 import AppContext from '~/context';
+import EmployeeApi from '~/api/Collections/EmployeeApi';
 
 const formItemLayout = {
   labelCol: {
@@ -62,14 +63,7 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
   const hanldeAdd = async (values) => {
     try {
       setLoading(true);
-      values.account = {
-        username: values.user,
-        password: values.pass,
-        role: 'Employee'
-      };
-      delete values.pass;
-      delete values.user;
-      const api = await UserApi.add(values);
+      const api = await EmployeeApi.add(values);
       if (api) {
         onMess({ content: 'Thêm nhân viên thành công', type: 'success' });
       }
@@ -125,7 +119,7 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
         <Form.Item name={'address'} label="Địa chỉ" rules={[{ required: true, message: false }]}>
           <Input placeholder="Số 1 Võ Văn Ngân, Linh Chiểu" id="addressInput" />
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           name={'user'}
           label="Tên tài khoản"
           validateDebounce={1000}
@@ -149,7 +143,7 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
               <Button icon={<RedoOutlined />} onClick={randomPassword} />
             </Space.Compact>
           </Form.Item>
-        )}
+        )} */}
 
         <Form.Item
           wrapperCol={{

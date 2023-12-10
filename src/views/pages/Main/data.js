@@ -601,6 +601,26 @@ const emails = [
   'nguyenvanthang5959@gmail.com'
 ];
 
+export const employees = () => {
+  let rs = [];
+  for (let i = 0; i < 94; i++) {
+    const name = names[i];
+    const phone = phones[i];
+    const email = emails[i];
+    const address = addresses[i];
+    rs.push({
+      name,
+      phone,
+      email,
+      address
+    });
+  }
+
+  console.log(rs);
+
+  return rs;
+};
+
 export const users = () => {
   let rs = [];
   const roles = ['Admin', 'Manager', 'Employee'];

@@ -68,9 +68,8 @@ function Map({}) {
           style={{ backgroundColor: token.neutral5 }}>
           <Spin spinning={loading} wrapperClassName="h-100 w-100">
             <MapInteractionCSS
-              minScale={1}
-              maxScale={1.2}
-              translationBounds={{ xMin: -100, yMin: -100, xMax: 800, yMax: 600  }}>
+              minScale={0.4}
+              maxScale={2}>
               <div className="map-wrapper">
                 {useMemo(() => {
                   let vehicles;
