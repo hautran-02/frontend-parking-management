@@ -10,7 +10,7 @@ import { SLOTS_C } from './parkingC';
 import CarA from '~/assets/images/blue-car.png';
 import CarB from '~/assets/images/blue-car.png';
 import CarC from '~/assets/images/blue-car.png';
-import MapA from '~/assets/images/MapA.svg?react';
+import MapA from '~/assets/images/mapA.svg?react';
 import MapB from '~/assets/images/mapB.svg?react';
 import MapC from '~/assets/images/mapC.svg?react';
 import dayjs from 'dayjs';
