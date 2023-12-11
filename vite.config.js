@@ -27,7 +27,9 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       jsconfigPaths(),
-      svgr()
+      svgr({
+        include: '**/*.svg'
+      })
     ],
     optimizeDeps: {
       esbuildOptions: {
