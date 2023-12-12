@@ -1,18 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { Layout, Modal, theme } from 'antd';
-import { Content, Footer, Header, Sider } from '~/views/layouts';
+import { Sider } from '~/views/layouts';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
-import Home from './Home';
-import Map from './Map';
-import Driver from './Driver';
-import { publicRoutes } from '~/routes';
+import { adminRoutes, publicRoutes } from '~/routes';
 import AppContext from '~/context';
 import { PasswordForm } from '~/views/components/Form';
 import socket from '~/socket';
 import { useEffect } from 'react';
-import Cookies from 'js-cookie';
-import { addManyDriver, employees } from './data';
-import { AccountApi } from '~/api';
 
 function Main({}) {
   const { token } = theme.useToken();
@@ -40,6 +34,18 @@ function Main({}) {
   }, []);
   // addManyDriver();
   // employees();
+
+  const currRoute = useMemo(() => {
+    let rs = publicRoutes;
+    if (auth.role && auth.role === 'Admin') {
+      console.log(auth);
+      rs = adminRoutes;
+    }
+    return rs;
+  }, [state.auth]);
+
+  console.log(currRoute);
+
   return (
     <Layout className="vh-100">
       <Modal
@@ -60,9 +66,9 @@ function Main({}) {
           noChangeAccount
         />
       </Modal>
-      <Sider style={{ background: token.colorBgContainer }} />
+      <Sider style={{ background: token.colorBgContainer }} routes={currRoute} />
       <Routes>
-        {publicRoutes.map((route, ix) => (
+        {currRoute.map((route, ix) => (
           <Route {...route} key={'route' + ix} />
         ))}
         <Route path="*" element={<Navigate to="/dashboard" />} />

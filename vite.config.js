@@ -28,7 +28,7 @@ export default defineConfig(({ mode }) => {
       react(),
       jsconfigPaths(),
       svgr({
-        include: '**/*.svg'
+        include: ['**/*.svg?react']
       })
     ],
     optimizeDeps: {

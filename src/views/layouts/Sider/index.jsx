@@ -2,10 +2,10 @@ import { CarOutlined, LineChartOutlined } from '@ant-design/icons';
 import { Flex, Image, Layout, Menu, Typography, theme } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import LOGO from '~/assets/logo/main.svg';
+import LOGO from '~/assets/logo/main.svg?url';
 import { publicRoutes } from '~/routes';
 
-function Sider({ ...props }) {
+function Sider({ routes, ...props }) {
   const { token } = theme.useToken();
   const location = useLocation();
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ function Sider({ ...props }) {
         <Menu
           id="menuSider"
           className="mt-5"
-          items={publicRoutes}
+          items={routes}
           selectedKeys={current?.selectedKeys}
           openKeys={current?.openKeys}
           onSelect={handleChangePage}

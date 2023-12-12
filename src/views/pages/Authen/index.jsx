@@ -35,9 +35,9 @@ function Authen({}) {
   };
 
   const onFinish = (values) => {
-    const { username, password } = values;
+    const { username, password, role } = values;
     setLoading(true);
-    actions.onLogin({ username, password, role: 'Admin', onComplete, onNoti: actions.onNoti });
+    actions.onLogin({ username, password, role, onComplete, onNoti: actions.onNoti });
   };
 
   const onFinishFailed = (errorInfo) => {};

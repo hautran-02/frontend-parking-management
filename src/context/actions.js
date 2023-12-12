@@ -24,6 +24,7 @@ export const onLogin = async (params) => {
         JSON.stringify({
           isLogin,
           info,
+          role,
           expDate: expirationTime
         })
       );
@@ -42,7 +43,8 @@ export const onLogin = async (params) => {
     type: 'auth',
     payload: {
       isLogin,
-      info
+      info,
+      role
     }
   };
   // }

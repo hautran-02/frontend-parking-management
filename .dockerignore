@@ -3,5 +3,4 @@ npm-debug.log
 .dockerignore
 .git
 .vs
-yarn.lock
 yarn-error.log

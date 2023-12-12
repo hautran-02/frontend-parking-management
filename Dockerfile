@@ -1,6 +1,7 @@
-FROM node:20-alpine
+# syntax=docker/dockerfile:1
+FROM node:18 AS build
 WORKDIR /app
-COPY . .
+COPY package.json yarn.lock ./
 RUN yarn install
-CMD ["yarn", "dev"]
-EXPOSE 5173
+COPY . .
+CMD [ "yarn", "dev" ]
