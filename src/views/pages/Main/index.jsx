@@ -47,7 +47,7 @@ function Main({}) {
   console.log(currRoute);
 
   return (
-    <Layout className="vh-100">
+    <Layout style={{ minHeight: '100vh' }}>
       <Modal
         title={'Thay đổi mật khẩu'}
         open={state.onChangePassword}
@@ -66,7 +66,7 @@ function Main({}) {
           noChangeAccount
         />
       </Modal>
-      <Sider style={{ background: token.colorBgContainer }} routes={currRoute} />
+      <Sider routes={currRoute} />
       <Routes>
         {currRoute.map((route, ix) => (
           <Route {...route} key={'route' + ix} />
