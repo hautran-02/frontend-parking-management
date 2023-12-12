@@ -21,11 +21,11 @@ import { UserApi } from '~/api';
 import dayjs from 'dayjs';
 import { useSearchParams, useParams } from 'react-router-dom';
 import { GetAllParams } from '~/services/RegularService';
-import EmployeeForm from './EmployeeForm';
+import UserForm from './UserForm';
 import CustomedTable from '~/components/Table';
 import AppContext from '~/context';
 import { ErrorService } from '~/services';
-import EmployeeApi from '~/api/Collections/EmployeeApi';
+import columns from './columns';
 
 function UserPage({}) {
   const { actions } = useContext(AppContext);
@@ -58,7 +58,7 @@ function UserPage({}) {
   const callApi = async () => {
     try {
       setLoading(true);
-      const api = await EmployeeApi.get({ ...params, pageSize, pageIndex });
+      const api = await UserApi.get({ ...params, pageSize, pageIndex });
       setData(api);
       isMounted.current = true;
     } catch (error) {
@@ -83,7 +83,7 @@ function UserPage({}) {
   }, [data]);
 
   const onAdd = () => {
-    setFormAction({ action: 'add', actionText: 'Thêm', title: 'Thêm nhân viên mới' });
+    setFormAction({ action: 'add', actionText: 'Thêm', title: 'Thêm người dùng mới' });
     setOpenForm(true);
   };
 
@@ -92,7 +92,7 @@ function UserPage({}) {
     setFormAction({
       action: 'edit',
       actionText: 'Chỉnh sửa',
-      title: 'Chỉnh sửa thông tin nhân viên',
+      title: 'Chỉnh sửa thông tin người dùng',
       payload: { ...values }
     });
     setOpenForm(true);
@@ -141,67 +141,6 @@ function UserPage({}) {
     if (reload) callApi();
   };
 
-  const columns = [
-    {
-      title: '#',
-      dataIndex: 'key',
-      width: 60,
-      render: (_, prop, index) => (pageIndex - 1) * pageSize + index + 1
-    },
-    {
-      title: 'Tên',
-      dataIndex: 'name',
-      key: 'name',
-      sorter: (a, b) => a.name - b.name
-    },
-    {
-      title: 'Số điện thoại',
-      dataIndex: 'phone',
-      key: 'phone'
-    },
-    {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email'
-    },
-    {
-      title: 'Địa chỉ',
-      dataIndex: 'address',
-      key: 'address'
-    },
-    {
-      title: 'Ngày tham gia',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      width: 180,
-      render: (_, record, index) => dayjs(record.createdAt).format('L')
-    },
-    {
-      title: '',
-      dataIndex: 'actions',
-      key: 'actions',
-      width: 120,
-      render: (_, record, index) => (
-        <Space>
-          <Button
-            icon={<EditOutlined />}
-            type="text"
-            onClick={() => {
-              onEdit(record);
-            }}
-          />
-          <Button
-            icon={<DeleteOutlined />}
-            type="text"
-            onClick={() => {
-              onDelete(record);
-            }}
-          />
-        </Space>
-      )
-    }
-  ];
-
   const onEnterFilter = (e) => {
     const { value, name } = e.target;
     setSearchParams({ ...params, [name]: value.toString().trim() });
@@ -228,7 +167,7 @@ function UserPage({}) {
 
   return (
     <Layout className="px-4">
-      <Header className="border-1" title={'Quản lý nhân viên'} />
+      <Header className="border-1" title={'Quản lý người dùng'} />
       <Content className="w-100 py-3">
         <Modal
           title={formAction.title}
@@ -238,7 +177,7 @@ function UserPage({}) {
           }}
           destroyOnClose={true}
           classNames={{ footer: 'd-none' }}>
-          <EmployeeForm
+          <UserForm
             formAction={formAction}
             onClose={hanldeCloseForm}
             noChangeAccount={formAction.action === 'edit'}
@@ -260,7 +199,7 @@ function UserPage({}) {
                 </Button>
               )}
               <Button type="primary" ghost icon={<PlusOutlined />} onClick={onAdd}>
-                Thêm nhân viên
+                Thêm người dùng
               </Button>
             </Space>
           }
@@ -308,7 +247,7 @@ function UserPage({}) {
             </Row>
           </Row>
           <Table
-            columns={columns}
+            columns={columns({ pageSize, pageIndex, onDelete, onEdit })}
             dataSource={data.data || []}
             rowKey={(record) => record._id}
             pagination={false}

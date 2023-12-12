@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Form, Modal, Input, Select, Button, Space, Card } from 'antd';
-import { EyeInvisibleOutlined, EyeTwoTone, RedoOutlined } from '@ant-design/icons';
 import { UserApi } from '~/api';
 import { ErrorService, ValidateService } from '~/services';
 import AppContext from '~/context';
 import EmployeeApi from '~/api/Collections/EmployeeApi';
+import { RedoOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
 const formItemLayout = {
   labelCol: {
@@ -17,7 +17,7 @@ const formItemLayout = {
 
 const DEFAULT_PASSWORD = 'Parking@123';
 
-function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
+function UserForm({ isOpen, onClose, formAction, noChangeAccount }) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const { state, actions } = useContext(AppContext);
@@ -50,7 +50,7 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
       delete values.user;
       const api = await UserApi.edit(formAction.payload._id, values);
       if (api) {
-        onMess({ content: 'Chỉnh sửa nhân viên thành công', type: 'success' });
+        onMess({ content: 'Chỉnh sửa người dùng thành công', type: 'success' });
       }
       onClose({ reload: true, newValues: api });
     } catch (error) {
@@ -65,7 +65,7 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
       setLoading(true);
       const api = await EmployeeApi.add(values);
       if (api) {
-        onMess({ content: 'Thêm nhân viên thành công', type: 'success' });
+        onMess({ content: 'Thêm người dùng thành công', type: 'success' });
       }
       onClose({ reload: true });
     } catch (error) {
@@ -119,7 +119,7 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
         <Form.Item name={'address'} label="Địa chỉ" rules={[{ required: true, message: false }]}>
           <Input placeholder="Số 1 Võ Văn Ngân, Linh Chiểu" id="addressInput" />
         </Form.Item>
-        {/* <Form.Item
+        <Form.Item
           name={'user'}
           label="Tên tài khoản"
           validateDebounce={1000}
@@ -143,7 +143,7 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
               <Button icon={<RedoOutlined />} onClick={randomPassword} />
             </Space.Compact>
           </Form.Item>
-        )} */}
+        )}
 
         <Form.Item
           wrapperCol={{
@@ -163,4 +163,4 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
   );
 }
 
-export default EmployeeForm;
+export default UserForm;
