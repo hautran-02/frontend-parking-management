@@ -139,7 +139,6 @@ export const onSetChangePassword = async (payload) => {
 };
 
 export const onEventParking = async (payload) => {
-  console.log(onEventParking, payload);
   return {
     type: 'parkingEvent',
     payload: payload

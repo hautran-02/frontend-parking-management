@@ -88,7 +88,6 @@ function Employee({}) {
   };
 
   const onEdit = (values) => {
-    values.user = values.account.username;
     setFormAction({
       action: 'edit',
       actionText: 'Chỉnh sửa',

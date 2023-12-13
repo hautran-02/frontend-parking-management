@@ -249,9 +249,10 @@ function Driver({}) {
       dataIndex: 'actions',
       width: 120,
       key: 'actions',
-      render: (_, record, index) => (
+      render: (_, record, ix) => (
         <Space>
           <Button
+            id={`btnEdit${ix}`}
             icon={<EditOutlined />}
             type="text"
             onClick={() => {
@@ -259,6 +260,7 @@ function Driver({}) {
             }}
           />
           <Button
+            id={`btnDelete${ix}`}
             icon={<DeleteOutlined />}
             type="text"
             onClick={() => {
@@ -325,11 +327,11 @@ function Driver({}) {
           extra={
             <Space>
               {selectedRows.length > 0 && (
-                <Button type="primary" icon={<DeleteFilled />} onClick={onDeleteMany} danger>
+                <Button id='btnDeleteMany' type="primary" icon={<DeleteFilled />} onClick={onDeleteMany} danger>
                   Xóa
                 </Button>
               )}
-              <Button type="primary" ghost icon={<PlusOutlined />} onClick={onAdd}>
+              <Button id='btnAdd' type="primary" ghost icon={<PlusOutlined />} onClick={onAdd}>
                 Thêm chủ xe
               </Button>
             </Space>

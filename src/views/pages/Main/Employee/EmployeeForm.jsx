@@ -50,7 +50,7 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
       delete values.user;
       const api = await UserApi.edit(formAction.payload._id, values);
       if (api) {
-        onMess({ content: 'Chỉnh sửa nhân viên thành công', type: 'success' });
+        onNoti({ message: 'Chỉnh sửa nhân viên thành công', type: 'success' });
       }
       onClose({ reload: true, newValues: api });
     } catch (error) {
@@ -65,7 +65,7 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
       setLoading(true);
       const api = await EmployeeApi.add(values);
       if (api) {
-        onMess({ content: 'Thêm nhân viên thành công', type: 'success' });
+        onNoti({ message: 'Thêm nhân viên thành công', type: 'success' });
       }
       onClose({ reload: true });
     } catch (error) {

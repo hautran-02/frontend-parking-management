@@ -33,7 +33,7 @@ function DriverForm({ isOpen, onClose, formAction, onNoti, onMess }) {
       setLoading(true);
       const api = await UserApi.editDriver(formAction.payload._id, values);
       if (api) {
-        onMess({ content: 'Chỉnh sửa chủ xe thành công', type: 'success' });
+        onNoti({ message: 'Chỉnh sửa chủ xe thành công', type: 'success' });
       }
       onClose({ reload: true });
     } catch (error) {
@@ -48,7 +48,7 @@ function DriverForm({ isOpen, onClose, formAction, onNoti, onMess }) {
       setLoading(true);
       const api = await UserApi.addDriver(values);
       if (api) {
-        onMess({ content: 'Thêm chủ xe thành công', type: 'success' });
+        onNoti({ message: 'Thêm chủ xe thành công', type: 'success' });
       }
       onClose({ reload: true });
     } catch (error) {
@@ -107,10 +107,10 @@ function DriverForm({ isOpen, onClose, formAction, onNoti, onMess }) {
           <Input placeholder="Số 1 Võ Văn Ngân, Linh Chiểu" id="addressInput" />
         </Form.Item>
         <Form.Item label="Nghề nghiệp" name={['job']} rules={[{ required: true }]}>
-          <Select>
-            <Select.Option value="Teacher">Giảng viên</Select.Option>
-            <Select.Option value="Student">Sinh viên</Select.Option>
-            <Select.Option value="Employee">Nhân viên</Select.Option>
+          <Select id='jobInput'>
+            <Select.Option id="selectTeacher" value="Teacher">Giảng viên</Select.Option>
+            <Select.Option id="selectStudent" value="Student">Sinh viên</Select.Option>
+            <Select.Option id="selectEmployee" value="Employee">Nhân viên</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item label="Đơn vị" name={['department']} rules={[{ required: true }]}>
@@ -215,8 +215,8 @@ function DriverForm({ isOpen, onClose, formAction, onNoti, onMess }) {
           }}
           className="mt-4">
           <Space>
-            <Button onClick={hanldeClose}>Hủy</Button>
-            <Button htmlType="submit" type="primary">
+            <Button id='btnCancel' onClick={hanldeClose}>Hủy</Button>
+            <Button id='btnSubmit' htmlType="submit" type="primary">
               {formAction.actionText}
             </Button>
           </Space>
