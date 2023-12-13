@@ -65,7 +65,7 @@ function UserPage({}) {
   const callApi = async () => {
     try {
       setLoading(true);
-      const api = await UserApi.get({ ...params, pageSize, pageIndex });
+      const api = await UserApi.getManagers({ ...params, pageSize, pageIndex });
       setData(api);
       isMounted.current = true;
     } catch (error) {

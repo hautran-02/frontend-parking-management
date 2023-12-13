@@ -109,7 +109,7 @@ function Event({}) {
                   <Switch
                     checkedChildren="Chọn"
                     unCheckedChildren="Nhập"
-                    value={isSelect}
+                    checked={isSelect}
                     onChange={(checked) => {
                       setIsSelect(checked);
                     }}
@@ -131,8 +131,10 @@ function Event({}) {
                   ]}>
                   {isSelect ? (
                     <Select showSearch>
-                      {drivers.map((el) => (
-                        <Select.Option value={el.driver.vehicle[0].licenePlate}>
+                      {drivers.map((el, ix) => (
+                        <Select.Option
+                          key={'optionlicenePlate' + ix}
+                          value={el.driver.vehicle[0].licenePlate}>
                           {el.driver.vehicle[0].licenePlate}
                         </Select.Option>
                       ))}
@@ -143,8 +145,10 @@ function Event({}) {
                 </Form.Item>
                 <Form.Item name="zone" label="Khu vực">
                   <Radio.Group>
-                    {zones.map((el) => (
-                      <Radio.Button value={el}>{'Khu ' + el}</Radio.Button>
+                    {zones.map((el, ix) => (
+                      <Radio.Button key={'radio' + el + ix} value={el}>
+                        {'Khu ' + el}
+                      </Radio.Button>
                     ))}
                   </Radio.Group>
                 </Form.Item>
@@ -165,11 +169,14 @@ function Event({}) {
                         break;
                     }
 
-                    const rs = posList.map((el) => {
+                    const rs = posList.map((el, ix) => {
                       const { position } = el;
                       const isOccupied = slots.findIndex((e) => e.position === position);
                       return (
-                        <Radio value={el.position} disabled={isOccupied !== -1}>
+                        <Radio
+                          key={'radio' + el.position + ix}
+                          value={el.position}
+                          disabled={isOccupied !== -1}>
                           {el.position}
                         </Radio>
                       );
@@ -218,8 +225,10 @@ function Event({}) {
                     })
                   ]}>
                   <Select showSearch>
-                    {occupiedSlots.map((el) => (
-                      <Select.Option value={el?.parkingTurn?.vehicles?.licenePlate}>
+                    {occupiedSlots.map((el, ix) => (
+                      <Select.Option
+                        key={'option' + el?.parkingTurn?.vehicles?.licenePlate + ix}
+                        value={el?.parkingTurn?.vehicles?.licenePlate}>
                         {el?.parkingTurn?.vehicles[0]?.licenePlate}
                       </Select.Option>
                     ))}
