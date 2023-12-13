@@ -6,18 +6,10 @@ function generateEmail(username) {
 }
 
 function generatePhone() {
-  const uniqueNumbers = new Set();
+  // Tạo số ngẫu nhiên từ 10000000 đến 99999999
+  var randomNumber = Math.floor(Math.random() * 90000000) + 10000000;
 
-  while (uniqueNumbers.size < 8) {
-    const randomNumber = Math.floor(Math.random() * 100000000); // Số ngẫu nhiên từ 0 đến 99999999
-    uniqueNumbers.add(randomNumber);
-  }
-
-  // Chuyển set thành mảng và lấy số đầu tiên
-  const uniqueArray = Array.from(uniqueNumbers);
-  const uniqueNumber = uniqueArray[0];
-
-  return `03${uniqueNumber}`;
+  return `03${randomNumber}`;
 }
 
 const teacher_departments = [
@@ -71,7 +63,11 @@ function generateUsername(fullName) {
 
   const username = `${ten}${tenDem?.charAt(0)}${ho}`;
 
-  return username;
+  function removeVietnameseAccents(str) {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd')
+  }
+
+  return removeVietnameseAccents(username);
 }
 
 const fullNames = (length = 100) => {
@@ -619,6 +615,29 @@ export const employees = () => {
   console.log(rs);
 
   return rs;
+};
+
+export const managers = () => {
+  let list = [];
+  const names = fullNames();
+  for (let i = 0; i < 40; i++) {
+    const randomNumber = Math.floor(Math.random() * 3);
+    const name = names[i];
+    const username = generateUsername(name);
+    const email = generateEmail(username);
+    list.push({
+      name,
+      address: addresses[Math.floor(Math.random() * 100)],
+      phone: generatePhone(),
+      email,
+      account: {
+        username,
+        password: 'Parking@123',
+        role: 'Manager'
+      }
+    });
+  }
+  console.log('drivers', list);
 };
 
 export const users = () => {

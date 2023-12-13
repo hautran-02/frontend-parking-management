@@ -16,7 +16,7 @@ function GeneralCard({ zone = 'A' }) {
   });
 
   const config = {
-    height: 170,
+    height: 160,
     percent: data.occupied / data.total,
     range: {
       color: 'l(0) 0:#B8E1FF 1:#3D76DD'

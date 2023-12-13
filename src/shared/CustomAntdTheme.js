@@ -1,6 +1,14 @@
 import { createGlobalStyle, css } from 'styled-components';
 
 export default createGlobalStyle`
+    .ant-layout-sider-children {
+        display: flex;
+        flex-flow: column;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-bottom: 80px;
+    }
+
     .ant-menu.notCollapsed {
         .ant-menu-item {
             display: flex;

@@ -69,7 +69,7 @@ function EventBlock({}) {
       <div
         id="scrollableDiv"
         style={{
-          height: 800,
+          height: 'calc(100vh - 172px)',
           overflow: 'auto'
         }}>
         <InfiniteScroll

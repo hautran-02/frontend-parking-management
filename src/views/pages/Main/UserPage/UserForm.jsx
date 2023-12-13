@@ -17,7 +17,7 @@ const formItemLayout = {
 
 const DEFAULT_PASSWORD = 'Parking@123';
 
-function UserForm({ isOpen, onClose, formAction, noChangeAccount }) {
+function UserForm({ isOpen, onClose, formAction, noChangeAccount, role = 'Manager' }) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const { state, actions } = useContext(AppContext);
@@ -48,9 +48,10 @@ function UserForm({ isOpen, onClose, formAction, noChangeAccount }) {
       setLoading(true);
       delete values.account;
       delete values.user;
-      const api = await UserApi.edit(formAction.payload._id, values);
+      delete values.pass;
+      const api = await UserApi.editManager(formAction.payload._id, values);
       if (api) {
-        onMess({ content: 'Chỉnh sửa người dùng thành công', type: 'success' });
+        onNoti({ message: 'Chỉnh sửa người dùng thành công', type: 'success' });
       }
       onClose({ reload: true, newValues: api });
     } catch (error) {
@@ -61,11 +62,19 @@ function UserForm({ isOpen, onClose, formAction, noChangeAccount }) {
   };
 
   const hanldeAdd = async (values) => {
+    const account = {
+      username: values?.user,
+      password: values?.pass
+    };
+
     try {
+      values.account = account;
+      delete values.user;
+      delete values.pass;
       setLoading(true);
-      const api = await EmployeeApi.add(values);
+      const api = await UserApi.addManager(values);
       if (api) {
-        onMess({ content: 'Thêm người dùng thành công', type: 'success' });
+        onNoti({ message: 'Thêm người dùng thành công', type: 'success' });
       }
       onClose({ reload: true });
     } catch (error) {
@@ -152,8 +161,10 @@ function UserForm({ isOpen, onClose, formAction, noChangeAccount }) {
           }}
           className="mt-4">
           <Space>
-            <Button onClick={hanldeClose}>Hủy</Button>
-            <Button htmlType="submit" type="primary">
+            <Button id="btnCancel" onClick={hanldeClose}>
+              Hủy
+            </Button>
+            <Button id="btnSubmit" htmlType="submit" type="primary">
               {formAction.actionText}
             </Button>
           </Space>

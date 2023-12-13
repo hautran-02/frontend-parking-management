@@ -16,7 +16,13 @@ import {
   Input
 } from 'antd';
 import { Content, Footer, Header } from '~/views/layouts';
-import { PlusOutlined, EditOutlined, DeleteOutlined, DeleteFilled } from '@ant-design/icons';
+import {
+  PlusOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  DeleteFilled,
+  ExclamationCircleFilled
+} from '@ant-design/icons';
 import { UserApi } from '~/api';
 import dayjs from 'dayjs';
 import { useSearchParams, useParams } from 'react-router-dom';
@@ -26,6 +32,7 @@ import CustomedTable from '~/components/Table';
 import AppContext from '~/context';
 import { ErrorService } from '~/services';
 import columns from './columns';
+const { confirm } = Modal;
 
 function UserPage({}) {
   const { actions } = useContext(AppContext);
@@ -101,10 +108,10 @@ function UserPage({}) {
   const onDelete = async (values) => {
     try {
       setLoading(true);
-      const api = await UserApi.delete(values._id);
+      const api = await UserApi.deleteManager(values._id);
       setData(api);
-      actions.onMess({
-        content: 'Xóa thành công',
+      actions.onNoti({
+        message: 'Xóa người dùng thành công',
         type: 'success'
       });
       callApi();
@@ -116,6 +123,20 @@ function UserPage({}) {
   };
 
   const onDeleteMany = async () => {
+    confirm({
+      title: 'Bạn có chắc chắc muốn xóa ?',
+      icon: <ExclamationCircleFilled />,
+      content: 'Các nội dung được chọn sẽ bị mất vĩnh viễn',
+      okText: 'Đồng ý',
+      okType: 'danger',
+      cancelText: 'Hủy',
+      onOk() {
+        hanldeDeleteMany();
+      }
+    });
+  };
+
+  const hanldeDeleteMany = async () => {
     try {
       actions.onMess({
         content: 'Đang xóa',
@@ -123,10 +144,10 @@ function UserPage({}) {
         duration: 1
       });
       const ids = selectedRows.map((e) => e._id);
-      const api = await UserApi.deleteManyDriver(ids);
+      const api = await UserApi.deleteManyManager(ids);
       setData(api);
-      actions.onMess({
-        content: 'Xóa tất cả thành công',
+      actions.onNoti({
+        message: 'Xóa tất cả thành công',
         type: 'success'
       });
       callApi();
@@ -194,11 +215,16 @@ function UserPage({}) {
           extra={
             <Space>
               {selectedRows.length > 0 && (
-                <Button type="primary" icon={<DeleteFilled />} onClick={onDeleteMany} danger>
+                <Button
+                  id="btnDeleteMany"
+                  type="primary"
+                  icon={<DeleteFilled />}
+                  onClick={onDeleteMany}
+                  danger>
                   Xóa
                 </Button>
               )}
-              <Button type="primary" ghost icon={<PlusOutlined />} onClick={onAdd}>
+              <Button id="addUser" type="primary" ghost icon={<PlusOutlined />} onClick={onAdd}>
                 Thêm người dùng
               </Button>
             </Space>

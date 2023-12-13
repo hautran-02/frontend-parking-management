@@ -44,9 +44,10 @@ export default ({ pageSize, pageIndex, onEdit, onDelete }) => {
       dataIndex: 'actions',
       key: 'actions',
       width: 120,
-      render: (_, record, index) => (
+      render: (_, record, ix) => (
         <Space>
           <Button
+            id={`btnEdit${ix}`}
             icon={<EditOutlined />}
             type="text"
             onClick={() => {
@@ -54,6 +55,7 @@ export default ({ pageSize, pageIndex, onEdit, onDelete }) => {
             }}
           />
           <Button
+            id={`btnDelete${ix}`}
             icon={<DeleteOutlined />}
             type="text"
             onClick={() => {

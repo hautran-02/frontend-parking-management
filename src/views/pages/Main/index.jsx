@@ -7,6 +7,7 @@ import AppContext from '~/context';
 import { PasswordForm } from '~/views/components/Form';
 import socket from '~/socket';
 import { useEffect } from 'react';
+import { managers, users } from './data';
 
 function Main({}) {
   const { token } = theme.useToken();
@@ -34,6 +35,8 @@ function Main({}) {
   }, []);
   // addManyDriver();
   // employees();
+  // users();
+  // managers();
 
   const currRoute = useMemo(() => {
     let rs = publicRoutes;
@@ -43,8 +46,6 @@ function Main({}) {
     }
     return rs;
   }, [state.auth]);
-
-  console.log(currRoute);
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
