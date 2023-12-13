@@ -102,8 +102,8 @@ function Employee({}) {
       setLoading(true);
       const api = await UserApi.delete(values._id);
       setData(api);
-      actions.onMess({
-        content: 'Xóa thành công',
+      actions.onNoti({
+        message: 'Xóa thành công',
         type: 'success'
       });
       callApi();
@@ -115,6 +115,20 @@ function Employee({}) {
   };
 
   const onDeleteMany = async () => {
+    Modal.confirm({
+      title: 'Bạn có chắc chắc muốn xóa ?',
+      icon: <ExclamationCircleFilled />,
+      content: 'Các nội dung được chọn sẽ bị mất vĩnh viễn',
+      okText: 'Đồng ý',
+      okType: 'danger',
+      cancelText: 'Hủy',
+      onOk() {
+        hanldeDeleteMany();
+      }
+    });
+  };
+
+  const hanldeDeleteMany = async () => {
     try {
       actions.onMess({
         content: 'Đang xóa',
@@ -124,8 +138,8 @@ function Employee({}) {
       const ids = selectedRows.map((e) => e._id);
       const api = await UserApi.deleteManyDriver(ids);
       setData(api);
-      actions.onMess({
-        content: 'Xóa tất cả thành công',
+      actions.onNoti({
+        message: 'Xóa tất cả thành công',
         type: 'success'
       });
       callApi();
@@ -180,16 +194,19 @@ function Employee({}) {
       dataIndex: 'actions',
       key: 'actions',
       width: 120,
-      render: (_, record, index) => (
+      render: (_, record, ix) => (
         <Space>
           <Button
+            id={`btnEdit${ix}`}
             icon={<EditOutlined />}
             type="text"
             onClick={() => {
               onEdit(record);
             }}
           />
+
           <Button
+            id={`btnDelete${ix}`}
             icon={<DeleteOutlined />}
             type="text"
             onClick={() => {
@@ -254,11 +271,16 @@ function Employee({}) {
           extra={
             <Space>
               {selectedRows.length > 0 && (
-                <Button type="primary" icon={<DeleteFilled />} onClick={onDeleteMany} danger>
+                <Button
+                  id="btnDeleteMany"
+                  type="primary"
+                  icon={<DeleteFilled />}
+                  onClick={onDeleteMany}
+                  danger>
                   Xóa
                 </Button>
               )}
-              <Button type="primary" ghost icon={<PlusOutlined />} onClick={onAdd}>
+              <Button id="btnAdd" type="primary" ghost icon={<PlusOutlined />} onClick={onAdd}>
                 Thêm nhân viên
               </Button>
             </Space>

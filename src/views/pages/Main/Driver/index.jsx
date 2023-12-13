@@ -15,7 +15,7 @@ import {
   Pagination
 } from 'antd';
 import { Content, Footer, Header } from '~/views/layouts';
-import { PlusOutlined, EditOutlined, DeleteOutlined, DeleteFilled } from '@ant-design/icons';
+import { PlusOutlined, EditOutlined, DeleteOutlined, DeleteFilled, ExclamationCircleFilled } from '@ant-design/icons';
 import { UserApi } from '~/api';
 import dayjs from 'dayjs';
 import DriverForm from './DriverForm';
@@ -160,8 +160,8 @@ function Driver({}) {
       });
       const api = await UserApi.deleteDriver(values._id);
       setData(api);
-      actions.onMess({
-        content: 'Xóa thành công',
+      actions.onNoti({
+        message: 'Xóa chủ xe thành công',
         type: 'success'
       });
       callApi();
@@ -172,6 +172,20 @@ function Driver({}) {
   };
 
   const onDeleteMany = async () => {
+    Modal.confirm({
+      title: 'Bạn có chắc chắc muốn xóa ?',
+      icon: <ExclamationCircleFilled />,
+      content: 'Các nội dung được chọn sẽ bị mất vĩnh viễn',
+      okText: 'Đồng ý',
+      okType: 'danger',
+      cancelText: 'Hủy',
+      onOk() {
+        hanldeDeleteMany();
+      }
+    });
+  };
+
+  const hanldeDeleteMany = async () => {
     try {
       actions.onMess({
         content: 'Đang xóa',
@@ -181,8 +195,8 @@ function Driver({}) {
       const ids = selectedRows.map((e) => e._id);
       const api = await UserApi.deleteManyDriver(ids);
       setData(api);
-      actions.onMess({
-        content: 'Xóa tất cả thành công',
+      actions.onNoti({
+        message: 'Xóa tất cả thành công',
         type: 'success'
       });
       callApi();

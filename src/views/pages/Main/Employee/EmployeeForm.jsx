@@ -152,8 +152,8 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
           }}
           className="mt-4">
           <Space>
-            <Button onClick={hanldeClose}>Hủy</Button>
-            <Button htmlType="submit" type="primary">
+            <Button id='btnCancel' onClick={hanldeClose}>Hủy</Button>
+            <Button id='btnSubmit' htmlType="submit" type="primary">
               {formAction.actionText}
             </Button>
           </Space>
