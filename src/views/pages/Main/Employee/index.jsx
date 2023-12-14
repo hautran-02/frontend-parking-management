@@ -103,7 +103,7 @@ function Employee({}) {
       const api = await UserApi.delete(values._id);
       setData(api);
       actions.onNoti({
-        message: 'Xóa thành công',
+        message: 'Xóa nhân viên thành công',
         type: 'success'
       });
       callApi();

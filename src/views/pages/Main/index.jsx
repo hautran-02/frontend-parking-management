@@ -60,8 +60,7 @@ function Main({}) {
           account={state.auth?.info?.account}
           isOpen={state.onChangePassword}
           onClose={({ afterAction }) => {
-            actions.onSetChangePassword();
-            afterAction();
+            afterAction ? afterAction() : actions.onSetChangePassword();
           }}
           noChangeAccount
         />
@@ -71,7 +70,7 @@ function Main({}) {
         {currRoute.map((route, ix) => (
           <Route {...route} key={'route' + ix} />
         ))}
-        <Route path="*" element={<Navigate to="/dashboard" />} />
+        <Route path="*" element={<Navigate to={currRoute[0].path} />} />
       </Routes>
     </Layout>
   );

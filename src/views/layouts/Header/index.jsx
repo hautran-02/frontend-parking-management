@@ -83,9 +83,12 @@ function Header({ title }) {
   };
 
   const hanldeCloseForm = ({ newValues }) => {
-    delete newValues.account.password;
-    actions.editProfile(newValues);
-    setOpenForm(false);
+    if (newValues) {
+      delete newValues.account.password;
+      actions.editProfile(newValues);
+    } else {
+      setOpenForm(false);
+    }
   };
 
   return (

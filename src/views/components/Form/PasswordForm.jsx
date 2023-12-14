@@ -13,7 +13,7 @@ function PasswordForm({ account, isOpen, onClose, noChangeAccount }) {
 
   const hanldeClose = (action, values) => {
     form.resetFields();
-    onClose();
+    onClose({});
   };
 
   const onFinish = async (values) => {

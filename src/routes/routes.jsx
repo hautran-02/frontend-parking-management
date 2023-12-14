@@ -54,7 +54,6 @@ const publicRoutes = [
 ];
 
 const adminRoutes = [
-  ...publicRoutes,
   {
     key: 'user',
     label: 'Quản lý người dùng',

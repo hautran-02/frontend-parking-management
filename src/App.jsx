@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import Authen from './views/pages/Authen';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import Main from './views/pages/Main';
@@ -28,7 +28,7 @@ function Authorize({ children }) {
   const { state, actions } = useContext(AppContext);
   const { auth, authorize } = state;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     actions.onAuthorize({
       onError: () => {
         actions.logout();

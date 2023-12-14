@@ -132,6 +132,7 @@ export const onNoti = async (payload) => {
 };
 
 export const onSetChangePassword = async (payload) => {
+  console.log('cnahge');
   return {
     type: 'onChangePassword',
     payload: !payload
