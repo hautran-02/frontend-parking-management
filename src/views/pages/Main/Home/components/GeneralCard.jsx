@@ -2,8 +2,8 @@ import { Gauge } from '@ant-design/plots';
 import { Card, Space, Tag, Typography, theme } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
 import { MonitorApi } from '~/api';
-import CardBlock from '~/components/CardBlock';
-import CustomedTag from '~/components/CustomedTag';
+import CardBlock from '~/views/components/CardBlock';
+import CustomedTag from '~/views/components/CustomedTag';
 import AppContext from '~/context';
 
 function GeneralCard({ zone = 'A' }) {

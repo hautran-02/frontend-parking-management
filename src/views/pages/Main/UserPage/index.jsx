@@ -28,7 +28,7 @@ import dayjs from 'dayjs';
 import { useSearchParams, useParams } from 'react-router-dom';
 import { GetAllParams } from '~/services/RegularService';
 import UserForm from './UserForm';
-import CustomedTable from '~/components/Table';
+import CustomedTable from '~/views/components/Table';
 import AppContext from '~/context';
 import { ErrorService } from '~/services';
 import columns from './columns';

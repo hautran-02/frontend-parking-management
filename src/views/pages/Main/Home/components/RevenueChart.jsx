@@ -1,13 +1,13 @@
 import { Column, Line } from '@ant-design/plots';
 import { Card, DatePicker, Space, Typography, theme } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
-import CardBlock from '~/components/CardBlock';
+import CardBlock from '~/views/components/CardBlock';
 import { DefaultNumberStatisChart } from '../data';
 import { ChartService, ErrorService } from '~/services';
 import dayjs from 'dayjs';
 import AppContext from '~/context';
 import { MonitorApi } from '~/api';
-import { CustomedDateRangePicker } from '~/components';
+import { CustomedDateRangePicker } from '~/views/components';
 import { FormatNumber } from '~/services/RegularService';
 
 const zones = ['A', 'B', 'C'];

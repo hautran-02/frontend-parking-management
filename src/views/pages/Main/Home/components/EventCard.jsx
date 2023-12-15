@@ -2,7 +2,7 @@ import { Card, Col, Flex, Image, Row, Typography, theme } from 'antd';
 import dayjs from 'dayjs';
 import React from 'react';
 import IMG_DEVELOPING from '~/assets/images/developing.png';
-import CustomedTag from '~/components/CustomedTag';
+import CustomedTag from '~/views/components/CustomedTag';
 import { JobServices } from '~/services';
 
 const eventNames = {

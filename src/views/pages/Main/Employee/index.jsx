@@ -22,7 +22,7 @@ import dayjs from 'dayjs';
 import { useSearchParams, useParams } from 'react-router-dom';
 import { GetAllParams } from '~/services/RegularService';
 import EmployeeForm from './EmployeeForm';
-import CustomedTable from '~/components/Table';
+import CustomedTable from '~/views/components/Table';
 import AppContext from '~/context';
 import { ErrorService } from '~/services';
 import EmployeeApi from '~/api/Collections/EmployeeApi';

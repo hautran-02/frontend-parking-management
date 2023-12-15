@@ -62,7 +62,7 @@ function EventBlock({}) {
       <Row justify="space-between" className="pe-4">
         <Typography.Title level={4}>Sự kiện</Typography.Title>
         <Popconfirm title="Xuất báo cáo ?" onConfirm={onExport} okText="Đồng ý" cancelText="Hủy">
-          <Button icon={<FileExcelOutlined />} size="large" type="text" />
+          <Button icon={<FileExcelOutlined />} size="large">Xuất báo cáo</Button>
         </Popconfirm>
       </Row>
 
