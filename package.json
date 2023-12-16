@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
+    "deloy": "gh-pages -d build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "lint:fix": "eslint --fix",
@@ -27,6 +28,7 @@
     "axios": "^1.5.1",
     "bootstrap": "^5.3.2",
     "dayjs": "^1.11.10",
+    "gh-pages": "^6.1.0",
     "i18next": "^23.5.1",
     "js-cookie": "^3.0.5",
     "moment": "^2.29.4",
