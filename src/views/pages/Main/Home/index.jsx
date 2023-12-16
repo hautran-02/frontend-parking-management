@@ -50,7 +50,7 @@ function Home({}) {
 
   return (
     <Layout className="px-4">
-      <Header className="border-1" title={'Dashboard'} />
+      <Header className="border-1" title={'Home'} />
       <Content className="w-100 py-3">
         <Row id="dashboard-block" gutter={16}>
           <Col className="gutter-row" span={16}>
