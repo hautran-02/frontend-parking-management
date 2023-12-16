@@ -17,19 +17,23 @@ import { DownOutlined, SettingTwoTone } from '@ant-design/icons';
 import AppContext from '~/context';
 import { useNavigate } from 'react-router-dom';
 import EmployeeForm from '~/views/pages/Main/Employee/EmployeeForm';
+import ProfileForm from '~/views/components/Form/ProfileForm';
 
 const items = [
   {
+    id: 'editProfile',
     label: 'Chỉnh sửa thông tin',
     key: 'editProfile',
     disabled: false
   },
   {
+    id: 'changePassword',
     label: 'Thay đổi mật khẩu',
     key: 'changePassword',
     disabled: false
   },
   {
+    id: 'logout',
     label: <Typography.Text type="danger">Đăng xuất</Typography.Text>,
     key: 'logout'
   }
@@ -86,6 +90,7 @@ function Header({ title }) {
     if (newValues) {
       delete newValues.account.password;
       actions.editProfile(newValues);
+      setOpenForm(false);
     } else {
       setOpenForm(false);
     }
@@ -141,7 +146,7 @@ function Header({ title }) {
         }}
         destroyOnClose={true}
         classNames={{ footer: 'd-none' }}>
-        <EmployeeForm
+        <ProfileForm
           formAction={formAction}
           isOpen={openForm}
           onClose={hanldeCloseForm}

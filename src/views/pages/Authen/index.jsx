@@ -98,7 +98,7 @@ function Authen({}) {
               </Form.Item>
 
               <Form.Item>
-                <Button size="large" type="primary" htmlType="submit" block loading={loading}>
+                <Button id='btnLogin' size="large" type="primary" htmlType="submit" block loading={loading}>
                   Đăng nhập
                 </Button>
               </Form.Item>
