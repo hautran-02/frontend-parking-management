@@ -33,7 +33,7 @@ function DriverForm({ isOpen, onClose, formAction, onNoti, onMess }) {
       setLoading(true);
       const api = await UserApi.editDriver(formAction.payload._id, values);
       if (api) {
-        onMess({ content: 'Chỉnh sửa chủ xe thành công', type: 'success' });
+        onNoti({ message: 'Chỉnh sửa chủ xe thành công', type: 'success' });
       }
       onClose({ reload: true });
     } catch (error) {
@@ -48,7 +48,7 @@ function DriverForm({ isOpen, onClose, formAction, onNoti, onMess }) {
       setLoading(true);
       const api = await UserApi.addDriver(values);
       if (api) {
-        onMess({ content: 'Thêm chủ xe thành công', type: 'success' });
+        onNoti({ message: 'Thêm chủ xe thành công', type: 'success' });
       }
       onClose({ reload: true });
     } catch (error) {
@@ -68,7 +68,12 @@ function DriverForm({ isOpen, onClose, formAction, onNoti, onMess }) {
 
   return (
     <div className="container-fluid pt-3">
-      <Form form={form} onFinish={onFinish} disabled={loading} {...formItemLayout} style={{ maxWidth: 4000 }}>
+      <Form
+        form={form}
+        onFinish={onFinish}
+        disabled={loading}
+        {...formItemLayout}
+        style={{ maxWidth: 4000 }}>
         <Form.Item name={'name'} label="Họ và tên" rules={[{ required: true }]}>
           <Input placeholder="Nguyễn Văn A" id="nameInput" />
         </Form.Item>
@@ -98,8 +103,18 @@ function DriverForm({ isOpen, onClose, formAction, onNoti, onMess }) {
           ]}>
           <Input placeholder="0357647771" id="phoneInput" addonBefore={'+84'} />
         </Form.Item>
-        <Form.Item name={'address'} label="Địa chỉ">
+        <Form.Item name={'address'} label="Địa chỉ" rules={[{ required: true, message: false }]}>
           <Input placeholder="Số 1 Võ Văn Ngân, Linh Chiểu" id="addressInput" />
+        </Form.Item>
+        <Form.Item label="Nghề nghiệp" name={['job']} rules={[{ required: true }]}>
+          <Select id='jobInput'>
+            <Select.Option id="selectTeacher" value="Teacher">Giảng viên</Select.Option>
+            <Select.Option id="selectStudent" value="Student">Sinh viên</Select.Option>
+            <Select.Option id="selectEmployee" value="Employee">Nhân viên</Select.Option>
+          </Select>
+        </Form.Item>
+        <Form.Item label="Đơn vị" name={['department']} rules={[{ required: true }]}>
+          <Input placeholder="Công nghệ thông tin" />
         </Form.Item>
         <Form.Item
           label="Biển số xe"
@@ -200,8 +215,8 @@ function DriverForm({ isOpen, onClose, formAction, onNoti, onMess }) {
           }}
           className="mt-4">
           <Space>
-            <Button onClick={hanldeClose}>Hủy</Button>
-            <Button htmlType="submit" type="primary">
+            <Button id='btnCancel' onClick={hanldeClose}>Hủy</Button>
+            <Button id='btnSubmit' htmlType="submit" type="primary">
               {formAction.actionText}
             </Button>
           </Space>

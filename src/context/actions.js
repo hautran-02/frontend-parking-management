@@ -1,28 +1,31 @@
 import Cookies from 'js-cookie';
 import { AccountApi } from '../api';
+import dayjs from 'dayjs';
+import { ErrorService } from '~/services';
 
 export const onLogin = async (params) => {
   let isLogin = false;
   let type = 'error';
   let content = '';
   let info = {};
-  const { username, password, onComplete } = params;
-
+  const { username, password, onComplete, role } = params;
   try {
-    const rs = await AccountApi.login({ username, password, role: 'admin' });
+    const rs = await AccountApi.login({ username, password, role, onNoti });
     if (rs) {
       isLogin = true;
-      info = {
-        username
-      };
+      info = rs?.person || {};
       type = 'success';
       content = 'Đăng nhập thành công';
-      Cookies.set('access_token', rs.accessToken);
+      Cookies.set('access_token', rs.accessToken, { expires: 7 });
+
+      const expirationTime = dayjs().unix() + 5;
       localStorage.setItem(
         'auth',
         JSON.stringify({
           isLogin,
-          info
+          info,
+          role,
+          expDate: expirationTime
         })
       );
     } else {
@@ -31,6 +34,7 @@ export const onLogin = async (params) => {
   } catch (error) {
     type = 'error';
     content = 'Login Error';
+    ErrorService.hanldeError(error, onNoti)
   } finally {
     onComplete(type, content);
   }
@@ -39,10 +43,29 @@ export const onLogin = async (params) => {
     type: 'auth',
     payload: {
       isLogin,
-      info
+      info,
+      role
     }
   };
   // }
+};
+
+export const editProfile = async (state, payload) => {
+  const newValues = {
+    ...state.auth,
+    info: payload
+  };
+
+  localStorage.setItem(
+    'auth',
+    JSON.stringify({
+      ...newValues
+    })
+  );
+  return {
+    type: 'auth',
+    payload: newValues
+  };
 };
 
 export const checkAuthenSevice = async ({ onError = null, onFinish = null }) => {
@@ -68,10 +91,25 @@ export const checkAuthenSevice = async ({ onError = null, onFinish = null }) => 
   }
 };
 
+export const onAuthorize = async ({ onError }) => {
+  let payload = null;
+  try {
+    const api = await AccountApi.checkToken();
+    payload = api;
+  } catch {
+    onError();
+  } finally {
+  }
+
+  return {
+    type: 'authorize',
+    payload
+  };
+};
+
 export const logout = async () => {
   localStorage.removeItem('isLogin');
   Cookies.remove('access_token');
-  localStorage.clear();
 
   return {
     type: 'auth',
@@ -90,5 +128,20 @@ export const onNoti = async (payload) => {
   return {
     type: 'noti',
     payload
+  };
+};
+
+export const onSetChangePassword = async (payload) => {
+  console.log('cnahge');
+  return {
+    type: 'onChangePassword',
+    payload: !payload
+  };
+};
+
+export const onEventParking = async (payload) => {
+  return {
+    type: 'parkingEvent',
+    payload: payload
   };
 };

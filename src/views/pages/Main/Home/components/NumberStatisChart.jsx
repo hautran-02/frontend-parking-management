@@ -1,20 +1,20 @@
 import { Column } from '@ant-design/plots';
 import { Card, DatePicker, Space, Typography, theme } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
-import CardBlock from '~/components/CardBlock';
+import CardBlock from '~/views/components/CardBlock';
 import { DefaultNumberStatisChart } from '../data';
-import { ChartService } from '~/services';
+import { ChartService, ErrorService } from '~/services';
 import dayjs from 'dayjs';
 import AppContext from '~/context';
 import { MonitorApi } from '~/api';
-import { CustomedDateRangePicker } from '~/components';
+import { CustomedDateRangePicker } from '~/views/components';
 
 const zones = ['A', 'B', 'C'];
 
 function NumberStatisChart({}) {
   const { state, actions } = useContext(AppContext);
   const [data, setData] = useState([]);
-  const [dates, setDates] = useState([dayjs().startOf('week'), dayjs().endOf('week')]);
+  const [dates, setDates] = useState([dayjs().add(-7, 'd').startOf('d'), dayjs().endOf('d')]);
   const defaultConfig = ChartService.defaultConfig;
   const { token } = theme.useToken();
   const color = [token['purple'], token['magenta'], token['orange2']];
@@ -74,9 +74,7 @@ function NumberStatisChart({}) {
       startDate = startDate.format('L'); //DD/MM/YYYY 20/11/2023
       endDate = endDate.format('L');
       const api = await MonitorApi.getVehicleInOutNumber({ startDate, endDate });
-      console.log(api);
       const result = api.sort((a, b) => dayjs(a.date, 'L') - dayjs(b.date, 'L'));
-      console.log('after', result);
       //hanlde Data
 
       const newData = [];
@@ -112,13 +110,13 @@ function NumberStatisChart({}) {
 
       setData(newData);
     } catch (error) {
-      console.log(error);
+      // ErrorService.hanldeError(error, actions.onNoti);
     }
   };
 
   useEffect(() => {
     callApi();
-  }, [dates]);
+  }, [dates, state.parkingEvent]);
 
   return (
     <Card

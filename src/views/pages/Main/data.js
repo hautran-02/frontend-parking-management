@@ -1,5 +1,95 @@
 import { UserApi } from '~/api';
 
+function generateEmail(username) {
+  const email = `${username}@gmail.com`;
+  return email;
+}
+
+function generatePhone() {
+  // Tạo số ngẫu nhiên từ 10000000 đến 99999999
+  var randomNumber = Math.floor(Math.random() * 90000000) + 10000000;
+
+  return `03${randomNumber}`;
+}
+
+const teacher_departments = [
+  'Khoa Lý luận Chính trị',
+  'Khoa Khoa học ứng dụng',
+  'Khoa Cơ khí Chế tạo máy',
+  'Khoa Điện - Điện tử',
+  'Khoa Cơ khí Động Lực',
+  'Khoa Kinh tế',
+  'Khoa Công nghệ thông tin',
+  'Khoa In và Truyền thông',
+  'Khoa Công nghệ May và Thời Trang',
+  'Khoa Công nghệ Hóa học và Thực phẩm',
+  'Khoa Xây dựng',
+  'Khoa Ngoại ngữ',
+  'Khoa Đào tạo Chất lượng cao',
+  'Viện Sư phạm Kỹ thuật',
+  'Trường Trung học Kỹ thuật Thực hành'
+];
+
+const emp_departments = [
+  'Phòng Đào tạo',
+  'Phòng Đào tạo không chính quy',
+  'Phòng Tuyển sinh và Công tác Sinh viên',
+  'Phòng Truyền thông',
+  'Phòng Khoa học Công nghệ - Quan hệ Quốc tế',
+  'Phòng Quan hệ Doanh nghiệp',
+  'Phòng Thanh tra - Giáo dục',
+  'Phòng Đảm bảo Chất lượng',
+  'Phòng Tổ chức - Hành chính',
+  'Phòng Kế hoạch - Tài chính',
+  'Phòng Quản trị Cơ sở Vật chất',
+  'Phòng Thiết bị - Vật tư',
+  'Ban quản lý KTX',
+  'Trạm Y tế'
+];
+
+const jobs = [
+  { name: 'Teacher', departments: [...teacher_departments] },
+  { name: 'Employee', departments: [...emp_departments] },
+  { name: 'Student', departments: [...teacher_departments] }
+];
+
+function generateUsername(fullName) {
+  const cleanName = fullName
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+
+  const [ho, tenDem, ten] = cleanName.split(' ');
+
+  const username = `${ten}${tenDem?.charAt(0)}${ho}`;
+
+  function removeVietnameseAccents(str) {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd')
+  }
+
+  return removeVietnameseAccents(username);
+}
+
+const fullNames = (length = 100) => {
+  // Các họ và tên người Việt Nam
+  const ho = ['Nguyễn', 'Trần', 'Lê', 'Phạm', 'Hoàng', 'Huỳnh', 'Phan', 'Vũ', 'Võ', 'Đặng'];
+  const tenDem = ['Thị', 'Văn', 'Xuân', 'Minh', 'Hoàng', 'Quốc', 'Thành', 'Hữu', 'Đức', 'Tường'];
+  const ten = ['Hương', 'Anh', 'Nam', 'Linh', 'Duy', 'Thu', 'Tâm', 'Tuấn', 'Hải', 'Hạnh'];
+
+  // Hàm tạo họ tên ngẫu nhiên
+  function getRandomName() {
+    const randomHo = ho[Math.floor(Math.random() * ho.length)];
+    const randomTenDem = tenDem[Math.floor(Math.random() * tenDem.length)];
+    const randomTen = ten[Math.floor(Math.random() * ten.length)];
+    return `${randomHo} ${randomTenDem} ${randomTen}`;
+  }
+
+  // Tạo mảng 100 phần tử
+  const mangHoTen = Array.from({ length }, () => getRandomName());
+
+  return mangHoTen;
+};
+
 const names = [
   'Lê Anh Huy',
   'Nguyễn Thị Hương',
@@ -507,6 +597,49 @@ const emails = [
   'nguyenvanthang5959@gmail.com'
 ];
 
+export const employees = () => {
+  let rs = [];
+  for (let i = 0; i < 94; i++) {
+    const name = names[i];
+    const phone = phones[i];
+    const email = emails[i];
+    const address = addresses[i];
+    rs.push({
+      name,
+      phone,
+      email,
+      address
+    });
+  }
+
+  console.log(rs);
+
+  return rs;
+};
+
+export const managers = () => {
+  let list = [];
+  const names = fullNames();
+  for (let i = 0; i < 40; i++) {
+    const randomNumber = Math.floor(Math.random() * 3);
+    const name = names[i];
+    const username = generateUsername(name);
+    const email = generateEmail(username);
+    list.push({
+      name,
+      address: addresses[Math.floor(Math.random() * 100)],
+      phone: generatePhone(),
+      email,
+      account: {
+        username,
+        password: 'Parking@123',
+        role: 'Manager'
+      }
+    });
+  }
+  console.log('drivers', list);
+};
+
 export const users = () => {
   let rs = [];
   const roles = ['Admin', 'Manager', 'Employee'];
@@ -538,3 +671,41 @@ export const addManyUser = async () => {
   const userList = users();
   const rs = await UserApi.addMany(userList);
 };
+
+export const addManyDriver = async () => {
+  let driverList = [];
+  const names = fullNames();
+  for (let i = 0; i < 100; i++) {
+    const randomNumber = Math.floor(Math.random() * 3);
+    const name = names[i];
+    const username = generateUsername(name);
+    const email = generateEmail(username);
+    const jobObj = jobs[randomNumber];
+    const job = jobObj.name;
+    const deparment = jobObj.departments[Math.floor(Math.random() * jobObj.departments.length)];
+    const licenePlate = generateLicenePlate(/^\d{2}[A-Z]-\d{4,5}$/);
+    driverList.push({
+      licenePlate,
+      name,
+      address: addresses[i],
+      phone: generatePhone(),
+      email,
+      job,
+      deparment
+    });
+  }
+  console.log('drivers', driverList);
+  // const rs = await UserApi.addMany(userList);
+};
+
+function generateLicenePlate(pattern) {
+  const twoDigits = Math.floor(Math.random() * 100)
+    .toString()
+    .padStart(2, '0');
+  const capitalLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+  const fourToFiveDigits = Math.floor(Math.random() * 100000)
+    .toString()
+    .padStart(4, '0');
+
+  return `${twoDigits}${capitalLetter}-${fourToFiveDigits}`;
+}

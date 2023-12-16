@@ -1,12 +1,14 @@
 import { Gauge } from '@ant-design/plots';
 import { Card, Space, Tag, Typography, theme } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { MonitorApi } from '~/api';
-import CardBlock from '~/components/CardBlock';
-import CustomedTag from '~/components/CustomedTag';
+import CardBlock from '~/views/components/CardBlock';
+import CustomedTag from '~/views/components/CustomedTag';
+import AppContext from '~/context';
 
 function GeneralCard({ zone = 'A' }) {
   const { token } = theme.useToken();
+  const { state, actions } = useContext(AppContext);
   const [data, setData] = useState({
     total: 1,
     occupied: 0,
@@ -14,7 +16,7 @@ function GeneralCard({ zone = 'A' }) {
   });
 
   const config = {
-    height: 170,
+    height: 160,
     percent: data.occupied / data.total,
     range: {
       color: 'l(0) 0:#B8E1FF 1:#3D76DD'
@@ -67,7 +69,9 @@ function GeneralCard({ zone = 'A' }) {
           fontSize: 26,
           color: '#000'
         },
-        formatter: (e) => data.occupied.toString()
+        formatter: (e) => {
+          return data.occupied.toString();
+        }
       },
       content: {
         offsetY: -24,
@@ -101,17 +105,7 @@ function GeneralCard({ zone = 'A' }) {
 
   useEffect(() => {
     callApi();
-    // const interval = setInterval(
-    //   () => {
-    //     callApi();
-    //   },
-    //   import.meta.env.VITE_INTERVAL_TIME
-    // );
-
-    return () => {
-      // clearInterval(interval);
-    };
-  }, []);
+  }, [state.parkingEvent]);
 
   return (
     <Card

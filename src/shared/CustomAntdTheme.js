@@ -1,7 +1,15 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, css } from 'styled-components';
 
 export default createGlobalStyle`
-    .ant-menu {
+    .ant-layout-sider-children {
+        display: flex;
+        flex-flow: column;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-bottom: 80px;
+    }
+
+    .ant-menu.notCollapsed {
         .ant-menu-item {
             display: flex;
             flex-direction: column;
@@ -20,7 +28,7 @@ export default createGlobalStyle`
             }
         }
     }
-
+        
     .ant-image-img {
         border-radius: 8px;
     }

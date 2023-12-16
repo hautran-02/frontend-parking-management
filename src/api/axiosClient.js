@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const axiosClient = axios.create({
   headers: {
@@ -7,11 +8,17 @@ const axiosClient = axios.create({
   timeout: 55000
 });
 
+axiosClient.interceptors.request.use((config) => {
+  config.headers['Authorization'] = `bearer ${Cookies.get('access_token')}`;
+  return config;
+});
+
 axiosClient.interceptors.response.use(
   (response) => {
     return response.data;
   },
   async (error) => {
+    console.log('eror', error);
     let status = null,
       statusText = 'Lỗi không xác định',
       data = [];

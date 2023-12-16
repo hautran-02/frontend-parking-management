@@ -1,8 +1,6 @@
 import React, { Suspense, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Layout, Flex, Radio, theme, Typography, Tag, Spin, Skeleton } from 'antd';
 import { Content, Footer, Header } from '~/views/layouts';
-import { lazyRetry } from '~/utils';
-import { MapContainer } from './components';
 import { DetailFloorStyled, TransformBlock } from './style';
 import { MapInteractionCSS } from 'react-map-interaction';
 import { useSearchParams } from 'react-router-dom';
@@ -12,7 +10,7 @@ import { SLOTS_C } from './parkingC';
 import CarA from '~/assets/images/blue-car.png';
 import CarB from '~/assets/images/blue-car.png';
 import CarC from '~/assets/images/blue-car.png';
-import MapA from '~/assets/images/MapA.svg?react';
+import MapA from '~/assets/images/mapA.svg?react';
 import MapB from '~/assets/images/mapB.svg?react';
 import MapC from '~/assets/images/mapC.svg?react';
 import dayjs from 'dayjs';
@@ -28,14 +26,13 @@ function Map({}) {
   const [slots, setSlots] = useState([]);
   const zone = searchParams.get('zone') || 'A';
   const [loading, setLoading] = useState(false);
-
+  const isMounted = useRef(false);
   const onChangeZone = (e) => {
     setSearchParams({ zone: e.target.value });
   };
 
   const callApi = async () => {
     try {
-      setLoading(true);
       const api = await ParkingApi.getStatus({ zone });
       const newSlots = api[0].slots;
       setSlots(newSlots);
@@ -47,8 +44,12 @@ function Map({}) {
   };
 
   useEffect(() => {
-    //hanlde change Zone
-    // callApi();
+    callApi();
+  }, [state.parkingEvent]);
+
+  useEffect(() => {
+    setLoading(true);
+    callApi();
   }, [zone]);
 
   return (
@@ -62,9 +63,13 @@ function Map({}) {
             <Radio.Button value="C">Khu C</Radio.Button>
           </Radio.Group>
         </Flex>
-        <TransformBlock className="mt-2 overflow-hidden" style={{ backgroundColor: token.neutral5 }}>
-          <Spin spinning={loading} wrapperClassName='h-100 w-100'>
-            <MapInteractionCSS>
+        <TransformBlock
+          className="mt-2 overflow-hidden"
+          style={{ backgroundColor: token.neutral5 }}>
+          <Spin spinning={loading} wrapperClassName="h-100 w-100">
+            <MapInteractionCSS
+              minScale={0.4}
+              maxScale={2}>
               <div className="map-wrapper">
                 {useMemo(() => {
                   let vehicles;
@@ -101,8 +106,6 @@ function Map({}) {
                       break;
                   }
 
-                  console.log(slots);
-
                   const newSlots = slots.map((slot, ix) => {
                     const [vehicle] = vehicles.filter((e) => e.position === slot.position);
                     if (vehicle) {
@@ -121,10 +124,19 @@ function Map({}) {
                                   style={{ color: token.green7 }}>
                                   {`Khu ${zone} - ${position}`}
                                 </Typography.Title>
-                                <Tag color="cyan">{dayjs().format('L LTS')}</Tag>
+                                <Tag color="cyan">
+                                  {dayjs(slot?.parkingTurn?.start, 'x').format('L LTS')}
+                                </Tag>
                               </Flex>
                             }
-                            content={<DetailSlot {...vehicle} zone={zone} />}
+                            content={
+                              <DetailSlot
+                                {...vehicle}
+                                zone={zone}
+                                vehicle={slot?.parkingTurn?.vehicles}
+                                driver={slot?.parkingTurn?.persons}
+                              />
+                            }
                             overlayInnerStyle={{
                               border: '1px solid',
                               borderColor: token.cyan,

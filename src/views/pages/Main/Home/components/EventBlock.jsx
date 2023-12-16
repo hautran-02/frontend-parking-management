@@ -1,15 +1,21 @@
-import { Card, Col, Collapse, Flex, Image, Row, Space, Typography, theme } from 'antd';
-import React, { useEffect, useState } from 'react';
-import VirtualList from 'rc-virtual-list';
-import { Avatar, List } from 'antd';
-import { DefaultEvents } from '../data';
-import IMG_LISENCE from '~/assets/images/lisence.png';
-import CustomedTag from '~/components/CustomedTag';
-const { Meta } = Card;
+import { Button, Divider, Flex, Popconfirm, Row, Skeleton, Space, Typography, theme } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
+import { List } from 'antd';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import EventCard from './EventCard';
+import { MonitorApi } from '~/api';
+import { ErrorService } from '~/services';
+import AppContext from '~/context';
+import { useContext } from 'react';
+import { FileExcelOutlined } from '@ant-design/icons';
 
 function EventBlock({}) {
+  const { state, actions } = useContext(AppContext);
   const [data, setData] = useState([]);
   const { token } = theme.useToken();
+  const [pageSize, setPageSize] = useState(50);
+  const [pageIndex, setPageIndex] = useState(1);
+  const isMounted = useRef(false);
   const { geekblue6, blue2, colorTextSecondary, colorText, gold2, gold7 } = token;
   const inColor = {
     primary: geekblue6,
@@ -20,76 +26,99 @@ function EventBlock({}) {
     secondary: gold2
   };
   const onScroll = (e) => {
-    if (e.currentTarget.scrollHeight - e.currentTarget.scrollTop === ContainerHeight) {
+    if (e.currentTarget.scrollHeight - e.currentTarget.scrollTop === 400) {
       appendData();
     }
   };
 
+  const callApi = async () => {
+    try {
+      const api = await MonitorApi.getEvents({ pageSize, pageIndex });
+      setData(api.data);
+    } catch (error) {
+      // ErrorService.hanldeError(error, actions.onNoti);
+    } finally {
+    }
+  };
+
   useEffect(() => {
-    //callApi()
-    setData(DefaultEvents);
-  }, []);
+    callApi();1
+  }, [state.parkingEvent]);
+
+  const onExport = async () => {
+    try {
+      const api = await MonitorApi.export();
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(new Blob([api]));
+      link.download = `output.xlsx`;
+      link.click();
+    } catch(error) {
+      ErrorService.hanldeError(error, actions.onNoti)
+    }
+  };
 
   return (
     <div>
-      <Typography.Title level={4}>Sự kiện</Typography.Title>
-      <List split={false}>
-        <VirtualList data={data} height={720} itemKey="event" onScroll={onScroll}>
+      <Row justify="space-between" className="pe-4">
+        <Typography.Title level={4}>Sự kiện</Typography.Title>
+        <Popconfirm title="Xuất báo cáo ?" onConfirm={onExport} okText="Đồng ý" cancelText="Hủy">
+          <Button icon={<FileExcelOutlined />} size="large">Xuất báo cáo</Button>
+        </Popconfirm>
+      </Row>
+
+      <div
+        id="scrollableDiv"
+        style={{
+          height: 'calc(100vh - 172px)',
+          overflow: 'auto'
+        }}>
+        <InfiniteScroll
+          dataLength={data.length}
+          hasMore={data.length < 50}
+          // loader={
+          //   <Skeleton
+          //     avatar
+          //     paragraph={{
+          //       rows: 1
+          //     }}
+          //     active
+          //   />
+          // }
+          endMessage={<Divider plain>Không còn sự kiện khác</Divider>}
+          scrollableTarget="scrollableDiv">
+          <List
+            dataSource={data}
+            split={false}
+            renderItem={(item, index) => {
+              const color = item.type === 'in' ? inColor : outColor;
+              return (
+                <List.Item key={item.email}>
+                  <EventCard item={item} />
+                </List.Item>
+              );
+            }}
+          />
+        </InfiniteScroll>
+      </div>
+      {/* <List split={false}>
+        <VirtualList
+          data={data}
+          height={720}
+          onScroll={onScroll}
+          rowKey={(d) => {
+            console.log(d);
+            return 1;
+          }}>
           {(item, index) => {
             const color = item.type === 'in' ? inColor : outColor;
             return (
-              <List.Item key={'Event' + index}>
-                <Card
-                  title={item.time.format('L LTS')}
-                  className="event-card"
-                  style={{
-                    width: '99%',
-                    backgroundColor: color.secondary,
-                    border: `2px solid ${color.primary}`
-                  }}>
-                  <div id='eventTag' className='event-tag'>
-                    <CustomedTag entity={item.type} entityType="event">
-                      {item.type === 'in' ? 'Xe vào' : 'Xe ra'}
-                    </CustomedTag>
-                  </div>
-                  <Row gutter={{ xs: 4, sm: 8, md: 12 }}>
-                    <Col span={8}>
-                      <Flex vertical={true} align="center" gap={4}>
-                        <Image id="eventLisenceImg" src={IMG_LISENCE} />
-                        <Typography.Text id="eventLisencePlate">{item.license}</Typography.Text>
-                      </Flex>
-                    </Col>
-                    <Col span={16}>
-                      <Flex justify="space-evenly" vertical={true} align="start">
-                        <Typography.Title id="eventZone" level={5} className='mb-0' style={{ color: color.primary }}>
-                          {'Khu ' + item.zone}
-                        </Typography.Title>
-                        <Typography.Text id="eventDriverName">
-                          <span className="label">Chủ xe: </span>
-                          <span className="value">{item.driver.name}</span>
-                        </Typography.Text>
-                        <Typography.Text id="eventDriverJob">
-                          <span className="label">Nghề nghiệp: </span>
-                          <span className="value">{item.driver.job}</span>
-                        </Typography.Text>
-                        <Typography.Text id="eventDriverDepartment">
-                          <span className="label">Đơn vị: </span>
-                          <span className="value">{item.driver.department}</span>
-                        </Typography.Text>
-                        <Typography.Text id="eventDriverPhone">
-                          {' '}
-                          <span className="label">SĐT: </span>
-                          <span className="value">{item.driver.phone}</span>
-                        </Typography.Text>
-                      </Flex>
-                    </Col>
-                  </Row>
-                </Card>
+              <List.Item>
+
               </List.Item>
             );
           }}
         </VirtualList>
-      </List>
+      </List> */}
     </div>
   );
 }

@@ -12,20 +12,20 @@ function CustomedDateRangePicker({ limit = [14, 'd'], ...restProps }) {
 
     if (range === 'start') {
       const newDisable = (current) => {
-        return current && current > (start.add(14, "d") || curr > dayjs());
+        return current && current > (start.add(14, 'd') || curr > dayjs());
       };
-      console.log('rs', newDisable);
       setDisabledDate(newDisable);
     } else {
     }
   };
 
-
   return (
     <DatePicker.RangePicker
       {...restProps}
       onCalendarChange={onCalendarChange}
-      disabledDate={disabledDate}
+      disabledDate={(current) => {
+        return current > dayjs();
+      }}
       presets={[
         {
           label: '7 ngày gần nhất',

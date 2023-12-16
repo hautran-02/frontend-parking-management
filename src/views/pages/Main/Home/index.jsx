@@ -1,7 +1,7 @@
 import { TileLayout } from '@progress/kendo-react-layout';
 import { Col, Layout, Row } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
-import { PageHeader } from '~/components';
+import { PageHeader } from '~/views/components';
 import { Content, Footer, Header } from '~/views/layouts';
 import { DefaultPosition } from './data';
 import { EventBlock, GeneralCard, NumberStatisChart } from './components';
@@ -50,7 +50,7 @@ function Home({}) {
 
   return (
     <Layout className="px-4">
-      <Header className="border-1" title={'Dashboard'} />
+      <Header className="border-1" title={'Home'} />
       <Content className="w-100 py-3">
         <Row id="dashboard-block" gutter={16}>
           <Col className="gutter-row" span={16}>

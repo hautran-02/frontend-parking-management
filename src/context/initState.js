@@ -14,6 +14,9 @@ const initState = {
   auth: getIsLogin(),
   mess: null,
   noti: null,
+  onChangePassword: false,
+  parkingEvent: null,
+  authorize: null,
 };
 
 export default initState;

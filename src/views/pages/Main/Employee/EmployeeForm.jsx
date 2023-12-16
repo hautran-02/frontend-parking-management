@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Form, Modal, Input, Select, Button, Space, Card } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, RedoOutlined } from '@ant-design/icons';
 import { UserApi } from '~/api';
 import { ErrorService, ValidateService } from '~/services';
+import AppContext from '~/context';
+import EmployeeApi from '~/api/Collections/EmployeeApi';
 
 const formItemLayout = {
   labelCol: {
@@ -15,9 +17,11 @@ const formItemLayout = {
 
 const DEFAULT_PASSWORD = 'Parking@123';
 
-function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti, onMess }) {
+function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount }) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const { state, actions } = useContext(AppContext);
+  const { onNoti, onMess } = actions;
 
   const hanldeClose = (action, values) => {
     form.resetFields();
@@ -26,7 +30,6 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti, on
 
   useEffect(() => {
     if (formAction.action === 'edit') {
-      console.log(formAction);
       form.setFieldsValue({ ...formAction.payload });
     } else {
     }
@@ -41,16 +44,15 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti, on
   };
 
   const hanldeEdit = async (values) => {
-    console.log(values);
     try {
       setLoading(true);
       delete values.account;
       delete values.user;
       const api = await UserApi.edit(formAction.payload._id, values);
       if (api) {
-        onMess({ content: 'Chỉnh sửa nhân viên thành công', type: 'success' });
+        onNoti({ message: 'Chỉnh sửa nhân viên thành công', type: 'success' });
       }
-      onClose({ reload: true });
+      onClose({ reload: true, newValues: api });
     } catch (error) {
       ErrorService.hanldeError(error, onNoti);
     } finally {
@@ -61,16 +63,9 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti, on
   const hanldeAdd = async (values) => {
     try {
       setLoading(true);
-      values.account = {
-        username: values.user,
-        password: values.pass,
-        role: 'Employee'
-      };
-      delete values.pass;
-      delete values.user;
-      const api = await UserApi.add(values);
+      const api = await EmployeeApi.add(values);
       if (api) {
-        onMess({ content: 'Thêm nhân viên thành công', type: 'success' });
+        onNoti({ message: 'Thêm nhân viên thành công', type: 'success' });
       }
       onClose({ reload: true });
     } catch (error) {
@@ -121,10 +116,10 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti, on
           ]}>
           <Input placeholder="0357647771" id="phoneInput" addonBefore={'+87'} />
         </Form.Item>
-        <Form.Item name={'address'} label="Địa chỉ">
+        <Form.Item name={'address'} label="Địa chỉ" rules={[{ required: true, message: false }]}>
           <Input placeholder="Số 1 Võ Văn Ngân, Linh Chiểu" id="addressInput" />
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           name={'user'}
           label="Tên tài khoản"
           validateDebounce={1000}
@@ -148,7 +143,7 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti, on
               <Button icon={<RedoOutlined />} onClick={randomPassword} />
             </Space.Compact>
           </Form.Item>
-        )}
+        )} */}
 
         <Form.Item
           wrapperCol={{
@@ -157,8 +152,8 @@ function EmployeeForm({ isOpen, onClose, formAction, noChangeAccount, onNoti, on
           }}
           className="mt-4">
           <Space>
-            <Button onClick={hanldeClose}>Hủy</Button>
-            <Button htmlType="submit" type="primary">
+            <Button id='btnCancel' onClick={hanldeClose}>Hủy</Button>
+            <Button id='btnSubmit' htmlType="submit" type="primary">
               {formAction.actionText}
             </Button>
           </Space>

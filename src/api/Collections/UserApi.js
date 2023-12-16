@@ -11,6 +11,14 @@ export default {
     });
   },
 
+  getManagers: (payload) => {
+    const url = `${DOMAIN}/user/manager`;
+    return GET({
+      url,
+      payload
+    });
+  },
+
   getDrivers: (payload) => {
     const url = `${DOMAIN}/user/driver/filter`;
     return GET({
@@ -29,6 +37,14 @@ export default {
 
   add: (payload) => {
     const url = `${DOMAIN}/user`;
+    return POST({
+      url,
+      payload
+    });
+  },
+
+  addManager: (payload) => {
+    const url = `${DOMAIN}/user/manager`;
     return POST({
       url,
       payload
@@ -59,6 +75,14 @@ export default {
     });
   },
 
+  editManager: (_id, payload) => {
+    const url = `${DOMAIN}/user/manager?_id=${_id}`;
+    return PUT({
+      url,
+      payload
+    });
+  },
+
   editDriver: (_id, payload) => {
     const url = `${DOMAIN}/user/driver?_id=${_id}`;
     return PUT({
@@ -74,8 +98,25 @@ export default {
     });
   },
 
+  deleteManager: (_id) => {
+    const url = `${DOMAIN}/user/manager?_id=${_id}`;
+    return DELETE({
+      url
+    });
+  },
+
   deleteMany: (ids) => {
     const url = `${DOMAIN}/user/deleteMany`;
+    return POST({
+      url,
+      payload: {
+        ids
+      }
+    });
+  },
+
+  deleteManyManager: (ids) => {
+    const url = `${DOMAIN}/user/manager/deletes`;
     return POST({
       url,
       payload: {
@@ -98,6 +139,14 @@ export default {
       payload: {
         ids
       }
+    });
+  },
+
+  changePassword: (payload) => {
+    const url = `${DOMAIN}/user/changePassword`;
+    return POST({
+      url,
+      payload,
     });
   }
 };

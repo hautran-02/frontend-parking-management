@@ -1,23 +1,45 @@
 const reducer = (state, action) => {
   switch (action.type) {
-    case "auth": {
+    case 'auth': {
       return {
         ...state,
-        auth: action.payload,
+        auth: action.payload
       };
     }
-    case "mess": {
+    case 'mess': {
       return {
         ...state,
-        mess: action.payload,
+        mess: action.payload
       };
     }
-    case "noti": {
+    case 'noti': {
       return {
         ...state,
-        noti: action.payload,
+        noti: action.payload
       };
     }
+
+    case 'onChangePassword': {
+      return {
+        ...state,
+        onChangePassword: action.payload
+      };
+    }
+
+    case 'parkingEvent': {
+      return {
+        ...state,
+        parkingEvent: action.payload
+      };
+    }
+
+    case 'authorize': {
+      return {
+        ...state,
+        authorize: action.payload
+      };
+    }
+
     default:
       return state;
   }

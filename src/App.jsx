@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import Authen from './views/pages/Authen';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import Main from './views/pages/Main';
@@ -11,16 +11,32 @@ import { dayjsSetup } from './config';
 import dayjs from 'dayjs';
 import PageError from './views/pages/PageError';
 import { ThemeProvider } from 'styled-components';
+import socket from './socket';
 
-function Auth({ children }) {
+function Authencation({ children }) {
   const { state } = useContext(AppContext);
-  const { auth } = state;
+  const { auth, authorize } = state;
 
   if (auth.isLogin) {
     return children;
   }
 
   return <Navigate to={'/auth/login'} />;
+}
+
+function Authorize({ children }) {
+  const { state, actions } = useContext(AppContext);
+  const { auth, authorize } = state;
+
+  useLayoutEffect(() => {
+    actions.onAuthorize({
+      onError: () => {
+        actions.logout();
+      }
+    });
+  }, []);
+
+  return children;
 }
 
 function App() {
@@ -51,8 +67,7 @@ function App() {
       notiApi[type]({
         message,
         description,
-        placement,
-        
+        placement
       });
     }
   }, [noti]);
@@ -67,9 +82,11 @@ function App() {
           <Route
             path="/*"
             element={
-              <Auth>
-                <Main />
-              </Auth>
+              <Authencation>
+                <Authorize>
+                  <Main />
+                </Authorize>
+              </Authencation>
             }
             errorElement={
               <PageError

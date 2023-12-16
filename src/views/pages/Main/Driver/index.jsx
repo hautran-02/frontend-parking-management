@@ -15,13 +15,13 @@ import {
   Pagination
 } from 'antd';
 import { Content, Footer, Header } from '~/views/layouts';
-import { PlusOutlined, EditOutlined, DeleteOutlined, DeleteFilled } from '@ant-design/icons';
+import { PlusOutlined, EditOutlined, DeleteOutlined, DeleteFilled, ExclamationCircleFilled } from '@ant-design/icons';
 import { UserApi } from '~/api';
 import dayjs from 'dayjs';
 import DriverForm from './DriverForm';
 import { useSearchParams } from 'react-router-dom';
 import AppContext from '~/context';
-import { ErrorService } from '~/services';
+import { ErrorService, JobServices } from '~/services';
 
 function Driver({}) {
   const [data, setData] = useState({
@@ -72,7 +72,7 @@ function Driver({}) {
 
   useEffect(() => {
     if (isMounted.current) {
-      if (pageIndex > totalPage) {
+      if (pageIndex > totalPage && pageIndex > 1) {
         setSearchParams({ ...params, pageIndex: totalPage });
       }
     }
@@ -110,11 +110,11 @@ function Driver({}) {
       {
         title: 'Ngày đăng ký',
         dataIndex: 'createdAt',
-        key: 'createdAt'
+        key: 'createdAt',
+        render: (_, record, index) => dayjs(record.createdAt).format('L')
       }
     ];
     const newData = subData?.driver?.vehicle || [];
-    console.log(subData);
 
     return (
       <div className="container-fluid">
@@ -137,8 +137,11 @@ function Driver({}) {
   };
 
   const onEdit = (values) => {
-    console.log(values);
     values.licenePlate = values.driver?.vehicle[0]?.licenePlate || null;
+    values = {
+      ...values,
+      ...values?.driver
+    };
     setFormAction({
       action: 'edit',
       actionText: 'Chỉnh sửa',
@@ -157,8 +160,8 @@ function Driver({}) {
       });
       const api = await UserApi.deleteDriver(values._id);
       setData(api);
-      actions.onMess({
-        content: 'Xóa thành công',
+      actions.onNoti({
+        message: 'Xóa chủ xe thành công',
         type: 'success'
       });
       callApi();
@@ -169,6 +172,20 @@ function Driver({}) {
   };
 
   const onDeleteMany = async () => {
+    Modal.confirm({
+      title: 'Bạn có chắc chắc muốn xóa ?',
+      icon: <ExclamationCircleFilled />,
+      content: 'Các nội dung được chọn sẽ bị mất vĩnh viễn',
+      okText: 'Đồng ý',
+      okType: 'danger',
+      cancelText: 'Hủy',
+      onOk() {
+        hanldeDeleteMany();
+      }
+    });
+  };
+
+  const hanldeDeleteMany = async () => {
     try {
       actions.onMess({
         content: 'Đang xóa',
@@ -178,8 +195,8 @@ function Driver({}) {
       const ids = selectedRows.map((e) => e._id);
       const api = await UserApi.deleteManyDriver(ids);
       setData(api);
-      actions.onMess({
-        content: 'Xóa tất cả thành công',
+      actions.onNoti({
+        message: 'Xóa tất cả thành công',
         type: 'success'
       });
       callApi();
@@ -219,8 +236,20 @@ function Driver({}) {
     },
     {
       title: 'Địa chỉ',
-      dataIndex: 'adress',
+      dataIndex: 'address',
       key: 'address'
+    },
+    {
+      title: 'Nghề nghiệp',
+      dataIndex: ['driver', 'job'],
+      key: 'job',
+      render: (text, record, index) => JobServices.getTextByValue(text)
+    },
+    {
+      title: 'Đơn vị (Khoa)',
+      dataIndex: ['driver', 'department'],
+      key: 'department',
+      render: (text, record, index) => text
     },
     {
       title: 'Ngày tham gia',
@@ -234,9 +263,10 @@ function Driver({}) {
       dataIndex: 'actions',
       width: 120,
       key: 'actions',
-      render: (_, record, index) => (
+      render: (_, record, ix) => (
         <Space>
           <Button
+            id={`btnEdit${ix}`}
             icon={<EditOutlined />}
             type="text"
             onClick={() => {
@@ -244,6 +274,7 @@ function Driver({}) {
             }}
           />
           <Button
+            id={`btnDelete${ix}`}
             icon={<DeleteOutlined />}
             type="text"
             onClick={() => {
@@ -310,11 +341,11 @@ function Driver({}) {
           extra={
             <Space>
               {selectedRows.length > 0 && (
-                <Button type="primary" icon={<DeleteFilled />} onClick={onDeleteMany} danger>
+                <Button id='btnDeleteMany' type="primary" icon={<DeleteFilled />} onClick={onDeleteMany} danger>
                   Xóa
                 </Button>
               )}
-              <Button type="primary" ghost icon={<PlusOutlined />} onClick={onAdd}>
+              <Button id='btnAdd' type="primary" ghost icon={<PlusOutlined />} onClick={onAdd}>
                 Thêm chủ xe
               </Button>
             </Space>
