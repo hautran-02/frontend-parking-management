@@ -18,38 +18,23 @@ axiosClient.interceptors.response.use(
     return response.data;
   },
   async (error) => {
-    console.log('eror', error);
-    let status = null,
-      statusText = 'Lỗi không xác định',
-      data = [];
-    let {
-      response = {
-        status: false,
-        statusText: 'Kết nối chậm, vui lòng thử lại sau!'
-      }
-    } = error;
-    if (response.status) {
-      status = response.status;
-      statusText = response.statusText;
+    const { response } = error;
+    let statusCode = 500;
+    let message = 'Lỗi không xác định';
+    let data;
 
-      switch (status) {
-        case 404:
-          statusText = 'Không tìm thấy dữ liệu';
-          break;
-        case 500:
-          statusText = 'Server xảy ra lỗi';
-          break;
+    if (response) {
+      statusCode = response.status;
+      message = response.statusText;
+
+      if (response?.data) {
+        data = response.data;
       }
-    }
-    if (response.data && response.data.statusCode) {
-      const { statusCode, message } = response.data;
-      status = statusCode;
-      statusText = message;
     }
 
     return Promise.reject({
-      status,
-      statusText,
+      statusCode,
+      message,
       data
     });
   }

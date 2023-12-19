@@ -1,19 +1,13 @@
 export default {
   hanldeError: (error, onNoti) => {
     const type = 'error';
+    console.log('hanldeError', error);
     if (error?.data) {
-      const { statusCode = 0, message: description } = error?.data;
-      onNoti({ message: error.status, description: error.statusText, type });
-      switch (statusCode) {
-        case 500:
-          onNoti({ message: 'Lỗi Server', description, type });
-          break;
-        case 404:
-          break;
-        default:
-          onNoti({ message: error.status, description: error.statusText, type });
-          break;
+      let { statusCode = 0, message: description, code } = error?.data;
+      if(code === "BR_undefined") {
+        description = 'Lỗi không xác định'
       }
+      onNoti({ message: description, type });
     } else {
       onNoti({ message: error.status, description: error.statusText, type });
     }
