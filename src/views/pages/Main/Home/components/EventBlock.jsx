@@ -68,6 +68,7 @@ function EventBlock({}) {
 
       <div
         id="scrollableDiv"
+        className='mt-2'
         style={{
           height: 'calc(100vh - 172px)',
           overflow: 'auto'
