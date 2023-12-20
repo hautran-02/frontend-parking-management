@@ -11,6 +11,7 @@ import { FileExcelOutlined } from '@ant-design/icons';
 
 function EventBlock({}) {
   const { state, actions } = useContext(AppContext);
+  const [data, setData] = useState([]);
   const { token } = theme.useToken();
   const [pageSize, setPageSize] = useState(50);
   const [pageIndex, setPageIndex] = useState(1);
