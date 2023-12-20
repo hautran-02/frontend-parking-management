@@ -42,6 +42,7 @@ function Authorize({ children }) {
 function App() {
   //Message Function
   const { state } = useContext(AppContext);
+  const { mess, noti } = state;
   const [messageApi, contextHolder] = message.useMessage();
   const [notiApi, notiContextHolder] = notification.useNotification();
   const navigate = useNavigate();
