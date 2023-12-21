@@ -3,7 +3,7 @@ import Authen from './views/pages/Authen';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import Main from './views/pages/Main';
 import AppContext from './context';
-import { ConfigProvider, message, notification, theme } from 'antd';
+import { ConfigProvider, Skeleton, Spin, Typography, message, notification, theme } from 'antd';
 import customAntdTheme from './shared/CustomAntdTheme';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@progress/kendo-theme-default/dist/all.css';
@@ -27,16 +27,40 @@ function Authencation({ children }) {
 function Authorize({ children }) {
   const { state, actions } = useContext(AppContext);
   const { auth, authorize } = state;
+  const [loading, setLoading] = useState(true);
+
+  const api = async () => {
+    try {
+      await actions.onAuthorize({
+        onError: () => {
+          actions.logout();
+        }
+      });
+    } catch {
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useLayoutEffect(() => {
-    actions.onAuthorize({
-      onError: () => {
-        actions.logout();
-      }
-    });
+    api();
   }, []);
 
-  return children;
+  if (authorize) {
+    return children;
+  }
+
+  return (
+    <div className="full-screen">
+      {/* <Spin
+        spinning={loading}
+        size="large"
+        tip={<Typography.Title level={4}>Loading...</Typography.Title>}
+        fullscreen={true}>
+        <div className="content" />
+      </Spin> */}
+    </div>
+  );
 }
 
 function App() {

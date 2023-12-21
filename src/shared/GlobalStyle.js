@@ -115,4 +115,17 @@ export default createGlobalStyle`
             padding: 0 16px;
         }
     }
+
+    .full-screen {
+        height: 100vh;
+        margin: 20px 0;
+        margin-bottom: 20px;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 4px;
+
+        > div {
+            transform: translateY(40vh);
+        }
+    }
 `;
