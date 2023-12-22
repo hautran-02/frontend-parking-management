@@ -59,25 +59,40 @@ function EventCard({ item }) {
     i++;
   }
 
-  const isImage = name === 'in' || name === 'out';
+  let isImage = false;
+
+  if (name === 'in' || name === 'out') {
+    isImage = true;
+
+    if (rs.length === 0) {
+      rs = [
+        <Typography.Title level={5} key={'info'}>
+          Khách vãng lai
+        </Typography.Title>
+      ];
+    }
+  }
 
   return (
     <Card
-      title={dayjs(item.createdAt, 'x').format('L LTS')}
+      title={
+        <Typography.Title level={5}>{dayjs(item.createdAt, 'x').format('L LTS')}</Typography.Title>
+      }
+      extra={
+        <CustomedTag entity={name} entityType="event">
+          {eventNames[name]}
+        </CustomedTag>
+      }
       className="event-card"
       style={{
         width: '99%',
         backgroundColor: color.secondary,
         border: `2px solid ${color.primary}`
       }}>
-      <div id="eventTag" className="event-tag">
-        <CustomedTag entity={name} entityType="event">
-          {eventNames[name]}
-        </CustomedTag>
-      </div>
+      <div id="eventTag" className="event-tag"></div>
       <Row gutter={{ xs: 4, sm: 8, md: 12 }}>
-        <Col span={8}>
-          {isImage && (
+        {isImage && (
+          <Col span={8}>
             <Flex vertical={true} align="center" gap={4}>
               <Image
                 id="eventLisenceImg"
@@ -90,8 +105,8 @@ function EventCard({ item }) {
                 {vehicle.licenePlate}
               </Typography.Text>
             </Flex>
-          )}
-        </Col>
+          </Col>
+        )}
         <Col span={16}>
           <Flex justify="space-evenly" vertical={true} align="start">
             <Typography.Title
