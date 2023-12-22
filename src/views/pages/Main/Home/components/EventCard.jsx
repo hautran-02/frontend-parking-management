@@ -7,7 +7,9 @@ import { JobServices } from '~/services';
 
 const eventNames = {
   in: 'Xe vào',
-  out: 'Xe ra'
+  out: 'Xe ra',
+  almost_full: 'Bãi xe sấp đầy',
+  parking_full: 'Bãi xe đã đầy'
 };
 
 const personInfo = {
@@ -19,18 +21,13 @@ const personInfo = {
 
 function EventCard({ item }) {
   const { token } = theme.useToken();
-  const { geekblue6, blue2, colorTextSecondary, colorText, gold2, gold7 } = token;
-  const inColor = {
-    primary: geekblue6,
-    secondary: blue2
-  };
-  const outColor = {
-    primary: gold7,
-    secondary: gold2
-  };
 
   let { name, parkingTurn, vehicle, person = {} } = item;
-  const color = name === 'in' ? inColor : outColor;
+
+  const color = {
+    primary: token.event[name][0],
+    secondary: token.event[name][1]
+  };
   let rs = [];
   let i = 0;
 
@@ -45,20 +42,24 @@ function EventCard({ item }) {
   }
 
   for (const [key, value] of Object.entries(personInfo)) {
-    let xValue = (person && person[key]) || 'Không xác định';
-    if (key === 'job') {
-      xValue = JobServices.getTextByValue(xValue);
+    let xValue = person && person[key];
+    if (xValue) {
+      if (key === 'job') {
+        xValue = JobServices.getTextByValue(xValue);
+      }
+      rs.push(
+        <Typography.Text key={'info' + i}>
+          <span className="label">{value}</span>
+          <span className="value">
+            {': '} {xValue}
+          </span>
+        </Typography.Text>
+      );
     }
-    rs.push(
-      <Typography.Text key={'info' + i}>
-        <span className="label">{value}</span>
-        <span className="value">
-          {': '} {xValue}
-        </span>
-      </Typography.Text>
-    );
     i++;
   }
+
+  const isImage = name === 'in' || name === 'out';
 
   return (
     <Card
@@ -76,18 +77,20 @@ function EventCard({ item }) {
       </div>
       <Row gutter={{ xs: 4, sm: 8, md: 12 }}>
         <Col span={8}>
-          <Flex vertical={true} align="center" gap={4}>
-            <Image
-              id="eventLisenceImg"
-              src={IMG_DEVELOPING}
-              className="p-2"
-              preview={false}
-              style={{ background: '#FFF', width: 120, height: 120 }}
-            />
-            <Typography.Text id="eventLisencePlate" strong>
-              {vehicle.licenePlate}
-            </Typography.Text>
-          </Flex>
+          {isImage && (
+            <Flex vertical={true} align="center" gap={4}>
+              <Image
+                id="eventLisenceImg"
+                src={IMG_DEVELOPING}
+                className="p-2"
+                preview={false}
+                style={{ background: '#FFF', width: 120, height: 120 }}
+              />
+              <Typography.Text id="eventLisencePlate" strong>
+                {vehicle.licenePlate}
+              </Typography.Text>
+            </Flex>
+          )}
         </Col>
         <Col span={16}>
           <Flex justify="space-evenly" vertical={true} align="start">
@@ -98,7 +101,7 @@ function EventCard({ item }) {
               style={{ color: color.primary }}>
               {'Khu ' + item.zone}
             </Typography.Title>
-            {rs}
+            {rs.length > 0 && rs}
             {/* <Typography.Text id="eventDriverName">
               <span className="label">Chủ xe: </span>
               <span className="value">{item.driver.name}</span>

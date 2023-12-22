@@ -36,15 +36,16 @@ function CustomedTag({ children, entity, entityType, size = 'normal', ...restPro
 
     padding = '1px 8px';
   } else {
+    color = token['colorBgBase'];
     switch (entity) {
       case 'in':
-        color = token['colorBgBase'];
-        backgroundColor = token['geekblue6'];
+        backgroundColor = token.event.entry[0];
         break;
       case 'out':
-        color = token['colorBgBase'];
-        backgroundColor = token['gold7'];
+        backgroundColor = token.event.exit[0];
         break;
+      default:
+        backgroundColor = token.event[entity][0];
     }
 
     fontSize = 14;
