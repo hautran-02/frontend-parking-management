@@ -66,15 +66,22 @@ function Event({}) {
   };
 
   const hanldeExport = async (values) => {
+    console.log('values', values);
     try {
-      await ParkingApi.exportVehicle(values);
+      setLoading(true);
+      const apis = values.licenePlate.map((el) => {
+        return ParkingApi.exportVehicle(el);
+      });
+      await Promise.allSettled(apis);
       actions.onNoti({
         type: 'success',
         message: 'Xuất xe thành công',
-        description: values.licenePlate
+        description: values.licenePlate.toString()
       });
     } catch (error) {
       ErrorService.hanldeError(error, actions.onNoti);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -213,18 +220,8 @@ function Event({}) {
                 <Form.Item
                   name="licenePlate"
                   label="Biển số xe"
-                  rules={[
-                    { required: true, message: false },
-                    ({}) => ({
-                      validator(_, value) {
-                        if (ValidateService.licensePlate(value)) {
-                          return Promise.resolve();
-                        }
-                        return Promise.reject({ message: 'Sai định dạng (VD: 12A-2184)' });
-                      }
-                    })
-                  ]}>
-                  <Select showSearch>
+                  rules={[{ required: true, message: false }]}>
+                  <Select mode="multiple" showSearch>
                     {occupiedSlots.map((el, ix) => (
                       <Select.Option
                         key={'option' + el?.parkingTurn?.vehicles?.licenePlate + ix}
