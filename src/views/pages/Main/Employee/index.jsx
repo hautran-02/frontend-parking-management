@@ -100,7 +100,7 @@ function Employee({}) {
   const onDelete = async (values) => {
     try {
       setLoading(true);
-      const api = await UserApi.delete(values._id);
+      const api = await EmployeeApi.delete(values._id);
       setData(api);
       actions.onNoti({
         message: 'Xóa nhân viên thành công',
