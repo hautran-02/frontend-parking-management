@@ -60,6 +60,7 @@ function Event({}) {
         message: 'Nhập xe thành công',
         description: values.licenePlate
       });
+      importForm.resetFields();
     } catch (error) {
       ErrorService.hanldeError(error, actions.onNoti);
     }
@@ -70,7 +71,7 @@ function Event({}) {
     try {
       setLoading(true);
       const apis = values.licenePlate.map((el) => {
-        return ParkingApi.exportVehicle(el);
+        return ParkingApi.exportVehicle({ licenePlate: el });
       });
       await Promise.allSettled(apis);
       actions.onNoti({
@@ -78,6 +79,8 @@ function Event({}) {
         message: 'Xuất xe thành công',
         description: values.licenePlate.toString()
       });
+
+      exportForm.resetFields();
     } catch (error) {
       ErrorService.hanldeError(error, actions.onNoti);
     } finally {
