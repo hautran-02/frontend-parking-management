@@ -27,10 +27,12 @@ function Authencation({ children }) {
 function Authorize({ children }) {
   const { state, actions } = useContext(AppContext);
   const { auth, authorize } = state;
-  const [loading, setLoading] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const api = async () => {
     try {
+      setLoading(true);
       await actions.onAuthorize({
         onError: () => {
           actions.logout();
@@ -48,6 +50,20 @@ function Authorize({ children }) {
 
   if (authorize) {
     return children;
+  } else {
+    if (loading) {
+      return (
+        <div className="full-screen">
+          <Spin
+            spinning={loading}
+            size="large"
+            tip={<Typography.Title level={4}>Loading...</Typography.Title>}
+            fullscreen={true}>
+            <div className="content" />
+          </Spin>
+        </div>
+      );
+    }
   }
 
   return (

@@ -16,7 +16,7 @@ import {
   Input
 } from 'antd';
 import { Content, Footer, Header } from '~/views/layouts';
-import { PlusOutlined, EditOutlined, DeleteOutlined, DeleteFilled } from '@ant-design/icons';
+import { PlusOutlined, EditOutlined, DeleteOutlined, DeleteFilled, ExclamationCircleFilled } from '@ant-design/icons';
 import { UserApi } from '~/api';
 import dayjs from 'dayjs';
 import { useSearchParams, useParams } from 'react-router-dom';
@@ -136,7 +136,7 @@ function Employee({}) {
         duration: 1
       });
       const ids = selectedRows.map((e) => e._id);
-      const api = await UserApi.deleteManyDriver(ids);
+      const api = await UserApi.deleteMany(ids);
       setData(api);
       actions.onNoti({
         message: 'Xóa tất cả thành công',

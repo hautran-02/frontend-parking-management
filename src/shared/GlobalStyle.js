@@ -118,7 +118,6 @@ export default createGlobalStyle`
 
     .full-screen {
         height: 100vh;
-        margin: 20px 0;
         margin-bottom: 20px;
         text-align: center;
         background: rgba(0, 0, 0, 0.05);

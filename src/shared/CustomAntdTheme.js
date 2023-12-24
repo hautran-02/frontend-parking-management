@@ -5,7 +5,6 @@ export default createGlobalStyle`
         display: flex;
         flex-flow: column;
         flex-direction: column;
-        justify-content: space-between;
         padding-bottom: 80px;
     }
 

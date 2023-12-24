@@ -1,5 +1,5 @@
 import { CarOutlined, LineChartOutlined } from '@ant-design/icons';
-import { Flex, Image, Layout, Menu, Typography, theme } from 'antd';
+import { Flex, Image, Layout, Menu, Space, Typography, theme } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import LOGO from '~/assets/logo/main.svg?url';
@@ -45,8 +45,8 @@ function Sider({ routes, ...props }) {
       style={{
         background: token.colorBgContainer
       }}>
-      <Flex vertical className="px-2 mt-1" justify="space-between" align="center">
-        <Image src={LOGO} width={40} />
+      <Flex vertical className="px-2 mt-1" align="center">
+        <Image src={LOGO} width={40} preview={false} />
         {!collapsed && (
           <Typography.Title level={4} className="text-center" style={{ color: token.colorPrimary }}>
             Parking Management
@@ -61,9 +61,6 @@ function Sider({ routes, ...props }) {
         openKeys={current?.openKeys}
         onSelect={handleChangePage}
       />
-      <div className="container text-center d-flex flex-column justify-content-end">
-        <Typography.Text strong>{`Phiên bản ${import.meta.env.VITE_VERSION}`}</Typography.Text>
-      </div>
     </Layout.Sider>
   );
 }
