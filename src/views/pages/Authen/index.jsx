@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Form, Image, Input, Layout, Radio, Row, Space } from 'antd';
+import { Button, Form, Image, Input, Layout, Radio, Row, Space, Typography } from 'antd';
 import LOGO from '~/assets/logo/full-logo.svg';
 import AppContext from '~/context';
 import { useNavigate } from 'react-router-dom';
@@ -98,11 +98,24 @@ function Authen({}) {
               </Form.Item>
 
               <Form.Item>
-                <Button id='btnLogin' size="large" type="primary" htmlType="submit" block loading={loading}>
+                <Button
+                  id="btnLogin"
+                  size="large"
+                  type="primary"
+                  htmlType="submit"
+                  block
+                  loading={loading}>
                   Đăng nhập
                 </Button>
               </Form.Item>
             </Form>
+          </Row>
+          <Row justify={'center'}>
+            <Typography.Title level={5} type="secondary" className="text-center">
+              Liên hệ Admin để được cấp tài khoản <br />
+              Gmail: hautrantrung.02@gmail.com <br />
+              Số điện thoại: 0357647771
+            </Typography.Title>
           </Row>
         </Space>
       </Content>
