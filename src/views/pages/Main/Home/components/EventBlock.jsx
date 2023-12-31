@@ -9,12 +9,16 @@ import AppContext from '~/context';
 import { useContext } from 'react';
 import { FileExcelOutlined } from '@ant-design/icons';
 
+let pageSize = 30;
+const loadMoreCount = 10;
 function EventBlock({}) {
   const { state, actions } = useContext(AppContext);
   const [data, setData] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
   const { token } = theme.useToken();
-  const [pageSize, setPageSize] = useState(50);
   const [pageIndex, setPageIndex] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const isMounted = useRef(false);
   const { geekblue6, blue2, colorTextSecondary, colorText, gold2, gold7 } = token;
   const inColor = {
@@ -31,18 +35,27 @@ function EventBlock({}) {
     }
   };
 
-  const callApi = async () => {
+  const callApi = async (pageIndex, pageSize, hanldeData) => {
     try {
       const api = await MonitorApi.getEvents({ pageSize, pageIndex });
       setData(api.data);
+      setTotalCount(api.totalCount);
     } catch (error) {
       // ErrorService.hanldeError(error, actions.onNoti);
     } finally {
     }
   };
 
+  const onLoadMore = async () => {
+    callApi(pageIndex, (data.length += loadMoreCount), (newData) => {
+      setData(newData);
+    });
+  };
+
   useEffect(() => {
-    callApi();1
+    callApi(pageIndex, pageSize, (newData) => {
+      setData(newData);
+    });
   }, [state.parkingEvent]);
 
   const onExport = async () => {
@@ -52,8 +65,8 @@ function EventBlock({}) {
       link.href = window.URL.createObjectURL(new Blob([api]));
       link.download = `output.xlsx`;
       link.click();
-    } catch(error) {
-      ErrorService.hanldeError(error, actions.onNoti)
+    } catch (error) {
+      ErrorService.hanldeError(error, actions.onNoti);
     }
   };
 
@@ -62,29 +75,31 @@ function EventBlock({}) {
       <Row justify="space-between" className="pe-4">
         <Typography.Title level={4}>Sự kiện</Typography.Title>
         <Popconfirm title="Xuất báo cáo ?" onConfirm={onExport} okText="Đồng ý" cancelText="Hủy">
-          <Button icon={<FileExcelOutlined />} size="large">Xuất báo cáo</Button>
+          <Button icon={<FileExcelOutlined />} size="large">
+            Xuất báo cáo
+          </Button>
         </Popconfirm>
       </Row>
-
       <div
         id="scrollableDiv"
-        className='mt-2'
+        className="mt-2"
         style={{
           height: 'calc(100vh - 172px)',
           overflow: 'auto'
         }}>
         <InfiniteScroll
           dataLength={data.length}
-          hasMore={data.length < 50}
-          // loader={
-          //   <Skeleton
-          //     avatar
-          //     paragraph={{
-          //       rows: 1
-          //     }}
-          //     active
-          //   />
-          // }
+          hasMore={data.length < totalCount}
+          next={onLoadMore}
+          loader={
+            <Skeleton
+              avatar
+              paragraph={{
+                rows: 1
+              }}
+              active
+            />
+          }
           endMessage={<Divider plain>Không còn sự kiện khác</Divider>}
           scrollableTarget="scrollableDiv">
           <List

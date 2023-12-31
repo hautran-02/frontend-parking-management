@@ -16,7 +16,8 @@ function GeneralCard({ zone = 'A' }) {
   });
 
   const config = {
-    height: 160,
+    height: 168,
+    autoFit: true,
     percent: data.occupied / data.total,
     range: {
       color: 'l(0) 0:#B8E1FF 1:#3D76DD'
@@ -52,6 +53,7 @@ function GeneralCard({ zone = 'A' }) {
         offsetY: 25,
         style: { fill: '#000', fontSize: 14, color: '#000' },
         formatter: (val) => {
+          return "";
           if (val === '0') {
             return '0';
           } else if (val === '1') {
@@ -70,7 +72,7 @@ function GeneralCard({ zone = 'A' }) {
           color: '#000'
         },
         formatter: (e) => {
-          return data.occupied.toString();
+          return `${data.occupied.toString()}/${data.total}`;
         }
       },
       content: {

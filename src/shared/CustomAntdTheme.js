@@ -32,6 +32,44 @@ export default createGlobalStyle`
         border-radius: 8px;
     }
 
+    .ant-card.card-main{
+        border-radius: 10px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        border: none;
+
+        .ant-card-head {
+            padding: 10px 10px 0px;
+            border: none;
+            min-height: auto;
+            .ant-card-head-title {
+                display: contents;
+                padding: 0;
+            }
+            .ant-card-extra{
+                padding: 0;
+            }
+        }
+
+        .ant-card-body {
+            flex: 1;
+            padding: 0 16px;
+        }
+    }
+
+    .full-screen {
+        height: 100vh;
+        margin-bottom: 20px;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 4px;
+
+        > div {
+            transform: translateY(40vh);
+        }
+    }
+
     .ant-card {
         &.event-card {
             .ant-card-head {
