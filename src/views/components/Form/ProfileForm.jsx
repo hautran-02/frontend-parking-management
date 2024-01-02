@@ -110,7 +110,7 @@ function ProfileForm({ isOpen, onClose, formAction, noChangeAccount }) {
                   return Promise.resolve();
                 }
 
-                return Promise.reject();
+                return Promise.reject(new Error('Sai định dang, SĐT phải là 10 số'));
               }
             })
           ]}>
