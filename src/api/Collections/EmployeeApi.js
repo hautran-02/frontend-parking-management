@@ -18,11 +18,21 @@ export default {
       payload
     });
   },
-  
+
   delete: (_id) => {
     const url = `${DOMAIN}/user/employee?_id=${_id}`;
     return DELETE({
       url
+    });
+  },
+
+  deleteMany: (ids) => {
+    const url = `${DOMAIN}/user/employee/deletes`;
+    return POST({
+      url,
+      payload: {
+        ids
+      }
     });
   }
 };

@@ -136,7 +136,7 @@ function Employee({}) {
         duration: 1
       });
       const ids = selectedRows.map((e) => e._id);
-      const api = await UserApi.deleteMany(ids);
+      const api = await EmployeeApi.deleteMany(ids);
       setData(api);
       actions.onNoti({
         message: 'Xóa tất cả thành công',
